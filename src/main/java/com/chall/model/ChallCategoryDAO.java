@@ -74,6 +74,7 @@ public class ChallCategoryDAO {
 				ChallCategoryDTO dto = new ChallCategoryDTO();
 				
 				dto.setCategory_name(rs.getString("category_name"));
+				dto.setCategory_image(rs.getString("category_image"));
 				
 				list.add(dto);
 			}

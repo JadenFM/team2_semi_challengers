@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,17 +28,21 @@
 			<hr class="join_hr" width="50%" color="red">
 			<br>
 			
-			
+			<form id="form" method="post" action="member_challJoin_5.do">
 			<h5>예치금</h5>
-			<a>고정 예치금은 최소 1천원부터 가능합니다.(천원 단위 가능)</a><label>&nbsp;&nbsp;<input type="checkbox" name="color" value="red">고정 예치금</label>
+			<a>고정 예치금은 최소 1천원부터 가능합니다.(천원 단위 가능)</a><label>&nbsp;&nbsp;
+			<input type="checkbox" name="color" value="red" checked>고정 예치금</label>
+			<!-- 고정 예치금 체크풀면 최대 예치금 입력칸 보이게 하기 -->
 			<br>
-			<textarea rows="1" cols="30">1000</textarea>원
+			<textarea name="depositDefault" rows="1" cols="30" placeholder="예) 1000"></textarea>원 ~
+			<textarea name="depositMax" rows="1" cols="30" placeholder="예) 200000"></textarea>원
+			
 			
   			
   			<br><br>
 			<h5>비공개 참여 코드</h5>
 			<a>프라이빗한 챌린지를 위해, 우리만의 코드를 정해보세요.</a><br>
-			<textarea cols="25" rows="1" id="title" placeholder="예) 1234, 우리는챌린저스"></textarea>
+			<textarea name="privateCode" cols="25" rows="1" id="title" placeholder="예) 1234, 우리는챌린저스"></textarea>
 			
 			
 			<br><br>
@@ -47,14 +52,15 @@
 			<div class="form-check form-switch">
 			  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
 			</div>
-			<textarea rows="1" cols="4">50</textarea>명
+			<textarea name="maxPeople" rows="1" cols="4"></textarea>명
 			
 			
 			
 			
 			<br><br>
-			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin3.do'">이전</button>
-			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/member_challJoin5.do'">다음</button>
+			<button type="button" class="btn btn-dark" onclick="history.back()">이전</button>
+			<button type="submit" class="btn btn-dark">다음</button>
+			</form>
 		</div>
 		<br>
    		<div class="progress">

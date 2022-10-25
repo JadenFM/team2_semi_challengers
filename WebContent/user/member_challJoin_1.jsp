@@ -17,19 +17,7 @@
 	  let checkBox3 = document.getElementById("promise3");
 
 	  if (checkBox1.checked == true && checkBox2.checked == true && checkBox3.checked == true){
-		 location.href="member_challJoin2.do";
-			/* $.ajax({
-				type : "post",
-				url : "member_challJoin_2.jsp",
-				datatype : "html",
-				success : function(data) {
-					document.body.innerHTML = data;
-				},
-				
-				error : function(data) {
-					alert("에러가 발생하였습니다.~~~");
-				}
-			}); */
+		 location.href="member_challJoin_2.do";
 	  } else {
 		 location.href="#";
 	  }
