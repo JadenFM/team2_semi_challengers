@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="../CSS/CScenter.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="../JS/CScenter.js"></script>
+<script type="text/javascript" src="../searchJS/location.js"></script>
+<script type="text/javascript" src="searchJS/location.js"></script>
 
 <style type="text/css">
 	
@@ -227,8 +229,9 @@
 			
 		
 		<div class="search">
-			<form method="post" action="<%=request.getContextPath() %>/main.do">
-				<input class="search_text" type="text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;<input class="search_btn" type="submit" value="검색">
+			<form id="form_searchText" method="post" onsubmit="return false;">
+				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
+				<input id="search_btn" class="search_btn" type="button" value="검색" >
 			</form>	
 		</div>
 		
