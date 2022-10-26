@@ -17,6 +17,17 @@
 		<a href="<%=request.getContextPath()%>/member_login.do">[회원 로그인]</a>
 		&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
 		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a>
+		
+		<table class="list">
+			<tr>
+				<th>메인제목</th>
+				<th>메인내용</th>
+			</tr>
+		</table>		
+		
+		
+		<div id="load">
+		</div>
 	</article>
 	<jsp:include page="include/chall_bottom.jsp" />
 
