@@ -2,6 +2,7 @@ package com.user.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,8 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.chall.model.UserDAO;
 import com.chall.model.UserDTO;
+import com.question.model.QuestionDAO;
+import com.question.model.QuestionDTO;
 
 public class LoginOkAction implements Action {
 
@@ -34,15 +37,17 @@ public class LoginOkAction implements Action {
 		if(check > 0) { // 회원인 경우
 			
 			UserDTO dto = dao.getMember(member_id);
-			
+			QuestionDAO dao_q = QuestionDAO.getInstance();
+			List<QuestionDTO> list = dao_q.getAnswerCheck(dto.getMem_num());
 			// 세션 객체 생성
 			HttpSession session = request.getSession();	
-			
+
 			// 세션 정보 받아오기 
 			session.setAttribute("memberId", dto.getMem_id());
 			session.setAttribute("memberName", dto.getMem_name());
 			session.setAttribute("memberNum", dto.getMem_num());
-
+			session.setAttribute("list",list);
+			session.setAttribute("member_id", member_id);
 			forward.setRedirect(true);
 			
 			// 메인 페이지로 이동

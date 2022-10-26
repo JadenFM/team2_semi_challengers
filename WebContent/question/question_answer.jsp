@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post"
+	<form method="post" 
 		action="<%=request.getContextPath()%>/question_answer.do">
 		<input type="hidden" name="p_q_num" value="${param.p_q_num }">
 		<input type="hidden" name="p_q_user_num" value="${param.p_q_user_num }">
@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="submit" value="답변하기">
+					<input type="submit"  value="답변하기" >
 				</td>
 			</tr>
 		</table>

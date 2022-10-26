@@ -34,7 +34,7 @@ public class QuestionDAO {
 	public void openConn() {
 		
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -83,6 +83,7 @@ public class QuestionDAO {
 				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
 				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
 				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+				dto.setP_q_check(rs.getInt("p_q_check"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -128,6 +129,7 @@ public class QuestionDAO {
 				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
 				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
 				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+				dto.setP_q_check(rs.getInt("p_q_check"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,12 +140,84 @@ public class QuestionDAO {
 	}
 	public int writeanswer(QuestionDTO dto) {
 		int result = 0;
+		int check = 1;
 		openConn();
 		try {
-			sql = "update private_q set p_q_answer_num = p_q_answer_num + 1 , p_q_answer_cont = ? , p_q_answer_regdate = sysdate where p_q_num = ?";
+			sql = "update private_q set p_q_answer_num = p_q_answer_num + 1 , p_q_answer_cont = ? , p_q_check = ? , p_q_answer_regdate = sysdate where p_q_num = ?";
 			st = con.prepareStatement(sql);
 			st.setString(1, dto.getP_q_answer_cont());
-			st.setInt(2,dto.getP_q_num());
+			st.setInt(2,check);
+			st.setInt(3,dto.getP_q_num());
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public QuestionDTO getQuestionByMem_num(int mem_num, int p_q_check) {
+		QuestionDTO dto = null;
+		openConn();
+		try {
+			sql = "select * from private_q where p_q_user_num = ? and p_q_check = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,mem_num);
+			st.setInt(2,p_q_check);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				dto = new QuestionDTO();
+				dto.setP_q_num(rs.getInt("p_q_num"));
+				dto.setP_q_chall_num(rs.getInt("p_q_chall_num"));
+				dto.setP_q_title(rs.getString("p_q_title"));
+				dto.setP_q_content(rs.getString("p_q_content"));
+				dto.setP_q_category_num(rs.getInt("p_q_category_num"));
+				dto.setP_q_regdate(rs.getString("p_q_regdate"));
+				dto.setP_q_answer_cont(rs.getString("p_q_answer_cont"));
+				dto.setP_q_answer_regdate(rs.getString("p_q_answer_regdate"));
+				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
+				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
+				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+				dto.setP_q_check(rs.getInt("p_q_check"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return dto;
+	}
+	public List<QuestionDTO> getAnswerCheck(int mem_num) {
+		List<QuestionDTO> list = new ArrayList<QuestionDTO>();
+		int result = 0;
+		openConn();
+		try {
+			sql = "select p_q_check from private_q where p_q_user_num = ? and p_q_check = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,mem_num);
+			st.setInt(2,1);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				QuestionDTO dto = new QuestionDTO();
+				dto.setP_q_check(rs.getInt("p_q_check"));
+				System.out.println(dto.getP_q_check());
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public int updateAnswerCheck(int p_q_num) {
+		int result = 0 , check = 0;
+		openConn();
+		try {
+			sql = "update private_q set p_q_check = ? where p_q_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,check);
+			st.setInt(2,p_q_num);
 			result = st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -12,7 +12,14 @@ public class QuestionDTO {
 	private int p_q_again_num;
 	private int p_q_answer_num;
 	private int p_q_user_num;
+	private int p_q_check;
 	
+	public int getP_q_check() {
+		return p_q_check;
+	}
+	public void setP_q_check(int p_q_check) {
+		this.p_q_check = p_q_check;
+	}
 	public int getP_q_num() {
 		return p_q_num;
 	}
