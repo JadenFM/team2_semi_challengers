@@ -226,10 +226,9 @@
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
 						
-					</c:if>
 						<c:if test="${!empty list}">
-							<span class="top_li_5" onclick="aaa()">
-										<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
+							<span class="top_li_5">
+										<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
 										${fn:length(list)}
 									<c:forEach var="check" items="${list }">
 									<c:if test="${check.p_q_check == 1 }">
@@ -240,6 +239,7 @@
 									</c:forEach>
 							</span>
 						</c:if>
+					</c:if>
 			
 				</ul>
 			</div>
@@ -269,10 +269,10 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-	$(function(){
+	<%-- $(function(){
 		$(".top_li_5").mouseout(function(){
 			<%
-				String member_id = request.getParameter("mem_id").trim();
+				//String member_id = request.getParameter("mem_id").trim();
 				UserDAO dao = UserDAO.getinstance();
 				UserDTO dto = dao.getMember("jheo");
 				QuestionDAO dao_q = QuestionDAO.getInstance();
@@ -280,7 +280,11 @@
 				HttpSession session1 = request.getSession();
 				session1.setAttribute("list",list);
 			%>
-		})
-	})
+				console.log("aslkjdlkasd");
+		$(".top_li_5").mouseout(function(){
+			location.reload();
+		}
+		});
+	}) --%>
 	
 </script>

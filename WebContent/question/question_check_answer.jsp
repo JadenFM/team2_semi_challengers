@@ -22,6 +22,7 @@
 	<div align="center">
 		<form method="post" action="question_update_check.do">
 		<input type="hidden" name="p_q_num" value="<%=content.getP_q_num() %>">
+		<input type="hidden" name="mem_id" value="${param.mem_id }">
 		<table border="1" cellspacing="0">
 			<tr>
 				<th>문의 번호</th>

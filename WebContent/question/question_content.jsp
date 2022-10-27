@@ -15,6 +15,8 @@
 	function question_answer() {
 		// 형식) window.open("파일경로명","창이름", "가로폭/세로높이")
 		window.open("<%=request.getContextPath()%>/question/question_answer.jsp?title=<%=content.getP_q_title()%>&p_q_num=<%=content.getP_q_num()%>&p_q_user_num=<%=content.getP_q_user_num()%>","답변","width=770px, height=380px")
+		location.href="category_question.do";
+		
 	}
 	
 </script>
