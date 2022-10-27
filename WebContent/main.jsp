@@ -7,6 +7,7 @@
 <title>Challengers</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="searchJS/main_list.js"></script>
+<script type="text/javascript" src="searchJS/history.js"></script>
 </head>
 <body>
 	<jsp:include page="include/chall_top.jsp" />
@@ -29,6 +30,11 @@
 		
 		
 		<div id="load">
+		<p>load</p>
+		</div>
+		
+		<div id="TARGET">
+		<p>TARGET</p>
 		</div>
 	</article>
 	<jsp:include page="include/chall_bottom.jsp" />

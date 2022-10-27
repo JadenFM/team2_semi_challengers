@@ -16,7 +16,7 @@ $(document).ready(function() {
 			url : "/Semi_Challengers/main_list.do",
 			datatype : "xml",
 			success : function(data){
-
+				
 				$(".list tr:gt(0)").remove();
 					
 				let table = "";
@@ -42,8 +42,8 @@ $(document).ready(function() {
 	
 	getList();
 	
-	$(window).on("popstate", function(){
+/*	$(window).on("popstate", function(){
 		
 		window.location = document.location.href;
-	});
+	});*/
 });

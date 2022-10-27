@@ -14,7 +14,7 @@ $(document).ready(function(){
 		
 		var keyword = $("#text").val();
 		
-		var url = "/Semi_Challengers/search/search.jsp";
+		console.log("searchList 파라메터 >>>" +keyword);
 		
 		$.ajax({
 			
@@ -24,7 +24,7 @@ $(document).ready(function(){
 			async : false,
 			success : function(data){
 				
-				history.pushState(keyword, null, url);
+				//history.pushState(keyword, null, url);
 				
 				$(".li tr:gt(0)").remove();
 				
@@ -48,10 +48,10 @@ $(document).ready(function(){
 		});
 	} // getSearchList end
 	
-	$(window).on("popstate", function(){
+	/*$(window).on("popstate", function(){
 		
 		window.location = document.location.href;
-	});
+	});*/
 	
 	getSearchList();
 

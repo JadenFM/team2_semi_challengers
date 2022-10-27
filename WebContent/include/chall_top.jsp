@@ -18,6 +18,10 @@
 <script src="../JS/CScenter.js"></script>
 <script type="text/javascript" src="../searchJS/location.js"></script>
 <script type="text/javascript" src="searchJS/location.js"></script>
+<!-- <script type="text/javascript" src="../searchJS/move.js"></script>
+<script type="text/javascript" src="searchJS/move.js"></script> -->
+
+
 
 <style type="text/css">
 	
@@ -231,7 +235,7 @@
 		<div class="search">
 			<form id="form_searchText" method="post" onsubmit="return false;">
 				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
-				<input id="search_btn" class="search_btn" type="button" value="검색" >
+				<input id="search_btn" class="search_btn" type="button" value="검색">
 			</form>	
 		</div>
 		
