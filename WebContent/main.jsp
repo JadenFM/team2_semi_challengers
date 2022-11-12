@@ -12,9 +12,10 @@
 <script type="text/javascript" src="searchJS/main_menu.js"></script>
 <link rel="stylesheet" href="searchCS/mainCS.css">
 
+
 <script type="text/javascript" src="searchJS/refresh.js"></script>
 </head>
-<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+<body>
 	<jsp:include page="include/chall_top.jsp" />
 	<article align="center" id="art">
 
@@ -26,9 +27,9 @@
 		<br>
 	<div class="kakao"></div>	
 		<a href="<%=request.getContextPath()%>/member_login.do">[회원 로그인]</a>
-		&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; 
---%>
-		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a>
+		&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+
+		<a href="<%=request.getContextPath()%>/admin_login.do">[관리자 로그인]</a> --%>
 			<div class="main_container event">
 				<div class="slide_container">
 					<div class="slide fade active">

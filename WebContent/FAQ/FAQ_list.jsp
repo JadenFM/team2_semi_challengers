@@ -88,11 +88,8 @@
 				}
 			})
 		})
-		let timeout = null
-		$(".search").on('propertychange change keyup paste input',function(){
-			let keyword = $(this).val();
-		    clearTimeout(timeout);
-		    timeout = setTimeout(function() {
+
+		$(".search").on('keyup',function(){
 			let searching = $(".search").val();
 			$.ajax({
 				type : "post",
@@ -124,7 +121,6 @@
 					alert("에러가 발생하였습니다.")
 				}
 			})
-		    }, 100);
 		})
 	});
 </script>
@@ -349,18 +345,8 @@ img {
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link"
 					href="FAQ_control.do?page=1">First</a></li>
-				<c:if test="${page == 1 }">
-		    <li>
-		      <a class="page-link" 
-		      		href="FAQ_control.do?page=1">Previous</a>
-		    </li>
-		    </c:if>
-		    <c:if test="${page != 1 }">
-		    <li>
-		      <a class="page-link" 
-		      		href="FAQ_control.do?page=${page - 1 }">Previous</a>
-		    </li>
-		    </c:if>
+				<li><a class="page-link"
+					href="FAQ_control.do?page=${page - 1 }">Previous</a></li>
 				<c:forEach begin="${startBlock }" end="${lastBlock }" var="i">
 
 					<c:if test="${i == page }">
