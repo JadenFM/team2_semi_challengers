@@ -124,7 +124,7 @@
 				</div>
 				<div class="h_container1">
 					<h2>서브카테고리</h2>
-					<input class="name" name="category_name_input" placeholder="변결할 서브카테고리의 이름을 입력해 주십시오.">
+					<input class="name" name="category_name_input" placeholder="변경할 서브카테고리의 이름을 입력해 주십시오.">
 				</div>
 				<br>
 				<br>

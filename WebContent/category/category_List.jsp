@@ -68,7 +68,7 @@
 }
 
 img {
-	margin-top: 20px;
+	margin-top: 40px;
 }
 .category_div{
 	display: inline-block;
@@ -272,7 +272,7 @@ img {
 				<li>
 					<div class="selfcare">
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=9">
-						<img src="uploadFile/admin/공부.png" width="64" height="54">
+						<img src="uploadFile/admin/셀프케어.png" width="64" height="54">
 						<h2>셀프케어</h2>
 						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>

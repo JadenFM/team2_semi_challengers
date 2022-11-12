@@ -120,7 +120,12 @@
 		list-style: none;
 		padding: 0;
 	}
-	
+	.member_login{
+		color : #ff4d54;
+	}
+	.admin_login {
+		color : #289828;
+	}
 	
 </style>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js" integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
@@ -136,7 +141,8 @@
 			<br>
 			<br>
 			<hr width="80%" color="#289828">
-			<h1 class="login_title">관리자 로그인</h1>
+			<h1 class="login_title"><a class="member_login" href="member_login.do">회원 로그인</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="admin_login" href="#">관리자 로그인</a></h1>
+			
 		</header>
 		
 		<article class="log_content">

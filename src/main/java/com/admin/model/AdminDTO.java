@@ -5,8 +5,6 @@ public class AdminDTO {
 	private String admin_id;
 	private String admin_pwd;
 	private String admin_name;
-	private int admin_age;
-	private String admin_addr;
 	private String admin_phone;
 	private String admin_regdate;
 	private String admin_email;
@@ -39,18 +37,6 @@ public class AdminDTO {
 	}
 	public void setAdmin_name(String admin_name) {
 		this.admin_name = admin_name;
-	}
-	public int getAdmin_age() {
-		return admin_age;
-	}
-	public void setAdmin_age(int admin_age) {
-		this.admin_age = admin_age;
-	}
-	public String getAdmin_addr() {
-		return admin_addr;
-	}
-	public void setAdmin_addr(String admin_addr) {
-		this.admin_addr = admin_addr;
 	}
 	public String getAdmin_phone() {
 		return admin_phone;
