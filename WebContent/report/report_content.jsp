@@ -14,13 +14,10 @@
 .header {
 	height: 100%;
 	padding: 60px 0px 30px;
-}
-.h_container {
-	margin-left: 120px;
+		margin-left: 30%;
 }
 .h_container1{
-	margin-top: 100px;
-	margin-left: 120px;
+	margin-top: 10%;
 }
 
 .report_title , .mem_id_report , .mem_id_reported , .mem_name_reported , .report_cause , .report_result{
@@ -36,12 +33,9 @@
 	border-radius: 7px;
 }
 
-.btn {
-	margin-left: 230px;
-}
+
 
 .btn input {
-	
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -112,10 +106,10 @@
 						</div>
 					</c:if>
 				</div>
-				</div>
-			<br><br><br><br><br>
+				<br><br><br><br><br>
 			<div class="btn">
 					<input type="submit" value="정지">
+					&nbsp;&nbsp;&nbsp;
 					<c:if test="${!empty content.mem_id_reported }">
 						<input type="button" value="회원삭제" onclick="location.href='<%=request.getContextPath()%>/delete_member.do?mem_id_reported=${content.mem_id_reported }'">			
 					</c:if>
@@ -123,6 +117,8 @@
 						<input type="button" value="회원삭제" onclick="location.href='<%=request.getContextPath()%>/delete_member.do?mem_name_reported=${content.mem_name_reported }'">			
 					</c:if>
 			</div>
+				</div>
+			
 			</div>
 		</form>
 	<jsp:include page="../include/chall_bottom.jsp"/>

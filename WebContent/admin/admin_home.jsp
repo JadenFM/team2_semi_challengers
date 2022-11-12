@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
 <style type="text/css">
 	
 .home_list{
@@ -79,7 +83,7 @@
 	
 </style>
 </head>
-<body>
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
 	<jsp:include page="../include/admin_top.jsp"/>
 	<br><br><br>
 	<div class="grid" align="center">

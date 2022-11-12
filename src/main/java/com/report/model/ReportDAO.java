@@ -184,6 +184,77 @@ public class ReportDAO {
 		}
 		return result;
 	}
+	public int getTotalRecord_search(String search) {
+		openConn();
+		int result = 0;
+		try {
+			sql = "select count(*) from member_report where mem_id_reported = ? or mem_name_reported = ? ";
+			st = con.prepareStatement(sql);
+			st.setString(1,search);
+			st.setString(2,search);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public String pagination(int rowsize ,int block , int pages, int startNo , int lastNo , int startBlock , int lastBlock , int totalRecord , int allPage) {
+		String please = "";
+		please += "<paginations>";
+		please += "<pagination>";
+		please += "<rowsize>" + rowsize + "</rowsize>";
+		please += "<block>" + block + "</block>";
+		please += "<pages>" + pages + "</pages>";
+		please += "<startNo>" + startNo + "</startNo>";
+		please += "<lastNo>" + lastNo + "</lastNo>";
+		please += "<startBlock>" + startBlock + "</startBlock>";
+		please += "<lastBlock>" + lastBlock + "</lastBlock>";
+		please += "<totalRecord>" + totalRecord + "</totalRecord>";
+		please += "<allPage>" + allPage + "</allPage>";
+		please += "</pagination>";
+		please += "</paginations>";
+		return please;
+	}
+	public String findout(String search , int startNo , int lastNo) {
+		openConn();
+		String result = "";
+		sql = "select * from (select rownum as rnum , a.* from (select * from member_report where mem_id_reported = ? or mem_name_reported = ? or mem_id_report = ? order by report_num desc) a where rownum <= ?) where rnum >= ?";
+		try {
+			st = con.prepareStatement(sql);
+			st.setString(1,search);
+			st.setString(2,search);
+			st.setString(3,search);
+			st.setInt(4, lastNo);
+			st.setInt(5,startNo);
+			rs = st.executeQuery();
+			result += "<reports>";
+			while(rs.next()) {
+				result +="<report>";
+				result +="<report_num>"+rs.getInt("report_num")+"</report_num>";
+				result +="<report_title>"+rs.getString("report_title")+"</report_title>";
+				result +="<mem_id_report>"+rs.getString("mem_id_report")+"</mem_id_report>";
+				if(rs.getString("mem_id_reported") != null) {
+					result +="<mem_id_reported>"+rs.getString("mem_id_reported")+"</mem_id_reported>";
+				}else if(rs.getString("mem_name_reported")!= null) {
+					result +="<mem_name_reported>"+rs.getString("mem_name_reported")+"</mem_name_reported>";
+				}
+				result +="<report_cause>"+rs.getString("report_cause")+"</report_cause>";
+				result +="<report_image>"+rs.getString("report_image")+"</report_image>";
+				result +="</report>";
+			}
+			result += "</reports>";			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
 }
 
 

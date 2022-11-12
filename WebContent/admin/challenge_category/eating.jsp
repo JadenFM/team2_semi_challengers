@@ -120,8 +120,18 @@
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link"
 					href="eating_list.do?page=1&chall_category=C002">First</a></li>
-				<li><a class="page-link"
-					href="eating_list.do?page=${page - 1 }&category_code=C002">Previous</a></li>
+				<c:if test="${page == 1 }">
+		    <li>
+		      <a class="page-link" 
+		      		href="eating_list.do?page=1&chall_category=C002">Previous</a>
+		    </li>
+		    </c:if>
+		    <c:if test="${page != 1 }">
+		    <li>
+		      <a class="page-link" 
+		      		href="eating_list.do?page=${page - 1 }&chall_category=C002">Previous</a>
+		    </li>
+		    </c:if>
 				<c:forEach begin="${startBlock }" end="${lastBlock }" var="i">
 
 					<c:if test="${i == page }">

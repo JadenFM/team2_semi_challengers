@@ -119,27 +119,37 @@
 		<nav>
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link"
-					href="hobby_list.do?page=1">First</a></li>
-				<li><a class="page-link"
-					href="hobby_list.do?page=${page - 1 }">Previous</a></li>
+					href="hobby_list.do?page=1&chall_category=005">First</a></li>
+				<c:if test="${page == 1 }">
+		    <li>
+		      <a class="page-link" 
+		      		href="hobby_list.do?page=1&chall_category=C005">Previous</a>
+		    </li>
+		    </c:if>
+		    <c:if test="${page != 1 }">
+		    <li>
+		      <a class="page-link" 
+		      		href="hobby_list.do?page=${page - 1 }&chall_category=C005">Previous</a>
+		    </li>
+		    </c:if>
 				<c:forEach begin="${startBlock }" end="${lastBlock }" var="i">
 
 					<c:if test="${i == page }">
 						<li class="page-item active" aria-current="page"><a
-							class="page-link" href="hobby_list.do?page=${i }">${i }</a></li>
+							class="page-link" href="hobby_list.do?page=${i }&chall_category=005">${i }</a></li>
 					</c:if>
 
 					<c:if test="${i != page }">
 						<li class="page-item"><a class="page-link"
-							href="hobby_list.do?page=${i }">${i }</a></li>
+							href="hobby_list.do?page=${i }&chall_category=005">${i }</a></li>
 					</c:if>
 				</c:forEach>
 
 				<c:if test="${lastBlock < allPage }">
 					<li class="page-item"><a class="page-link"
-						href="hobby_list.do?page=${page + 1 }">Next</a></li>
+						href="hobby_list.do?page=${page + 1 }&chall_category=005">Next</a></li>
 					<li class="page-item"><a class="page-link"
-						href="hobby_list.do?page=${allPage }">End</a></li>
+						href="hobby_list.do?page=${allPage }&chall_category=005">End</a></li>
 				</c:if>
 			</ul>
 		</nav>
