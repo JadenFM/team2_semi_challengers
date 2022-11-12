@@ -34,7 +34,7 @@ function pagination(page){
 			table += "<div class='con'> <div class='all'>";
 			$(data).find("search").each(function(){
 				table += "<div class='alll'>";
-				table += "<a class='block' href='<%=request.getContextPath()%>/challenge_modify.do?chall_num=" + $(this).find("chall_num").text() + "&chall_category=선택&page=1'>";
+				table += "<a class='block' href='<%=request.getContextPath()%>/challenge_modify.do?chall_num=" + $(this).find("chall_num").text() + "&chall_category=운동&page=1'>";
 				table += "<img src='<%=request.getContextPath() %>/uploadFile/" +$(this).find("chall_mainimage").text()+ "' width='64' height='54'><br><br>";
 				table += "<h2>" + $(this).find("chall_title").text() +"</h2> <br> <span class='tkdtpqhrl'> 상세보기 + </span> </a></div>";
 			})
@@ -48,11 +48,7 @@ function pagination(page){
 				pagi += "<nav class='search_pagination'> <ul class='pagination'> <li class='page-item'>";
 				pagi += "<a class='page-link' href='#' onclick='pagination(1)'>First</a>";
 				pagi += "</li><li>";
-				if(page == 1){
-					pagi += "<a class='page-link' href='#' onclick='pagination(1)'>Previous</a></li>"
-				}else{
-					pagi += "<a class='page-link' href='#' onclick='pagination("+page+"-1)'>Previous</a> </li>";
-				}
+				pagi += "<a class='page-link' href='#' onclick='pagination("+page+"-1)'>Previous</a> </li>";
 				for(let i=startBlock; i <=lastBlock; i++){
 					console.log("i :"+ i);
 					console.log("page : "+page);
@@ -83,12 +79,8 @@ function pagination(page){
 	})
 }
 $(function(){
-	let timeout = null
 	$(".search_pagination").hide();
-	$(".search").on('propertychange change keyup paste input',function(){
-		let keyword = $(this).val()
-		clearTimeout(timeout);
-	    timeout = setTimeout(function() {
+	$(".search").on('keyup',function(){
 		let searching = $(".search").val();
 		$.ajax({
 			type : "post",
@@ -104,7 +96,7 @@ $(function(){
 				table += "<div class='con'> <div class='all'>";
 				$(data).find("search").each(function(){
 					table += "<div class='alll'>";
-					table += "<a class='block' href='<%=request.getContextPath()%>/challenge_modify.do?chall_num=" + $(this).find("chall_num").text() + "&chall_category=선택&page=1'>";
+					table += "<a class='block' href='<%=request.getContextPath()%>/challenge_modify.do?chall_num=" + $(this).find("chall_num").text() + "&chall_category=운동&page=1'>";
 					table += "<img src='<%=request.getContextPath() %>/uploadFile/" +$(this).find("chall_mainimage").text()+ "' width='64' height='54'><br><br>";
 					table += "<h2>" + $(this).find("chall_title").text() +"</h2> <br> <span class='tkdtpqhrl'> 상세보기 + </span> </a></div>";
 				})
@@ -118,11 +110,7 @@ $(function(){
 					pagi += "<nav class='search_pagination'> <ul class='pagination'> <li class='page-item'>";
 					pagi += "<a class='page-link' href='#' onclick='pagination(1)'>First</a>";
 					pagi += "</li><li>";
-					if(page == 1){
-						pagi += "<a class='page-link' href='#' onclick='pagination(1)'>Previous</a></li>"
-					}else{
-						pagi += "<a class='page-link' href='#' onclick='pagination("+page+"-1)'>Previous</a> </li>";
-					}
+					pagi += "<a class='page-link' href='#' onclick='pagination("+page+"-1)'>Previous</a> </li>";
 					for(let i=startBlock; i <=lastBlock; i++){
 						console.log("i :"+ i);
 						console.log("page : "+page);
@@ -151,7 +139,6 @@ $(function(){
 				alert("에러가 발생하였습니다.")
 			}
 		})
-	    }, 100);
 	})
 })
 </script>
@@ -176,7 +163,7 @@ $(function(){
 						src="https://chlngers.com/assets/svgs/icon-search-line-black.svg"
 						width="30" height="30">
 				</div>
-				<input class="search" name="search" placeholder="챌린지 이름을 입력해주세요.">
+				<input class="search" name="search">
 			</div>
 		</div>
 </body>
