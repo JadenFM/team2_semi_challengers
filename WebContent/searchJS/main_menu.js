@@ -20,6 +20,7 @@ function prevSlide(){
 		newIndex = currentIndex-1;
 	}
 	
+	$(".slide").removeClass("active");
 	$(".slide").eq(newIndex).addClass("active");
 	$(".slide").eq(newIndex).show();
 }
@@ -47,9 +48,11 @@ function nextSlide(){
 	$(".slide").eq(newIndex).addClass("active");
 	$(".slide").eq(newIndex).show();
 }
+
 $(document).ready(function(){
 	
-	$(".slide").not(".active").hide();
 	setInterval(nextSlide, 4000);
+
 	
 })
+

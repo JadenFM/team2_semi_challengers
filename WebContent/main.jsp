@@ -9,7 +9,6 @@
 <script type="text/javascript" src="searchJS/main_list.js"></script>	
 <script type="text/javascript" src="searchJS/main_menu.js"></script>	
 <link rel="stylesheet" href="searchCS/mainCS.css">	
-<script type="text/javascript" src="searchJS/refresh.js"></script>	
 </head>	
 <body>	
 	<jsp:include page="include/chall_top.jsp" />	

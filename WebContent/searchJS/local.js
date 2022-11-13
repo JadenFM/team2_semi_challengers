@@ -9,8 +9,8 @@ function getContextPath(){
 		return location.href.substring(path, location.href.indexOf('/', path+1));
 }
 
-let VIEW_ITEM_DATA = 1;
-let VIEW_ITEM_MAXCOUNT = 50;
+let ITEM_DATA = 1;
+let ITEM_MAXCOUNT = 50;
 
 function checkNull(obj){
 	
@@ -50,6 +50,7 @@ function initLatelyViewItemList(){
 		card += "<p>최근 조회한 챌린지가 없습니다.</p>";
 		card += "</div>";
 		
+		$("#card_qurency").empty();
 		$("#card_qurency").append(card);
 		
 	}else{ /* 기존 정보가 있을 경우*/
@@ -86,9 +87,7 @@ function initLatelyViewItemList(){
 			
 		}
 		
-			console.log("겟>> " +getLocalStorage('latelyItemList'));
 			let latelyItemList = JSON.parse(getLocalStorage('latelyItemList'));
-			console.log(latelyItemList[0].itemNum);
 			
 		/*화면을 그리는 함수 호출*/
 		latelyViewItemRender();
@@ -103,7 +102,7 @@ function latelyViewItemRender(){
 	if(getLocalStorage('latelyItemList') !="null"||checkNull(getLocalStorage('latelyItemList'))){
 		
 		let latelyItemList = JSON.parse(getLocalStorage('latelyItemList'));
-		
+		$("#card_qurency").empty();
 		let card = "";
 		/*가져온 최근 본 챌린지 올리기*/
 		for(let i=0; i<5; i++){
@@ -135,7 +134,9 @@ function latelyViewItemRender(){
 
 $(document).ready(function(){
 	
+	$("#open").on("click", function(){
 	initLatelyViewItemList()
+	});
 	
 });
 

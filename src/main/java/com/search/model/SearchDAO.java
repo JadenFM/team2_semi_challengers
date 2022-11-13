@@ -1,7 +1,6 @@
 package com.search.model;
 
 import java.awt.RadialGradientPaint;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.category.medel.CategoryDTO;
+import com.chall.controller.OjdbcUrl;
 import com.sun.jdi.connect.spi.TransportService.ListenKey;
 import com.sun.mail.handlers.image_gif;
 import com.user.model.UserDTO;
-import com.chall.controller.OjdbcUrl;
 
 public class SearchDAO {
 	Connection con = null;
@@ -75,10 +74,15 @@ public class SearchDAO {
 
 	// DB에 연결하여 challenge_category 테이블의 값을 가져올 수 있는지 테스트하는 메서드
 
-	public String getChallList() {
+	public String getChallList(int page) {
 		
 		String result = "";
 		String name = "";
+		String mem_img = "";
+		
+		int rowsize = 12;
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
 
 		List<UserDTO> list = new ArrayList<UserDTO>();
 
@@ -99,9 +103,13 @@ public class SearchDAO {
 				list.add(dto);
 			}
 
-			sql = "select * from challenge_list order by chall_num desc";
+			/* sql = "select * from challenge_list order by chall_num desc"; */
+			sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b) where rnum >= ? and rnum <= ?";
 
 			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, startNo);
+			pstmt.setInt(2, endNo);
 
 			rs = pstmt.executeQuery();
 
@@ -109,10 +117,17 @@ public class SearchDAO {
 
 			while (rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 
@@ -136,7 +151,9 @@ public class SearchDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				result += "</chall_list>";
 				 
 			}
@@ -151,12 +168,15 @@ public class SearchDAO {
 	}
 	
 	
-	public String getSearchKeyList(String keyword) {
+	public String getSearchKeyList(String keyword, int page) {
 		
-		System.out.println("KeyList 실행");
 		String result="";
 		String name = "";
-
+		String mem_img = "";
+		int rowsize = 12;
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
+		
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		List<KeywordDTO> listKey = new ArrayList<KeywordDTO>();
 		
@@ -185,7 +205,6 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				System.out.println("키워드 확인");
 				
 				KeywordDTO dto = new KeywordDTO();
 				
@@ -198,14 +217,15 @@ public class SearchDAO {
 			
 			
 			
-			sql = "select * from challenge_list where chall_title like ? or chall_keyword1 = ? or chall_keyword2 = ? or chall_keyword3 = ?";
-			
+			sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b  where chall_title like ? or chall_keyword1 = ? or chall_keyword2 = ? or chall_keyword3 = ?) where rnum >= ? and rnum <= ?";
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, "%" +keyword+ "%");
 			pstmt.setString(2, keyword);
 			pstmt.setString(3, keyword);
 			pstmt.setString(4, keyword);
+			pstmt.setInt(5, startNo);
+			pstmt.setInt(6, endNo);
 			
 			rs = pstmt.executeQuery();
 			
@@ -213,26 +233,17 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("chall_creater_num")) {
-						name = dto.getMem_name();
-					}
-				}
 				
 				for(int i=0; i<listKey.size(); i++) {
 					
-					System.out.println("키워드 비교");
 					KeywordDTO dto = listKey.get(i);
 					int count = dto.getKeyword_count();
 					if(dto.getKeyword_name().equals(rs.getString("chall_keyword1"))
 						|| dto.getKeyword_name().equals(rs.getString("chall_keyword2"))
 						|| dto.getKeyword_name().equals(rs.getString("chall_keyword3"))){
 						
-						System.out.println("if문 실행 완료>>> " +count);
 						count +=1;
 						
-						System.out.println("count+1 >>> " +count);
 						sql = "update challenge_keyword set keyword_count= ? where keyword_code = ?";
 						
 						pstmt = con.prepareStatement(sql);
@@ -241,6 +252,21 @@ public class SearchDAO {
 						pstmt.setString(2, dto.getKeyword_code());
 						
 						pstmt.executeUpdate();
+					}
+				}
+				
+				
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 				
@@ -264,9 +290,9 @@ public class SearchDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
-
-				
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				result += "</chall_list>";
 			}
 			result += "</chall_lists>";
@@ -283,9 +309,10 @@ public class SearchDAO {
 	
 	public String getSearchKeyList2(String keyword) {
 		
-		System.out.println("KeyList 실행");
 		String result="";
 		String name = "";
+		String mem_img = "";
+		
 		
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		
@@ -306,7 +333,7 @@ public class SearchDAO {
 				list.add(dto);
 			}
 			
-			sql = "select * from challenge_list where chall_title like ?";
+			sql = "select * from challenge_list where chall_title like ? or chall_keyword1 = ? or chall_keyword2 = ? or chall_keyword3 = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -318,10 +345,17 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("chall_creater_num")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 				
@@ -345,9 +379,9 @@ public class SearchDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
-				
-				
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				result += "</chall_list>";
 			}
 			result += "</chall_lists>";
@@ -362,11 +396,15 @@ public class SearchDAO {
 		return result;
 	}
 	
-	public String getSearchCateList(String category) {
+	public String getSearchCateList(String category, int page) {
 		
 		System.out.println("CateList 실행");
 		String result="";
 		String name = "";
+		String mem_img = "";
+		int rowsize = 12;
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
 		
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		
@@ -391,10 +429,13 @@ public class SearchDAO {
 			
 			
 			sql = "select * from challenge_list where chall_category_code_fk = ?";
+			sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b  where chall_category_code_fk = ?) where rnum >= ? and rnum <= ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, category);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
 			
 			rs = pstmt.executeQuery();
 			
@@ -402,10 +443,17 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("chall_creater_num")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 				
@@ -431,8 +479,9 @@ public class SearchDAO {
 				result += "<chall_keyword2>" +rs.getString("chall_keyword2")+ "</chall_keyword2>";
 				result += "<chall_keyword3>" +rs.getString("chall_keyword3")+ "</chall_keyword3>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
-				
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				
 				result += "</chall_list>";
 			}
@@ -448,15 +497,18 @@ public class SearchDAO {
 		return result;
 	}
 
-	public String getOptionList(String[] spOptionA, String[] spOptionB, String keyword) {
+	public String getOptionList(String[] spOptionA, String[] spOptionB, String keyword, int page) {
 
-		System.out.println("인자2개 옵션 메서드 실행");
 		String result = "";
 		String strA = "";
 		String strB = "";
 		int num = 0;
+		int rowsize = 12;
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
 		
 		String name = "";
+		String mem_img = "";
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		
 		try {
@@ -467,19 +519,23 @@ public class SearchDAO {
 				}
 				strA = strA.replaceAll(",$", "");
 				
-				System.out.println("strC >>> " +strA);
 			
 				for(int i=0; i<spOptionB.length-1; i++) {
 					strB += "?,";
 				}
 				strB = strB.replaceAll(",$", "");
 				
-				System.out.println("strD >>> " +strB);
 			
-				sql = "select * from challenge_list where " +spOptionA[spOptionA.length-1]+ " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and chall_title like ?";
+				/*
+				 * sql = "select * from challenge_list where " +spOptionA[spOptionA.length-1]+
+				 * " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+
+				 * ") and chall_title like ?";
+				 */
+				
+				sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b  where " +spOptionA[spOptionA.length-1]+  " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and chall_title like ?) where rnum >= ? and rnum <= ?";
+				
 				pstmt = con.prepareStatement(sql);
 				
-				System.out.println("sql >>> " +sql);
 				
 				for(int i=0; i<spOptionA.length-1; i++) {
 					num +=1;
@@ -489,13 +545,12 @@ public class SearchDAO {
 				
 				for(int i=0; i<spOptionB.length-1; i++) {
 					num +=1;
-					System.out.println("D num >>> " +num);
 					pstmt.setString(num, spOptionB[i]);
 				}
 				
-				System.out.println("총합 num >>>" +num);
 				pstmt.setString(num+1, "%" +keyword+ "%");
-				
+				pstmt.setInt(num+2, startNo);
+				pstmt.setInt(num+3, endNo);
 
 			
 			rs = pstmt.executeQuery();
@@ -504,10 +559,17 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("chall_creater_num")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 				
@@ -531,7 +593,9 @@ public class SearchDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				result += "</chall_list>";
 				
 			}
@@ -548,17 +612,21 @@ public class SearchDAO {
 
 
 
-	public String getOptionList(String[] spOption, String keyword) {
+	public String getOptionList(String[] spOption, String keyword, int page) {
 		System.out.println("======인자 1개 옵션메서드 실행=======");
 		
 		for (int i=0; i<spOption.length; i++) {
-			System.out.println("배열 >>> " +spOption[i]);
 		}
 		
 		String result = "";
 		String str = "";
 		
 		String name = "";
+		String mem_img = "";
+		int rowsize = 12;
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
+		
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		int num = 0;
 		
@@ -584,22 +652,25 @@ public class SearchDAO {
 			}
 			
 			str = str.replaceAll(",$", "");
-			System.out.println("? 갯수 >>> " +str);
-			System.out.println("마지막 값 >>> " +spOption[spOption.length-1]);
-
-			sql = "select * from challenge_list where " +spOption[spOption.length-1]+" in(" +str+ ") and chall_title like ?";
+			
+//			 sql = "select * from challenge_list where " +spOption[spOption.length-1]+" in(" +str+ ") and chall_title like ?";
+			 
+			
+			sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b  where " +spOption[spOption.length-1]+" in(" +str+ ") and chall_title like ?) where rnum >= ? and rnum <= ?";
+			
 			pstmt = con.prepareStatement(sql);
+			
+			
 			
 			for(int i=0; i<spOption.length-1; i++) {
 				num +=1;
-				System.out.println("num >>> " +num);
 				pstmt.setString(num, spOption[i]);
-				System.out.println("opton[i] >>>" +spOption[i]);
 			}
 			
 			pstmt.setString(num+1, "%" +keyword+ "%");
+			pstmt.setInt(num+2, startNo);
+			pstmt.setInt(num+3, endNo);
 			
-			System.out.println("sql >>> " +sql);
 			
 			rs = pstmt.executeQuery();
 			
@@ -607,10 +678,17 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("chall_creater_num")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 				
@@ -634,7 +712,9 @@ public class SearchDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				result += "</chall_list>";
 				
 			}
@@ -649,15 +729,20 @@ public class SearchDAO {
 		return result;
 	}
 
-	public String getOptionList(String[] spOptionA, String[] spOptionB, String[] spOptionC, String keyword) {
+	public String getOptionList(String[] spOptionA, String[] spOptionB, String[] spOptionC, String keyword, int page) {
 		
-		System.out.println("인자3개 옵션 메서드 실행");
 		String result = "";
 		String strA = "";
 		String strB = "";
 		String strC = "";
 		int num = 0;
 		String name = "";
+		String mem_img = "";
+		int rowsize = 12;
+		int startNo = (page * rowsize) - (rowsize - 1);
+		int endNo = (page * rowsize);
+		
+		
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		
 		try {
@@ -668,49 +753,49 @@ public class SearchDAO {
 				}
 				strA = strA.replaceAll(",$", "");
 				
-				System.out.println("strA >>> " +strA);
 			
 				for(int i=0; i<spOptionB.length-1; i++) {
 					strB += "?,";
 				}
 				strB = strB.replaceAll(",$", "");
 				
-				System.out.println("strB >>> " +strB);
 				
 				for(int i=0; i<spOptionC.length-1; i++) {
 					strC += "?,";
 				}
 				strC = strC.replaceAll(",$", "");
 				
-				System.out.println("strC >>> " +strC);
 			
-				sql = "select * from challenge_list where " +spOptionA[spOptionA.length-1]+ " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and "
-						+spOptionC[spOptionC.length-1]+ " in(" +strC+ ") " +"and chall_title like ?";
+				/*
+				 * sql = "select * from challenge_list where " +spOptionA[spOptionA.length-1]+
+				 * " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and "
+				 * +spOptionC[spOptionC.length-1]+ " in(" +strC+ ") " +"and chall_title like ?";
+				 */
+				
+				sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b  where " +spOptionA[spOptionA.length-1]+  " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and " +spOptionC[spOptionC.length-1]+ " in(" +strC+ ") " +"and chall_title like ?) where rnum >= ? and rnum <= ?";
+				
+				
 				pstmt = con.prepareStatement(sql);
 				
-				System.out.println("sql >>> " +sql);
 				
 				for(int i=0; i<spOptionA.length-1; i++) {
 					num +=1;
-					System.out.println("Anum >>> " +num);
 					pstmt.setString(num, spOptionA[i]);
 				}
 				
 				for(int i=0; i<spOptionB.length-1; i++) {
 					num +=1;
-					System.out.println("Bnum >>> " +num);
 					pstmt.setString(num, spOptionB[i]);
 				}
 				
 				for(int i=0; i<spOptionC.length-1; i++) {
 					num +=1;
-					System.out.println("Cnum >>> " +num);
 					pstmt.setString(num, spOptionC[i]);
 				}
 				
-				System.out.println("총합 num >>>" +num);
 				pstmt.setString(num+1, "%" +keyword+ "%");
-				
+				pstmt.setInt(num+2, startNo);
+				pstmt.setInt(num+3, endNo);
 
 			
 			rs = pstmt.executeQuery();
@@ -719,10 +804,17 @@ public class SearchDAO {
 			
 			while(rs.next()) {
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("chall_creater_num")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
 				
@@ -746,7 +838,9 @@ public class SearchDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
 				result += "</chall_list>";
 				
 			}

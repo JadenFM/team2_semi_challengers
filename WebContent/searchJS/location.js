@@ -167,6 +167,11 @@ $(document).ready(function(){
 		formSubmit_keyword(name);
 	});
 	
+/*	$(".keyword_form").on("click", function(){
+		let name=$(this).attr('data-value');
+		formSubmit_keyword(name);
+	});*/
+
 	/*인기 카테고리 클릭*/
 	$(document).on("click", ".form_category", function(){
 		let name = $(this).attr('data-value');
