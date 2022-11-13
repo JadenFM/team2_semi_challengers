@@ -106,14 +106,14 @@
 					<select class="chall_cycle" name="chall_cycle">
 						<option value="${content.chall_cycle }">${content.chall_cycle }</option>
 						<option value="평일 매일">평일 매일</option>
-						<option value="평일 매일">주말 매일</option>
-						<option value="평일 매일">주 1일</option>
-						<option value="평일 매일">주 2일</option>
-						<option value="평일 매일">주 3일</option>
-						<option value="평일 매일">주 4일</option>
-						<option value="평일 매일">주 5일</option>
-						<option value="평일 매일">주 6일</option>
-						<option value="평일 매일">기 타</option>
+						<option value="주말 매일">주말 매일</option>
+						<option value="주 1일">주 1일</option>
+						<option value="주 2일">주 2일</option>
+						<option value="주 3일">주 3일</option>
+						<option value="주 4일">주 4일</option>
+						<option value="주 5일">주 5일</option>
+						<option value="주 6일">주 6일</option>
+						<option value="기 타">기 타</option>
 					</select>
 				</div>
 				<div class="h_container1">
