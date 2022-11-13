@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.category.medel.CategoryDTO;
-import com.chall.controller.OjdbcUrl;
 import com.user.model.UserDTO;
+
 
 public class MainDAO {
 	Connection con = null;
@@ -29,14 +29,12 @@ public class MainDAO {
 		}
 		return instance;
 	}
-	
-	OjdbcUrl oju = new OjdbcUrl();
 
 // Connection을 가져오는 메서드
 	public void openConn() {
 
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = oju.getUrl();
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/download/Wallet_ProjectChallengers";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 
@@ -293,7 +291,8 @@ public class MainDAO {
 		
 		String result = "";
 		String name = "";
-
+		String mem_img = "";
+		
 		List<UserDTO> list = new ArrayList<UserDTO>();
 
 		
@@ -324,12 +323,20 @@ public class MainDAO {
 			
 			while(rs.next()){
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
-						name = dto.getMem_name();
+				if(rs.getInt("CHALL_CREATER_NUM") == 0) {
+					mem_img = "admin_logo.svg";
+					name = "공식 챌린지";
+				}else {
+					
+					for(int i=0; i<list.size(); i++) {
+						UserDTO dto = list.get(i);
+						if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
+							name = dto.getMem_name();
+							mem_img = dto.getMem_img();
+						}
 					}
 				}
+				
 				
 				result += "<chall_list>";
 				result += "<chall_open>" +rs.getString("chall_open") +"</chall_open>";
@@ -351,7 +358,10 @@ public class MainDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
 				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
+				result += "<chall_creater_img>" +mem_img+ "</chall_creater_img>";
+				
 				result += "</chall_list>";
 			}
 			
@@ -370,27 +380,9 @@ public class MainDAO {
 	public String getAdminChall() {
 		
 		String result = "";
-		String name = "";
-
-		List<UserDTO> list = new ArrayList<UserDTO>();
-
 		
 		try {
 			openConn();
-			
-			sql = "select * from user_member";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				UserDTO dto = new UserDTO();
-				
-				dto.setMem_num(rs.getInt("MEM_NUM"));
-				dto.setMem_name(rs.getString("mem_name"));
-				list.add(dto);
-			}
 			
 			sql = "select * from challenge_list where chall_open ='admin' and chall_status = '진행중' and rownum <= 4 order by chall_ongoingpeople desc";
 			
@@ -398,17 +390,11 @@ public class MainDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			result += "<chall_lists>";
-			
 			while(rs.next()){
 				
-				for(int i=0; i<list.size(); i++) {
-					UserDTO dto = list.get(i);
-					if(dto.getMem_num() == rs.getInt("CHALL_CREATER_NUM")) {
-						name = dto.getMem_name();
-					}
-				}
-				
+			
+			result += "<chall_lists>";
+			
 				result += "<chall_list>";
 				result += "<chall_open>" +rs.getString("chall_open") +"</chall_open>";
 				result += "<chall_num>" +rs.getInt("chall_num") +"</chall_num>";
@@ -429,11 +415,15 @@ public class MainDAO {
 				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
 				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
 				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
-				result += "<chall_creater_name>" +name+ "</chall_creater_name>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
+				result += "<chall_creater_name>공식 챌린지</chall_creater_name>";
+				result += "<chall_creater_img>admin_logo.svg</chall_creater_img>";
 				result += "</chall_list>";
+			
 			}
 			
 			result += "</chall_lists>";
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -445,8 +435,44 @@ public class MainDAO {
 		return result;
 	}
 
+	public String getOngoing() {
+		
+		
+		String result = "";
+		
+		try {
+			openConn();
+			
+			sql = "select sum(CHALL_ONGOINGPEOPLE) as ongoing from challenge_list";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				
+			
+			result += "<chall_lists>";
+			
+				result += "<chall_list>";
+				result += "<chall_ongoing>" +rs.getInt("ongoing") +"</chall_ongoing>";
+				result += "</chall_list>";
+			
+			}
+			
+			result += "</chall_lists>";
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+	}
 
 
+	
 
 
 }
