@@ -179,7 +179,7 @@
     				dataType:'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
     				data: {id:$("#idInput").val()},  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
     				success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
-    					count = res.doesEmailExist;
+    					count = res.count;
     					if(count===1){
     					$("#frm").submit();
     					}else{

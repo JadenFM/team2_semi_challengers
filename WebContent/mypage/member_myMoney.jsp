@@ -20,7 +20,7 @@
 			place-items: center;
 			width: 100%;
 			grid-template-columns: 1fr 3fr 1fr;
-			grid-template-rows: 100px 400px 100px;	
+			grid-template-rows: 100px 1fr 100px;	
 		}
 		
 		.ongoingChall_title {

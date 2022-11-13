@@ -35,7 +35,7 @@ public class CheckId extends HttpServlet {
 		
         Map<String, Integer> map = new HashMap<>();
         
-        map.put("doesEmailExist", count);
+        map.put("count", count);
         
         JSONObject jsonObj = new JSONObject(map);
 

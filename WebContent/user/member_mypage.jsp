@@ -76,12 +76,238 @@ function execDaumPostcode() {
 	    
 	}	// chageDomainSelect() 함수 end 
 	
-	// 셀렉트 박스에 해당 회원의 정보가 선택되어 있도록 하는 메소드.
+	// 셀렉트 박스에 해당 회원의 정보가 선택되어 있도록 하는 함수.
 	window.onload = function(){
 		// nationNo 셀렉트 박스에 value 값이 DB의 해당 사용자 nationNo인 옵션을 selected 시켜준다
 		$("#nationNo").val("${dto.nationNo}").prop("selected", true);
 	}
 
+	function previewFile1() { 
+        var preview = document.querySelector('#image_main'); 
+        var file = document.querySelector('#image_main_input').files[0]; 
+        var reader  = new FileReader(); 
+        reader.onloadend = function () { 
+              preview.src = reader.result; 
+       } 
+       if (file) { 
+             reader.readAsDataURL(file); 
+         } else { 
+             preview.src = ""; 
+      } 
+    }		
+
+
+	// 문서의 body 부분 읽고 제이쿼리 실행.
+	$(function(){
+
+		/* 필수 입력값 */
+		let pwdFlag = false;
+		let emailFlag = false;
+		let phoneFlag = false;
+
+		$(".error").hide();
+		
+		/* 공통 함수 start*/    	
+		// 에러메세지를 띄우는 함수
+		function showMsg(msgDiv,msg){
+	       	msgDiv.text(msg);
+	       	msgDiv.css('color','red');
+	       	msgDiv.show();
+		} 	
+		
+		// 에러메세지를 숨기는 함수
+		function hideMsg(msgDiv){
+	       	msgDiv.hide();     			
+		} 	
+	   	
+	   	// 유효성 에러 메세지 띄우는 함수.
+	    function showSuccessMsg(obj, msg) {
+	        obj.attr('class', 'error_next_box');	// 클래스 속성값 변경
+	        obj.css('color','green');
+	        obj.html(msg);
+	        obj.show();
+	    }
+	
+	    // 입력창 아래에 성공 메세지 띄우는 함수.
+	    function showSuccessMsg2(obj, msg) {
+	        obj.attr("class", "error_next_box green");
+	        obj.html(msg);
+	        obj.show();
+	    }	// showSuccessMsg() 함수 end
+		
+		/* 공통함수 end */
+		
+		
+		// 각 입력창 포커스가 사라질 때 필수값, 유효성 검사.
+	    $("#pwd1").blur(function(){
+	    	checkPwd1();
+	    });
+	    
+	    $("#pwd2").blur(function(){
+	    	checkPwd2();
+	    });
+	    
+	    $("#phone").blur(function(){
+	    	checkPhone();
+	    });
+	    
+		
+		// '비밀번호' 입력창 검사
+		function checkPwd1(){
+	    	let inputId = $("#pwd1");
+	    	let msgDiv = $("#pwdDiv1");
+	    	let msg = "필수입력입니다.";
+	    	let pwdReg = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/;
+	       	
+	   		if (inputId.val() == ""){	
+	   			showMsg(msgDiv,msg);
+	   		}else{
+	   			// 비밀번호 유효성 검사
+	   			if(!pwdReg.test(inputId.val())){
+	   				showMsg(msgDiv,"8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+	   			}else {
+	   				hideMsg(msgDiv);
+	   				showSuccessMsg(msgDiv, "멋진 비밀번호네요!");
+	   			}						
+			
+	    	return false;	   			
+	   		
+	   		}   				
+			
+		}	// checkPwd1() 함수 end
+
+		// '비밀번호 확인' 입력창 검사
+		function checkPwd2(){
+	    	let inputId = $("#pwd2");
+	    	let msgDiv = $("#pwdDiv2");
+	    	let msg = "필수입력입니다.";
+	    	
+	   		if (inputId.val() == ""){	
+	   			showMsg(msgDiv,msg);
+	   		}else{
+	   			// 비밀번호 일치 검사
+	   			if(inputId.val() !== $("#pwd1").val() ){
+	   				showMsg(msgDiv,"비밀번호가 일치하지 않습니다.")
+	   			}else {
+	   				hideMsg(msgDiv);
+	   				showSuccessMsg(msgDiv, "비밀번호가 일치합니다!");
+					pwdFlag = true;		// 비밀번호 유효성 검사 통과
+	   			}  
+	   			
+	   			return false;
+			}			
+		}	// checkPwd2() 함수 end
+		
+		
+		// '본인 확인 이메일' 입력창 검사
+		// '본인 인증 번호 전송' 버튼 클릭 시 함수
+		$("#authNoSend_btn").click(function(){
+			
+			let inputEmail =  $("#email_id").val()+"@"+$("#email_domain").val(); 
+			let emailData = { "mem_email" : inputEmail};	
+			let msgDiv = $("#emailDiv");
+			
+			// 이메일 입력창 널값 체크
+			if($("#email_id").val()!=="" && $("#email_domain").val()!=="" ){
+				
+				// 이메일 중복 확인
+				$.ajax({
+					type: 'POST',  // http 요청 방식 (default: ‘GET’)
+					async : false ,
+					url: '<%=request.getContextPath()%>/joinCheckEmail.do',	
+					// 요청이 전송될 URL 주소, 서블릿으로 보내기
+					dataType:'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
+					data: emailData ,  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
+					success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
+						
+						// 입력받은 이메일이 DB 회원 테이블에 존재하면 1, 존재하지 않으면 0
+						if(res.count===1){
+							showMsg(msgDiv,"이미 존재하는 이메일 계정 입니다.");	
+						}else{	//  존재하지 않으면 입력한 이메일 본인확인 계속 진행.
+							
+							// 본인 인증
+							$.ajax({
+								type: 'POST',  // http 요청 방식 (default: ‘GET’)
+								async : false ,
+								url: '<%=request.getContextPath()%>/sendEmailAuthNo.do',	// 요청이 전송될 URL 주소
+								dataType: 'json',  // 응답 데이터 형식 (명시하지 않을 경우 자동으로 추측)
+								data: emailData ,  // 요청 시 포함되어질 데이터.(아이디를 서버로 전송)
+								success: function(res){	// 정상적으로 응답 받았을 경우에는 success 콜백이 호출.
+									// 메일로 인증번호를 보내고 보낸 인증번호를 응답받음.
+									alert('입력하신 이메일 주소로 인증번호를 전송했습니다.\n인증번호를 확인해주세요.');
+									let authNum = res.authNum;
+									//alert('응답받은 인증번호'+authNum);
+									
+										// '인증번호 확인' 버튼 클릭 시 함수
+										$("#authNoCheck_btn").click(function(){
+											
+											if(authNum == $("#authNoCheckInput").val() ){	//이메일로 전송한 인증번호와 입력한 인증번호가 일치하는 경우.
+												alert('인증이 완료되었습니다.');
+								   				hideMsg(msgDiv);
+												emailFlag = true;	// 이메일 유효성 검사 통과
+											}else{
+												alert('인증번호가 일치하지 않습니다.');
+											}
+											
+										});	// '인증번호 확인' 버튼 클릭 시 함수 end				
+									
+								},
+								error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
+									alert('ajax 응답 오류');
+								}
+							});	// 본인 인증 $.ajax() end												
+						}
+					},
+					error: function(res){ // 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없을 때 error 콜백이 호출.
+						alert('ajax 응답 오류');
+					}
+				});	// 이메일 중복 확인 $.ajax() end			
+				
+				
+			} else{	// 이메일 입력창 널값인 경우
+				alert('이메일을 입력해 주세요.');
+			}
+
+		});	// '본인 인증 번호 전송' 버튼 클릭 시 함수 end		
+		
+		// '휴대전화' 입력창 검사
+		function checkPhone(){
+			
+	    	let inputId = $("#phone");
+	    	let msgDiv = $("#phoneDiv");
+	    	let msg = "필수입력입니다.";
+	    	let phoneReg = /^[0-9]{8,11}$/;
+	       	
+	   		if (inputId.val() == ""){	
+	   			showMsg(msgDiv,msg);
+	   		}else{
+	   			// 생년월일 유효성 검사
+	   			if(!phoneReg.test(inputId.val())){
+	   				showMsg(msgDiv,"-없이 숫자만 입력해주세요. ex)01012345678")
+	   			}else {
+	   				hideMsg(msgDiv);
+	   				phoneFlag = true;	// 휴대전화 유효성 검사 통과
+	   			}						
+			
+	    	return false;	   			
+	   		
+	   		}   												
+		}	//	checkPhone() 함수 end
+		
+		$("#btn_update").click(function(){
+			checkPhone();
+			if(pwdFlag&&emailFlag&&phoneFlag){
+				console.log("최종 체크"+pwdFlag,emailFlag,phoneFlag);
+				$("#frm").submit();
+			}else{
+				console.log("최종 체크"+pwdFlag,emailFlag,phoneFlag);
+				alert('모든 필수 입력 정보를 정확히 입력해 주세요.');
+			}
+		});
+		
+		 
+	});
+	
 
 </script>
 
@@ -98,7 +324,7 @@ function execDaumPostcode() {
 		display: grid;
 		place-items: center;
 		grid-template-columns: 1fr 3fr 1fr;
-		grid-template-rows: 80px 150px 100px 1400px 100px;
+		grid-template-rows: 80px 150px 100px 1fr 100px;
 	}
 	
 	/* 마이페이지 공통 CSS */
@@ -226,6 +452,19 @@ function execDaumPostcode() {
 		border-radius: 5px;
 	}
 	
+	.authNo_btn{
+		margin-top: 10px;
+		width: 459.78px;
+		height: 50px;	
+		border: 0;
+		color: white;
+		font-size: 13px;
+		font-weight: bold;
+		background-color: #ff4d54;
+		border-radius: 5px;
+		cursor: pointer;	
+	}
+	
 	.btn_update {
 		width: 460px;
 		height: 50px;	
@@ -240,9 +479,6 @@ function execDaumPostcode() {
 
 </style>
 
-<%
-	int member_no = Integer.parseInt(request.getParameter("no"));
-%>
 
 </head>
 <body>
@@ -271,38 +507,60 @@ function execDaumPostcode() {
 			</div>
 				
 			<section class="my_article">
-				<form class="info_form" method="post" action="<%=request.getContextPath() %>/member_update_ok.do">
+				<form id="frm" enctype="multipart/form-data" class="info_form" method="post" action="<%=request.getContextPath() %>/member_myInfoUpdateOk.do">
 						
 						<!-- 아이디 입력 -->
 						<div class="info_id">		
 							<h3 class="info_title">아이디</h3>
-							<input class="input_box" type="text" name="id" value="${dto.mem_id}" readonly>
+							<input class="input_box" type="text" name="id" id="id" value="${dto.mem_id}" readonly>
+							<div class="error" id="idDiv"></div>
 						</div>
 						
 						<!-- 비밀번호 입력 -->
 						<div class="info_pwd">						
 							<h3 class="info_title">비밀번호</h3>
-							<input class="input_box" type="password" name="pwd" id="pwd">
+							
+							<input class="input_box" type="password" name="pwd" id="pwd1">
+							<div class="error" id="pwdDiv1"></div>
+							
 							<h3 class="info_title">비밀번호 확인</h3>
-							<input class="input_box" type="password" id="pwd2">
+							<input class="input_box" type="password" name="pwd2" id="pwd2">
+							<div class="error" id="pwdDiv2"></div>
 						</div>	
 						
 						<!-- 이름 입력 -->
-						<div class="join_name">
+						<div class="info_name">
 							<h3 class="info_title">이름</h3>
-							<input class="input_box" type="text" name="name" id="name" value="${dto.mem_name}">
+							<input class="input_box" type="text" name="name" id="name" value="${dto.mem_name}" readonly>
+							<div class="error" id="nameDiv"></div>
+						</div>
+					
+						
+						
+						<!-- 프로필 이미지 등록 -->
+						<div class="info_img">
+							<h3 class="info_title">프로필 이미지</h3>
+							
+						<input type='text' name="main_img" id='main_img' style='display: none;'> 
+						
+         				<img id="image_main" src='<%=request.getContextPath()%>/memUpload/${dto.mem_img}' height="200" width="200" border="2" onclick='document.all.mainImgFile.click(); document.all.main_img.value=document.all.mainImgFile.value' class="rounded mx-auto d-block">
+         				
+         				<input type="file" name="mainImgFile" id="image_main_input" accept="image/jpg, image/jpeg, image/png, image/gif" onchange="previewFile1()" style='display: none;'>
+              			<br>
+              			<span>업로드 가능한 확장자 : .jpg / .jpeg / .png / .gif</span>
 						</div>
 						
 						<!-- 생년월일 입력 -->
 						<div class="info_birth">
 							<h3 class="info_title">생년월일</h3>
-							<input class="input_box" type="text" name="birth" id="birth" value="${dto.mem_birth}" placeholder="  8자리로 입력해주세요.  ex)19960319">
+							<input class="input_box" type="text" name="birth" id="birth" value="${dto.mem_birth}" readonly>
+							<div class="error" id="birthDiv"></div>
 						</div>
 						
 						<!-- 성별 입력 -->
 						<div class="info_gender">
 							<h3 class="info_title">성별</h3>
-														
+							
 							<c:if test="${dto.mem_gender eq 'none' }">
 							<select class="input_select" name="gender" id="gender">
 								<option value="none" selected>--성별--</option>
@@ -326,29 +584,33 @@ function execDaumPostcode() {
 								<option value="F" selected>여자</option>
 							</select>
 							</c:if>
-							
 						</div>
 						
+					
 						<!-- 이메일 입력 -->
 						<div class="info_email">
-							<h3 class="info_title">이메일</h3>
-								<input class="input_box_email1" type="text" id="email_id" name="email_id" value="${dto.emailId}"> @ 
-								<input class="input_box_email1" type="text" id="email_domain" name="email_domain" value="${dto.emailDomain }">								
-								<select class="input_box_email1" id="input_domain" onchange="chageDomainSelect()">
-										<option >--선택--</option>
-										<option value="naver.com">naver.com</option>
-										<option value="gmail.com">gmail.com</option>
-										<option value="hanmail.net">hanmail.net</option>
-										<option value="yahoo.com">yahoo.com</option>
-										<option value="nate.com">nate.com</option>
-										<option value="">직접입력</option>
-								</select>
+							<h3 class="info_title">본인 확인 이메일</h3>
+							<input class="input_box_email1" type="text" id="email_id" name="email_id" value="${dto.emailId}"> @ 								
+							<input class="input_box_email1" type="text" id="email_domain" name="email_domain" value="${dto.emailDomain }">
+							<select class="input_box_email1" id="input_domain" onchange="chageDomainSelect()" >
+									<option >--선택--</option>
+									<option value="naver.com">naver.com</option>
+									<option value="gmail.com">gmail.com</option>
+									<option value="hanmail.net">hanmail.net</option>
+									<option value="yahoo.com">yahoo.com</option>
+									<option value="nate.com">nate.com</option>
+									<option value="">직접입력</option>
+							</select>
+							<input type="button" id="authNoSend_btn" class="authNo_btn" value="본인 인증 번호 전송">	
+					  		<input class="input_box_1" id="authNoCheckInput" type="text" required />
+			  				<input type="button" id="authNoCheck_btn" class="btn_mini" value="인증번호 확인">	
+							<div class="error" id="emailDiv"></div>
 						</div>
 						
 		                <!-- 휴대전화 번호, 인증번호 입력 -->
 		                <div class="info_mobile">
 	                    	<h3 class="info_title">휴대전화</h3>
-	                        <select class="input_select" id="nationNo" name="nationNo" >
+	                        <select class="input_select" id="nationNo" name="nationNo">
 		                                        <option value="233" >
 		                                            가나 +233
 		                                        </option>
@@ -424,7 +686,7 @@ function execDaumPostcode() {
 		                                        <option value="505" >
 		                                            니카라과 +505
 		                                        </option>
-		                                        <option value="82">
+		                                        <option value="82" selected>
 		                                            대한민국 +82
 		                                        </option>
 		                                        <option value="45" >
@@ -993,23 +1255,26 @@ function execDaumPostcode() {
 		                                        </option>
 		                        </select>
 
-							<input class="input_box" type="tel" id="phoneNo" name="phoneNo" value="${dto.phoneNo }" placeholder="-없이 입력해주세요." maxlength="16">
+							<input class="input_box" type="text" id="phone" name="phoneNo" value="${dto.phoneNo }"  placeholder="-없이 입력해주세요." maxlength="16">
+		                	<div class="error" id="phoneDiv"></div>
 		                </div>
 	                    
 	                    <!-- 주소 입력 -->
 	                    <div class="info_addr">
 	                    	<h3 class="info_title">주소</h3>
-								<input class="input_box_1" type="text" id="postcode" name="postcode" placeholder="우편번호" value="${dto.postcode }">
+								<input class="input_box_1" type="text" id="postcode" name="postcode" value="${dto.postcode }" placeholder="우편번호">
 								<input class="btn_mini" type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
 								<input class="input_box_addr" type="text" id="roadAddress" name="roadAddress" placeholder="도로명주소" value="${dto.roadAddress }">
 								<input class="input_box_addr" type="text" id="jibunAddress" name="jibunAddress" placeholder="지번주소" value="${dto.jibunAddress }">
 								<input class="input_box_addr" type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" value="${dto.detailAddress }">
-								<input class="input_box_addr" type="text" id="extraAddress"name="extraAddress" placeholder="참고항목" value="${dto.extraAddress }">	                    
+								<input class="input_box_addr" type="text" id="extraAddress"name="extraAddress" placeholder="참고항목"  value="${dto.extraAddress }">	                    
+	                   			<div class="error" id="addrDiv"></div>
 	                    </div>
 	                    <br>
 	                    <br>
-	                    	<input type="submit" class="btn_update" value="수정하기">
+	                    	<input type="button" id="btn_update" class="btn_update" value="수정하기" >
 				</form>
+
 			</section >	
 		</article>
 	</div>

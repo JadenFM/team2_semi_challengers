@@ -36,7 +36,7 @@ public class FindPwdEmailAuth extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 비밀번호 찾기 페이지2(member_fidPwd_2.jsp) 폼페이지에서 ajax로 넘어온 이메일로 
+		// 회원가입 페이지와 비밀번호 찾기 페이지2(member_fidPwd_2.jsp) 폼페이지에서 ajax로 넘어온 이메일로 
 		// 인증번호를 보내는 비즈니스 로직.
 		String mem_email = request.getParameter("mem_email").trim();
 		
@@ -50,7 +50,7 @@ public class FindPwdEmailAuth extends HttpServlet {
 		String host = "http://localhost:8282/Semi_Challengers/";
 		String from = "coya0319@gmail.com";	// 보내는 구글 이메일 계정
 		String to = mem_email;	// 받는 이메일 계정
-		String subject = "챌린저스 비밀번호 찾기 인증 번호입니다.";	// 메일 제목
+		String subject = "챌린저스 본인 인증 번호입니다.";	// 메일 제목
 		String content = "홈페이지를 방문해주셔서 감사합니다." +
 	                	"<br><br>" + 
 	                	"인증 번호는 [" + authNum + "] 입니다." + 

@@ -15,7 +15,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.chall.model.ChallProofDAO;
 import com.user.model.UserDTO;
 
-import jdk.nashorn.internal.runtime.doubleconv.DtoaBuffer;
 
 public class ChallContent implements Action {
 
