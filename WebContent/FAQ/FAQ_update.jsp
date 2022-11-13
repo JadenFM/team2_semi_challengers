@@ -6,6 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+
+function category_check(){
+	console.log($(".category_name").val());
+	if($(".category_name").val() == ":::카테고리 선택:::"){
+		alert("서브 카테고리를 선택해 주십시오.");
+	}else{
+		$("form").submit();
+	}
+}
+
+</script>
 <style type="text/css">
 
 .all_container{
@@ -136,12 +149,12 @@ img {
 				<div class="header2"></div>
 				<div class="h_container_cont">
 					<h2>내 용</h2>
-					<textarea class="cont" rows="20" cols="100" name="faq_content">${dto.faq_content }"></textarea>
+					<textarea class="cont" rows="20" cols="100" name="faq_content">${dto.faq_content }</textarea>
 				</div>
 				<br>
 				<br>
 				<div class="btn">
-				<input type="submit" value="수정하기">
+				<input type="button" value="수정하기" onclick="category_check()">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath() %>/FAQ_delete.do?faq_num=${dto.faq_num }&page=${param.page }'">
 			</div>

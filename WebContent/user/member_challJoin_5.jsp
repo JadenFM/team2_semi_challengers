@@ -117,8 +117,12 @@
 </style>
 </head>
 <body>
-   <jsp:include page="/include/chall_top.jsp" />
-   
+   <c:if test="${open=='admin'}">
+		<jsp:include page="/include/admin_top.jsp" />
+	</c:if>
+	<c:if test="${open!='admin'}">
+   		<jsp:include page="/include/chall_top.jsp" />
+   </c:if>
 		<div align="center">
 			<br>
 			<h3><b>이제 다 왔어요! 사람들이 쉽게 찾을 수 있게 완성해주세요!</b></h3>

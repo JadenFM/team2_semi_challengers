@@ -90,15 +90,6 @@
 					<div class="h_container1">
 						<h2>내 용</h2>
 						<textarea class="report_cont" rows="20" cols="100" readonly>${content.report_content }</textarea>
-					<h2>정지일</h2>
-					<select class="report_result" name="report_result">
-						<option value="">:::선택:::</option>
-						<option value="3">3일</option>
-						<option value="5">5일</option>
-						<option value="15">15일</option>
-						<option value="30">30일</option>
-						<option value="365">365일</option>
-					</select>
 					</div>
 					<c:if test="${!empty content.report_image }">
 						<div class="h_container1">
@@ -108,8 +99,6 @@
 				</div>
 				<br><br><br><br><br>
 			<div class="btn">
-					<input type="submit" value="정지">
-					&nbsp;&nbsp;&nbsp;
 					<c:if test="${!empty content.mem_id_reported }">
 						<input type="button" value="회원삭제" onclick="location.href='<%=request.getContextPath()%>/delete_member.do?mem_id_reported=${content.mem_id_reported }'">			
 					</c:if>

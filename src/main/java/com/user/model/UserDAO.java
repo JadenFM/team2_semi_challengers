@@ -795,4 +795,21 @@ public class UserDAO {
 			closeConn(rs, pstmt, con);
 		}
 	}	// updateXp() end
+
+	public int DeleteMember(String mem_id, String mem_name) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "delete from user_member where mem_id = ? or mem_name = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_id);
+			pstmt.setString(2, mem_name);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}
 }

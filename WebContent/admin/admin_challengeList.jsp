@@ -106,10 +106,18 @@
 		      <a class="page-link" 
 		      		href="challenge_control.do?page=1">First</a>
 		    </li>
+		    <c:if test="${page == 1 }">
+		    <li>
+		      <a class="page-link" 
+		      		href="challenge_control.do?page=1">Previous</a>
+		    </li>
+		    </c:if>
+		    <c:if test="${page != 1 }">
 		    <li>
 		      <a class="page-link" 
 		      		href="challenge_control.do?page=${page - 1 }">Previous</a>
 		    </li>
+		    </c:if>
 		    <c:forEach begin="${startBlock }"
 	       				end="${lastBlock }" var="i">
 		      

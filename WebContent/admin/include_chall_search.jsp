@@ -35,7 +35,11 @@ function pagination(page){
 			$(data).find("search").each(function(){
 				table += "<div class='alll'>";
 				table += "<a class='block' href='<%=request.getContextPath()%>/challenge_modify.do?chall_num=" + $(this).find("chall_num").text() + "&chall_category=선택&page=1'>";
-				table += "<img src='<%=request.getContextPath() %>/uploadFile/" +$(this).find("chall_mainimage").text()+ "' width='64' height='54'><br><br>";
+				if($(this).find("chall_mainimage").text() == "null"){
+					table += "<img src='<%=request.getContextPath() %>/uploadFile/main.jpg ' width='64' height='54'><br><br>";
+				}else{
+					table += "<img src='<%=request.getContextPath() %>/uploadFile/" +$(this).find("chall_mainimage").text()+ "' width='64' height='54'><br><br>";
+				}
 				table += "<h2>" + $(this).find("chall_title").text() +"</h2> <br> <span class='tkdtpqhrl'> 상세보기 + </span> </a></div>";
 			})
 			table += "</div></div><br><br><br><br>";

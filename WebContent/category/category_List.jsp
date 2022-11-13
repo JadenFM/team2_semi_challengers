@@ -281,9 +281,6 @@ img {
 				</li>
 			</ul>
 		</div><br>
-		<div class="btn">
-			<input type="button" name="btn1" value="카테고리 추가" onclick="location.href='<%=request.getContextPath()%>/category/create_category.jsp'">
-		</div>
 	<jsp:include page="../include/chall_bottom.jsp"/>
 </body>
 

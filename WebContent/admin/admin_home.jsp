@@ -121,7 +121,7 @@
 					<a class="block" href="<%=request.getContextPath() %>/FAQ_control.do">
 						<br><br><br>
 						<img src="<%=request.getContextPath()%>/uploadFile/admin/공지사항관리_image.png" width="64" height="54">
-						<h2>공지사항 관리</h2>
+						<h2>자주 하는 질문</h2>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 				</div>

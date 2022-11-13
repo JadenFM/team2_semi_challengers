@@ -105,6 +105,15 @@
 					<h2>챌린지 사이클</h2>
 					<select class="chall_cycle" name="chall_cycle">
 						<option value="${content.chall_cycle }">${content.chall_cycle }</option>
+						<option value="평일 매일">평일 매일</option>
+						<option value="평일 매일">주말 매일</option>
+						<option value="평일 매일">주 1일</option>
+						<option value="평일 매일">주 2일</option>
+						<option value="평일 매일">주 3일</option>
+						<option value="평일 매일">주 4일</option>
+						<option value="평일 매일">주 5일</option>
+						<option value="평일 매일">주 6일</option>
+						<option value="평일 매일">기 타</option>
 					</select>
 				</div>
 				<div class="h_container1">
@@ -122,7 +131,7 @@
 				<br><br>
 				<div class="h_container1">
 					<h2>내 용</h2>
-					<textarea class="chall_cont" rows="20" cols="100" name="chall_cont">${content.chall_cont }"></textarea>
+					<textarea class="chall_cont" rows="20" cols="100" name="chall_cont">${content.chall_cont }</textarea>
 					<h2>예치금</h2>
 					<input class="chall_depositdefault" name="chall_depositdefault" value="${content.chall_depositdefault }">
 				</div>
