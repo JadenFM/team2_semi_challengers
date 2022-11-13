@@ -287,7 +287,7 @@ img {
 		<div class="header2">
 			<div class="h_bottom">
 				<ul class="list">
-					<a href="#"><li id="1"><b>전체<b>
+					<a href="FAQ_control.do"><li id="1"><b>전체<b>
 									<div class="h_underline"></div></li></a>
 					<a href="#"><li id="2"><b>인증<b>
 									<div class="h_underline"></div></li></a>

@@ -123,13 +123,13 @@
 				<c:if test="${page == 1 }">
 		    <li>
 		      <a class="page-link" 
-		      		href="life_list.do?page=1&chall_category=C003">Previous</a>
+		      		href="life_list.do?page=1&category_code=C003">Previous</a>
 		    </li>
 		    </c:if>
 		    <c:if test="${page != 1 }">
 		    <li>
 		      <a class="page-link" 
-		      		href="life_list.do?page=${page - 1 }&chall_category=C003">Previous</a>
+		      		href="life_list.do?page=${page - 1 }&category_code=C003">Previous</a>
 		    </li>
 		    </c:if>
 				<c:forEach begin="${startBlock }" end="${lastBlock }" var="i">

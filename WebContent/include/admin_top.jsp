@@ -69,7 +69,7 @@
 	}
 	
 	.top{
-		width: 420px;
+		width: 450px;
 		display: grid;
 		grid-template-columns: 1fr 2fr 1fr;
 		grid-template-rows: 50px;
@@ -208,7 +208,7 @@
 		
 		<header class="head">
 		
-			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/challengers_manager_logo.png"> </a>
+			<a  href="<%=request.getContextPath() %>/admin/admin_home.jsp"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/challengers_manager_logo.png"> </a>
 			
 		</header>
 			<c:set var="dto" value="${admin_name }" />
@@ -226,7 +226,7 @@
 				<li class="menu_li_1"><a href="<%=request.getContextPath()%>/admin/admin_home.jsp">관리자 홈</a></li>
 				<li class="menu_li_2"><a href="<%=request.getContextPath()%>/admin_control.do">회원 신고 관리</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/category_control.do">카테고리 관리</a></li>
-				<li class="menu_li_4"><a href="<%=request.getContextPath() %>/FAQ_control.do">공지사항 관리</a></li>
+				<li class="menu_li_4"><a href="<%=request.getContextPath() %>/FAQ_control.do">자주 하는 질문</a></li>
 				<li class="menu_li_5"><a href="<%=request.getContextPath() %>/category_question.do">1:1문의 관리</a></li>
 			</ul>
 		</nav>

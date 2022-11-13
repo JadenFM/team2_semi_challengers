@@ -23,7 +23,7 @@ public class AdminLogoutAction implements Action {
 		ActionForward forward = new ActionForward();
 		PrintWriter out = response.getWriter();
 		forward.setRedirect(true);
-		forward.setPath("main_logout.do");
+		forward.setPath("main.do");
 		return forward;
 	}
 
