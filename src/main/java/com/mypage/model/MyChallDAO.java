@@ -363,7 +363,7 @@ public class MyChallDAO {
 	
 		MoneyLogDTO dto = null;
 		
-		List<MoneyLogDTO> list = null;
+		List<MoneyLogDTO> list = new ArrayList<MoneyLogDTO>();
 		
 		try {
 			openConn();
@@ -377,8 +377,6 @@ public class MyChallDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				
-				list = new ArrayList<MoneyLogDTO>();
 				
 				dto = new MoneyLogDTO();
 				dto.setLog_date(rs.getString("log_date"));

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.user.model.UserDAO;
 import com.user.model.UserDTO;
 
@@ -17,22 +19,39 @@ public class MemberJoinOkAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, Exception {
+		
+		
+		String saveFolder = "C:\\Users\\user\\git\\team2_semi_challengers\\WebContent\\memUpload";
+		int fileSize = 10 * 1024 * 1024; // 10MB
+
+		MultipartRequest multi = new MultipartRequest(
+				request,						// 일반적인 request 객체
+				saveFolder,						// 첨부파일이 저장될 경로
+				fileSize,						// 업로드할 첨부파일의 최대 크기
+				"utf-8",						// 문자 인코딩 방식
+				new DefaultFileRenamePolicy()	// 파일의 이름이 같은 경우 중복이 안되게 설정
+				);
+		
+		
 		// 회원가입 폼 페이지에서 넘어온 정보를 DB에 추가하고 로그인 페이지로 이동하는 비즈니스 로직.
-		String member_id = request.getParameter("id").trim();
-		String member_pwd = request.getParameter("pwd").trim();
-		String member_name = request.getParameter("name").trim();
-		String member_img = request.getParameter("main_img").trim();
-		String member_birth = request.getParameter("birth").trim();
-		String member_gender = request.getParameter("gender").trim();
-		String emailId = request.getParameter("email_id").trim();
-		String emailDomain = request.getParameter("email_domain").trim();
-		String nationNo = request.getParameter("nationNo").trim();
-		String phoneNo = request.getParameter("phoneNo").trim();
-		int postcode = Integer.parseInt(request.getParameter("postcode").trim());	// 우편번호
-		String roadAddress = request.getParameter("roadAddress").trim();		// 도로명주소
-		String jibunAddress = request.getParameter("jibunAddress").trim();	// 지번주소
-		String detailAddress = request.getParameter("detailAddress").trim();	// 상세주소
-		String extraAddress = request.getParameter("extraAddress").trim(); 	// 주소 참고항목(대략적인 분류)
+		String member_id = multi.getParameter("id").trim();
+		String member_pwd = multi.getParameter("pwd").trim();
+		String member_pwd2 = multi.getParameter("pwd2").trim();	// 필요 없는 값...
+		String member_name = multi.getParameter("name").trim();
+		//String member_img = multi.getParameter("main_img").trim();
+		String member_birth = multi.getParameter("birth").trim();
+		String member_gender = multi.getParameter("gender").trim();
+		String emailId = multi.getParameter("email_id").trim();
+		String emailDomain = multi.getParameter("email_domain").trim();
+		String nationNo = multi.getParameter("nationNo").trim();
+		String phoneNo = multi.getParameter("phoneNo").trim();
+		int postcode = Integer.parseInt(multi.getParameter("postcode").trim());	// 우편번호
+		String roadAddress = multi.getParameter("roadAddress").trim();		// 도로명주소
+		String jibunAddress = multi.getParameter("jibunAddress").trim();	// 지번주소
+		String detailAddress = multi.getParameter("detailAddress").trim();	// 상세주소
+		String extraAddress = multi.getParameter("extraAddress").trim(); 	// 주소 참고항목(대략적인 분류)
+		
+		String memberImgFile = multi.getFilesystemName("mainImgFile");
 		
 		// 주소 합치기 : [우편번호] 도로명주소/지번주소/상세주소/참고항목(동)
 		String  member_addr = "["+postcode+"]"+roadAddress+"/"+jibunAddress+"/"+detailAddress+"/"+extraAddress;
@@ -61,7 +80,7 @@ public class MemberJoinOkAction implements Action {
 		dto.setMem_id(member_id);
 		dto.setMem_pwd(member_pwd);
 		dto.setMem_name(member_name);
-		dto.setMem_img(member_img);
+		//dto.setMem_img(member_img);
 		dto.setMem_birth(member_birth);
 		dto.setMem_gender(member_gender);
 		dto.setMem_age(member_age);
@@ -80,6 +99,7 @@ public class MemberJoinOkAction implements Action {
 		dto.setJibunAddress(jibunAddress);
 		dto.setDetailAddress(detailAddress);
 		dto.setExtraAddress(extraAddress);
+		dto.setMem_img(memberImgFile);
 		
 		UserDAO dao = UserDAO.getinstance();
 		

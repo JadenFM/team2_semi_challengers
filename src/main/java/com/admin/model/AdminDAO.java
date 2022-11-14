@@ -101,8 +101,6 @@ public class AdminDAO {
 				dto.setAdmin_id(rs.getString("admin_id"));
 				dto.setAdmin_pwd(rs.getString("admin_pwd"));
 				dto.setAdmin_name(rs.getString("admin_name"));
-				dto.setAdmin_age(rs.getInt("admin_age"));
-				dto.setAdmin_addr(rs.getString("admin_addr"));
 				dto.setAdmin_phone(rs.getString("admin_phone"));
 				dto.setAdmin_regdate(rs.getString("admin_regdate"));
 				dto.setAdmin_email(rs.getString("admin_email"));
@@ -124,16 +122,14 @@ public class AdminDAO {
 			if(rs.next()) {
 				count = rs.getInt(1)+1;
 			}
-			sql = "insert into admin_member values(?,?,?,?,?,?,?,sysdate,?)";
+			sql = "insert into admin_member values(?,?,?,?,?,sysdate,?)";
 			st = con.prepareStatement(sql);
 			st.setInt(1,count);
 			st.setString(2,dto.getAdmin_id());
 			st.setString(3,dto.getAdmin_pwd());
 			st.setString(4,dto.getAdmin_name());
-			st.setInt(5,dto.getAdmin_age());
-			st.setString(6,dto.getAdmin_addr());
-			st.setString(7,dto.getAdmin_phone());
-			st.setString(8,dto.getAdmin_email());
+			st.setString(5,dto.getAdmin_phone());
+			st.setString(6,dto.getAdmin_email());
 			result = st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,8 +151,6 @@ public class AdminDAO {
 				dto.setAdmin_id(rs.getString("admin_id"));
 				dto.setAdmin_pwd(rs.getString("admin_pwd"));
 				dto.setAdmin_name(rs.getString("admin_name"));
-				dto.setAdmin_age(rs.getInt("admin_age"));
-				dto.setAdmin_addr(rs.getString("admin_addr"));
 				dto.setAdmin_phone(rs.getString("admin_phone"));
 				dto.setAdmin_regdate(rs.getString("admin_regdate"));
 				dto.setAdmin_email(rs.getString("admin_email"));
@@ -183,8 +177,6 @@ public class AdminDAO {
 				dto.setAdmin_id(rs.getString("admin_id"));
 				dto.setAdmin_pwd(rs.getString("admin_pwd"));
 				dto.setAdmin_name(rs.getString("admin_name"));
-				dto.setAdmin_age(rs.getInt("admin_age"));
-				dto.setAdmin_addr(rs.getString("admin_addr"));
 				dto.setAdmin_phone(rs.getString("admin_phone"));
 				dto.setAdmin_regdate(rs.getString("admin_regdate"));
 				dto.setAdmin_email(rs.getString("admin_email"));
@@ -419,6 +411,24 @@ public class AdminDAO {
 			st.setString(2,mem_id);
 			result = st.executeUpdate();
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public int joinCheckId(String id) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from admin_member where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

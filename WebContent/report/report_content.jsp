@@ -14,13 +14,10 @@
 .header {
 	height: 100%;
 	padding: 60px 0px 30px;
-}
-.h_container {
-	margin-left: 120px;
+		margin-left: 30%;
 }
 .h_container1{
-	margin-top: 100px;
-	margin-left: 120px;
+	margin-top: 10%;
 }
 
 .report_title , .mem_id_report , .mem_id_reported , .mem_name_reported , .report_cause , .report_result{
@@ -36,12 +33,9 @@
 	border-radius: 7px;
 }
 
-.btn {
-	margin-left: 230px;
-}
+
 
 .btn input {
-	
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -96,15 +90,6 @@
 					<div class="h_container1">
 						<h2>내 용</h2>
 						<textarea class="report_cont" rows="20" cols="100" readonly>${content.report_content }</textarea>
-					<h2>정지일</h2>
-					<select class="report_result" name="report_result">
-						<option value="">:::선택:::</option>
-						<option value="3">3일</option>
-						<option value="5">5일</option>
-						<option value="15">15일</option>
-						<option value="30">30일</option>
-						<option value="365">365일</option>
-					</select>
 					</div>
 					<c:if test="${!empty content.report_image }">
 						<div class="h_container1">
@@ -112,10 +97,8 @@
 						</div>
 					</c:if>
 				</div>
-				</div>
-			<br><br><br><br><br>
+				<br><br><br><br><br>
 			<div class="btn">
-					<input type="submit" value="정지">
 					<c:if test="${!empty content.mem_id_reported }">
 						<input type="button" value="회원삭제" onclick="location.href='<%=request.getContextPath()%>/delete_member.do?mem_id_reported=${content.mem_id_reported }'">			
 					</c:if>
@@ -123,6 +106,8 @@
 						<input type="button" value="회원삭제" onclick="location.href='<%=request.getContextPath()%>/delete_member.do?mem_name_reported=${content.mem_name_reported }'">			
 					</c:if>
 			</div>
+				</div>
+			
 			</div>
 		</form>
 	<jsp:include page="../include/chall_bottom.jsp"/>

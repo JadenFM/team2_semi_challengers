@@ -12,6 +12,10 @@
 <title>Insert title here</title>
 <style type="text/css">
 
+.asd{
+	background-color: #F6F7F9;
+}
+
 #container{
 	background-color: #F6F7F9;
 	height: 100%;
@@ -72,8 +76,11 @@
 	border: none;
 	border-radius: 7px;
 }
-
+.btn{
+	margin-top: 120px%;
+}
 .btn input {	
+	
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -97,17 +104,17 @@
 <body>
 	<jsp:include page="../include/admin_top.jsp" />
 	<div id="container">
-		<form method="post" enctype="multipart/form-data"
+		<form class="asd" method="post" enctype="multipart/form-data"
 			action="<%=request.getContextPath()%>/category_modify_Ok.do">
 			<input type="hidden" name="category_num" value="<%=content.getCategory_num()%>">
 			<div class="header">
 				<div class="h_container">
 					<h2>코 드</h2>
-					<input class="code" name="category_code" value="<%=content.getCategory_code()%>">
+					<input class="code" name="category_code" value="<%=content.getCategory_code()%>" readonly>
 				</div>
 				<div class="h_container1">
 					<h2>이 름</h2>
-					<input class="name" name="category_name" value="<%=content.getCategory_name()%>">
+					<input class="name" name="category_name" value="<%=content.getCategory_name()%>" readonly>
 				</div>
 				<div class="h_container1">
 					<h2>이미지</h2>
@@ -124,7 +131,7 @@
 				</div>
 				<div class="h_container1">
 					<h2>서브카테고리</h2>
-					<input class="name" name="category_name_input" placeholder="변결할 서브카테고리의 이름을 입력해 주십시오.">
+					<input class="name" name="category_name_input" placeholder="변경할 서브카테고리의 이름을 입력해 주십시오.">
 				</div>
 				<br>
 				<br>
@@ -133,14 +140,13 @@
 				<br>
 				<br>
 				<br>
-				<br>
-			<div class="btn">
-				<input type="submit" value="수정하기">
-				<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath()%>/category_delete.do?category_num=<%=content.getCategory_num()%>'">
-			</div>
+				<div class="btn">
+					<input type="submit" value="수정하기">
+				</div>
 			</div>
 		</form>
-	</div>
 	<jsp:include page="../include/chall_bottom.jsp" />
+	</div>
+	<br>
 </body>
 </html>

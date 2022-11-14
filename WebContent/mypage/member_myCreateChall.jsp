@@ -21,7 +21,7 @@
 			place-items: center;
 			width: 100%;
 			grid-template-columns: 1fr 3fr 1fr;
-			grid-template-rows: 100px 130px 130px 1000px 100px;	
+			grid-template-rows: 100px 130px 130px 1fr 100px;	
 		}
 		
 		.createChall_title {

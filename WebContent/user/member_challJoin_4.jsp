@@ -178,8 +178,12 @@
 </style>
 </head>
 <body>
-   <jsp:include page="/include/chall_top.jsp" />
-   
+   <c:if test="${open=='admin'}">
+		<jsp:include page="/include/admin_top.jsp" />
+	</c:if>
+	<c:if test="${open!='admin'}">
+   		<jsp:include page="/include/chall_top.jsp" />
+   </c:if>
 		<div align="center">
 			<br>
 			<h3><b>이 챌린지에 참여하기 위한 조건은 무엇인가요?</b></h3>

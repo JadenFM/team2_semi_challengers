@@ -84,10 +84,15 @@ $(document).ready(function() {
 				
 				$(data).find("chall_list").each(function() {
 					card += "<div class='most_chall_items'>";
-					card += "<a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'><img class='most_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
-					card += "<p>" +$(this).find("chall_title").text()+ "</p></a>";
-					card += "<span class='most_chall_time'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
-					card += "<span class='most_chall_time'>" +$(this).find("chall_duration").text()+ "</span>";
+					card += "<a href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";
+					card += "<div class='img_wrap'>";
+					card += "<img class='most_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
+					card += "<div class='img_text'><span><img class='icon_people' src='" +getContextPath()+ "/search_image/people.jpg'></span>&nbsp;" +$(this).find("chall_ongoingpeople").text()+ "명</div></div>";
+					card += "<span class='span_img'><img class='profil' src='"+getContextPath()+"/memUpload/" +$(this).find("chall_creater_img").text()+ "'></span>&nbsp;";
+					card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
+					card += "<p class='chall_title'>" +$(this).find("chall_title").text()+ "</p></a><br>";
+					card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
+					card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "</span>";
 					card += "</div>";
 					
 				});
@@ -115,10 +120,15 @@ $(document).ready(function() {
 				
 				$(data).find("chall_list").each(function() {
 					card += "<div class='admin_chall_items'>";
-					card += "<a  class='local' href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'><img class='admin_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
-					card += "<p>" +$(this).find("chall_title").text()+ "</p></a>";
-					card += "<span class='admin_chall_time'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
-					card += "<span class='admin_chall_time'>" +$(this).find("chall_duration").text()+ "</span>";
+					card += "<a  class='local' href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";
+					card += "<div class='img_wrap'>";
+					card += "<img class='most_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
+					card += "<div class='img_text'><span><img class='icon_people' src='" +getContextPath()+ "/search_image/people.jpg'></span>&nbsp;" +$(this).find("chall_ongoingpeople").text()+ "명</div></div>";
+					card += "<span class='span_img'><img class='profil' src='"+getContextPath()+"/memUpload/" +$(this).find("chall_creater_img").text()+ "'></span>&nbsp;";
+					card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
+					card += "<p class='chall_title'>" +$(this).find("chall_title").text()+ "</p></a><br>";
+					card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
+					card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "</span>";
 					card += "</div>";
 					
 				});
@@ -131,9 +141,41 @@ $(document).ready(function() {
 		});
 	}
 	
+	function getOngoinPeople(){
+		
+		$.ajax({
+			
+			url : getContextPath() +"/main_ongoing.do",
+			datatype : "xml",
+			async : false,
+			success : function(data){
+				
+				$("#input_ongoing").empty();
+					
+				let card = "";
+				
+				$(data).find("chall_list").each(function() {
+					
+					const num = Number($(this).find("chall_ongoing").text().toLocaleString('ko-KR'));
+					
+					card = num.toLocaleString('ko-KR') +"건";
+					
+				});
+				$("#input_ongoing").append(card);				
+				
+			},
+			error : function(){
+				alert('인기챌린지 불러오기 실패');
+			}
+		});
+		
+	}
+	
 	getCategory();
 	getMostchall();
 	getAdminchall();
+	getOngoinPeople()
+	
 	
 	$(".formSubmit").on("click", function(){
 		let name = $(this).attr('data-value');
