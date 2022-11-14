@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.admin.model.AdminDAO;
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
+import com.report.model.ReportDTO;
 import com.user.model.UserDTO;
 
 public class AdminControlAction implements Action{
@@ -34,8 +35,7 @@ public class AdminControlAction implements Action{
 	    	lastBlock = allPage;
 	    }
 		
-		
-		List<UserDTO> list = dao.getUserList(startNo,lastNo);
+		List<ReportDTO> list = dao.getReportList(startNo,lastNo);
 		request.setAttribute("list",list);
 		request.setAttribute("page",page);
 		ActionForward forward = new ActionForward();

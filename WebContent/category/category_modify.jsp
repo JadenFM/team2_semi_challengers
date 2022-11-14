@@ -20,14 +20,11 @@
 	/* height: 100%; */
 	padding: 60px 0px 30px;
 	box-sizing: none;
+	margin-left: 30%;
 }
 
-.h_container {
-	margin-left: 120px;
-}
 .h_container1{
 	margin-top: 100px;
-	margin-left: 120px;
 }
 
 .h_container2 {
@@ -62,19 +59,10 @@
 	background-color: #F6F7F9;
 }
 
-.h_bottom {
-	margin-left: 100px;
-}
-
 .list li {
 	display: inline-block;
 	width: 70px;
 }
-
-.list li b {
-	margin-left: 15px;
-}
-
 .h_underline {
 	margin-top: 20px;
 	border: solid;
@@ -84,12 +72,8 @@
 	border: none;
 	border-radius: 7px;
 }
-.btn {
-	margin-left: 120px;
-}
 
-.btn input {
-	
+.btn input {	
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -123,7 +107,7 @@
 				</div>
 				<div class="h_container1">
 					<h2>이 름</h2>
-					<input class="name" name="category_name" value="<%=content.getCategory_code()%>">
+					<input class="name" name="category_name" value="<%=content.getCategory_name()%>">
 				</div>
 				<div class="h_container1">
 					<h2>이미지</h2>
@@ -150,21 +134,6 @@
 				<br>
 				<br>
 				<br>
-							<%-- <th>카테고리 코드</th>
-							<td><input name="category_code" value="<%=content.getCategory_code()%>"></td>
-							<th>카테고리 이름</th>
-							<td><input name="category_name" value="<%=content.getCategory_name()%>"></td>
-							<th>카테고리 이미지</th>
-							<td><input type="file" name="category_image"></td>
-							<th>서브 카테고리</th>
-							<c:set var="list" value="${list }"/>
-										<select name="sub_category_name">
-											<option>:::서브 카테고리:::</option>
-										<c:forEach items="${list }" var="dto">
-											<option value="${dto.sub_category_name }">${dto.sub_category_name }</option>
-										</c:forEach>
-										</select>
-											<input name="category_name_input"> --%>
 			<div class="btn">
 				<input type="submit" value="수정하기">
 				<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath()%>/category_delete.do?category_num=<%=content.getCategory_num()%>'">

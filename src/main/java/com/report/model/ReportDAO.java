@@ -60,29 +60,131 @@ public class ReportDAO {
 		}
 
 	}  // closeConn() 메서드 end
-	public List<ReportDTO> getReportContent(String mem_id) {
-		List<ReportDTO> list = new ArrayList<ReportDTO>();
+	public ReportDTO getReportContent(int report_num) {
+		ReportDTO dto = null;
 		openConn();
 		try {
-			sql = "select * from member_report where mem_id_reported = ?";
+			sql = "select * from member_report where report_num = ? ";
 			st = con.prepareStatement(sql);
-			st.setString(1,mem_id);
+			st.setInt(1,report_num);
 			rs = st.executeQuery();
-			while(rs.next()) {
-				ReportDTO dto = new ReportDTO();
+			if(rs.next()) {
+				dto = new ReportDTO();
 				dto.setReport_num(rs.getInt("report_num"));
 				dto.setReport_count(rs.getInt("report_count"));
 				dto.setReport_content(rs.getString("report_content"));
-				dto.setChall_title(rs.getString("chall_title"));
-				dto.setMem_id_report(rs.getString("mem_id_report"));
 				dto.setMem_id_reported(rs.getString("mem_id_reported"));
-				list.add(dto);
+				dto.setMem_id_report(rs.getString("mem_id_report"));
+				dto.setReport_title(rs.getString("report_title"));
+				dto.setReport_cause(rs.getString("report_cause"));
+				dto.setReport_image(rs.getString("report_image"));
+				dto.setMem_name_reported(rs.getString("mem_name_reported"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			closeConn(rs, st, con);
 		}
-		return list;
+		return dto;
+	}
+	public int insertReport(ReportDTO dto) {
+		int result = 0 , count = 0 , report = 0;
+		openConn();
+		try {
+			sql = "select max(report_num) from member_report";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1)+1;
+			}
+			sql = "select report_count from member_report where mem_id_reported= ? or mem_name_reported = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,dto.getMem_id_reported());
+			st.setString(2,dto.getMem_name_reported());
+			rs = st.executeQuery();
+			if(rs.next()) {
+				report = rs.getInt(1)+1;
+			}
+			
+			sql = "insert into member_report values(?,?,?,?,?,?,?,?,?)";
+			st = con.prepareStatement(sql);
+			st.setInt(1,count);
+			st.setInt(2,report);
+			st.setString(3,dto.getReport_content());
+			if(dto.getMem_id_reported() == null){
+				st.setString(4,"");
+			}else {
+				st.setString(4,dto.getMem_id_reported());
+			}
+			st.setString(5,dto.getMem_id_report());
+			st.setString(6,dto.getReport_title());
+			st.setString(7,dto.getReport_cause());
+			st.setString(8,dto.getReport_image());
+			if(dto.getMem_name_reported() == null) {
+				st.setString(9,"");
+			}else {
+				st.setString(9,dto.getMem_name_reported());
+			}
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public int insertReport_noneImage(ReportDTO dto) {
+		int result = 0 , count = 0 , report = 0;
+		openConn();
+		try {
+			sql = "select max(report_num) from member_report";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1)+1;
+			}
+			sql = "update member_report set report_count = report_count + 1 where mem_id_reported = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,dto.getMem_id_reported());
+			sql = "update member_report set report_count = report_count + 1 where mem_name_reported = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,dto.getMem_name_reported());
+			sql = "select report_count from member_report where mem_id_reported= ? or mem_name_reported = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,dto.getMem_id_reported());
+			st.setString(2,dto.getMem_name_reported());
+			rs = st.executeQuery();
+			if(rs.next()) {
+				report = rs.getInt(1)+1;
+			}
+			
+			sql = "insert into member_report values(?,?,?,?,?,?,?,'',?)";
+			st = con.prepareStatement(sql);
+			st.setInt(1,count);
+			st.setInt(2,report);
+			st.setString(3,dto.getReport_content());
+			if(dto.getMem_id_reported() == null){
+				st.setString(4,"");
+			}else {
+				st.setString(4,dto.getMem_id_reported());
+			}
+			st.setString(5,dto.getMem_id_report());
+			st.setString(6,dto.getReport_title());
+			st.setString(7,dto.getReport_cause());
+			if(dto.getMem_name_reported() == null) {
+				st.setString(8,"");
+			}else {
+				st.setString(8,dto.getMem_name_reported());
+			}
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
 	}
 }
+
+
+

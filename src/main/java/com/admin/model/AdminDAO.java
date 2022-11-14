@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.report.model.ReportDTO;
 import com.user.model.UserDTO;
 
 public class AdminDAO {
@@ -34,7 +35,7 @@ public class AdminDAO {
 	public void openConn() {
 		
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/downroad/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -282,6 +283,139 @@ public class AdminDAO {
 			st = con.prepareStatement(sql);
 			st.setInt(1,mem_num);
 			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public List<ReportDTO> getReportList(int startNo, int lastNo) {
+		List<ReportDTO> list = new ArrayList<ReportDTO>();
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from member_report order by report_num desc) a where rownum <= ?) where rnum >= ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,lastNo);
+			st.setInt(2,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				ReportDTO dto = new ReportDTO();
+				dto.setReport_num(rs.getInt("report_num"));
+				dto.setReport_count(rs.getInt("report_count"));
+				dto.setReport_content(rs.getString("report_content"));
+				dto.setMem_id_reported(rs.getString("mem_id_reported"));
+				dto.setMem_id_report(rs.getString("mem_id_report"));
+				dto.setReport_title(rs.getString("report_title"));
+				dto.setReport_cause(rs.getString("report_cause"));
+				dto.setReport_image(rs.getString("report_image"));
+				dto.setMem_name_reported(rs.getString("mem_name_reported"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public String findid(String admin_name, String admin_phone) {
+		String result = "";
+		openConn();
+		try {
+			sql = "select * from admin_member where admin_name = ? and admin_phone = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,admin_name);
+			st.setString(2,admin_phone);
+			rs = st.executeQuery();
+			result += "<results>";
+			result += "<aaa>";
+			if(rs.next()) {
+				result += "<result>" + rs.getInt(1) + "</result>";
+			}else {
+				result += "<result>none</result>";
+			}
+			result += "</aaa>";
+			result += "</results>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public String admin_info(String admin_name , String admin_phone) {
+		String info = "";
+		openConn();
+		try {
+			sql = "select * from admin_member where admin_name = ? and admin_phone = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,admin_name);
+			st.setString(2,admin_phone);
+			rs = st.executeQuery();
+			info +="<member_info>";
+			while(rs.next()) {
+				info +="<member_email>";
+				info +="<admin_id>" + rs.getString("admin_id") + "</admin_id>";
+				info +="<admin_email>" + rs.getString("admin_email") + "</admin_email>";
+				info +="<admin_name>" + rs.getString("admin_name") + "</admin_name>";
+				info += "</member_email>";
+			}
+			info +="</member_info>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return info;
+	}
+	public int checkid(String admin_id) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select * from admin_member where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, admin_id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+		
+	}
+	public String getMemberEmail(String id) {
+		String result = "";
+		openConn();
+		try {
+			sql = "select admin_email from admin_member where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("admin_email");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public int updateAdminPwd(String admin_pwd, String mem_id) {
+		openConn();
+		int result = 0;
+		try {
+			sql = "update admin_member set admin_pwd = ? where admin_id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,admin_pwd);
+			st.setString(2,mem_id);
+			result = st.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

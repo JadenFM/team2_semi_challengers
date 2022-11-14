@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 <style type="text/css">
 
+.all_container{
+	margin-left: 30%;
+}
 #container{
 	background-color: #F6F7F9;
 }
@@ -17,18 +20,13 @@
 	padding: 60px 0px 30px;
 }
 
-.h_container {
-	margin-left: 120px;
-}
 
 .h_container_cate {
-	margin-left: 120px;
-	margin-top: 100px;
+	margin-top: 10%;
 }
 
 .h_container_cont {
-	margin-left: 120px;
-	margin-top: 50px;
+	margin-top: 10%;
 }
 
 .h_container2 {
@@ -90,10 +88,6 @@ img {
 	border-radius: 7px;
 }
 
-.btn {
-	margin-left: 120px;
-}
-
 .btn input {
 	
 	position: relative;
@@ -125,6 +119,7 @@ img {
 		<input type="hidden" name="faq_num" value="${dto.faq_num }"> <input
 			type="hidden" name="page" value="${param.page }">
 			<div class="header">
+			<div class="all_container">
 				<div class="h_container">
 					<h2>제 목</h2>
 					<input class="search" name="faq_title" value="${dto.faq_title }">
@@ -143,14 +138,16 @@ img {
 					<h2>내 용</h2>
 					<textarea class="cont" rows="20" cols="100" name="faq_content">${dto.faq_content }"></textarea>
 				</div>
-			</div>
-			<br>
-			<br>
-			<div class="btn">
+				<br>
+				<br>
+				<div class="btn">
 				<input type="submit" value="수정하기">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				<input type="button" value="삭제하기" onclick="location.href='<%=request.getContextPath() %>/FAQ_delete.do?faq_num=${dto.faq_num }&page=${param.page }'">
 			</div>
+			</div>
+			</div>
+			
 	</form>
 	</div>
 	<jsp:include page="../include/chall_bottom.jsp" />

@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+.main_container{
+	width: 100%;
+	height: 100%;
+}
+
+.event{
+	background-color: #FC9;	
+}
+.slide_container{
+	
+	position:relative;
+	width: 100%;
+	height: 300px;
+	
+}
+
+.slide{
+	position: absolute;
+	width: 80%;
+	height: 300px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	
+}
+
+.fade_img {
+	width: 1000px;
+	height: 100%;
+	object-fit: fill;
+}
+
+.fade{
+	animation-name: fade;
+	animation-duration: 1.5s;
+}
+
+.prev{
+	cursor: pointer;
+	position: absolute;
+	top: 35%;
+	width: auto;
+	padding: 16px;
+	margin-top: 40px;
+	color: black;
+	font-weight: bold;
+	font-size: 16px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
+	left:10%;
+}
+.next{
+	cursor: pointer;
+	position: absolute;
+	top: 35%;
+	width: auto;
+	padding: 16px;
+	margin-top: 40px;
+	color: black;
+	font-weight: bold;
+	font-size: 16px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
+	left: 80%;
+	right: 0;
+}
+
+
+.prev:hover, .next:hover{
+	background-color: raba(0,0,0,0.8);
+}
+
+.container_title{
+	font-size: 20px;
+	font-weight: 700;
+	color: #000;
+	letter-spacing: -.1px;
+	text-align: left;
+	overflow: auto;
+	position: absolute;
+	width: 80%;
+	height: 400px;
+	top:40%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+
+
+/* 컨테이너 카테고리 */
+
+.category_container{
+	
+	position:relative;
+ 	margin-top: 20px;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
+	
+}
+
+.card_category{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px;
+	flex-wrap:wrap;
+	align-content: space-between;
+	font-weight: bold;
+}	
+
+#input_items{
+	overflow: auto;
+	position: absolute;
+	width: 80%;
+	height: 480px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+.category_items{
+	cursor: pointer;
+}
+
+.category_items p{
+	margin-bottom: 0px;
+}
+
+.category_image{
+	
+	width: 226px;
+	height: 100px;
+}
+
+.category_items{
+	margin: 0px 20px;
+}
+
+
+/* 컨테이너 인기챌린지 */
+
+.most_container{
+	
+	position:relative;
+ 	margin-top: 20px;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
+	
+}
+
+.card_most_chall{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px;
+	flex-wrap:wrap;
+	align-content: space-between;
+	font-weight: bold;
+}	
+
+#input_items2{
+	overflow: auto;
+	position: absolute;
+	width: 80%;
+	height: 480px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+.most_chall_items{
+	cursor: pointer;
+}
+
+.most_chall_items{
+	margin: 0px 20px;
+}
+
+.most_chall_items img{
+	height: 282px;
+	width: 282px;
+}
+
+.most_chall_items p{
+	margin-bottom: 0px;
+}
+
+
+/* 전문 멘토 챌린지 컨테이너 */
+
+.admin_container{
+	
+	position:relative;
+ 	margin-top: 20px;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
+	
+}
+
+.card_admin_chall{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px;
+	flex-wrap:wrap;
+	align-content: space-between;
+	font-weight: bold;
+}
+
+#input_items3{
+	overflow: auto;
+	position: absolute;
+	width: 80%;
+	height: 480px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+.admin_chall_items{
+	margin: 0px 20px;
+}
+
+.admin_chall_items img{
+	height: 282px;
+	width: 282px;
+}
+
+.admin_chall_items{
+	cursor: pointer;
+}
+
+.admin_chall_items p{
+	margin-bottom: 0px;
+}

@@ -17,7 +17,7 @@ public class ChallengeControlAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)throws IOException, Exception {
 		
 		ChallengeDAO dao = ChallengeDAO.getinstance();
-		int rowsize = 10;
+		int rowsize = 12;
 		int block = 10;
 		int page = 1;
 		if (request.getParameter("page") != null) {

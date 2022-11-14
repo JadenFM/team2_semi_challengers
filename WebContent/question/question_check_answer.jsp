@@ -21,28 +21,24 @@
 	#container{
 	background-color: #F6F7F9;
 }
-.header {
-	background-color: #F6F7F9;
+.header1 {
 	height: 100%;
 	padding: 60px 0px 30px;
+	margin-left: 30%;
 }
-
-.h_container_num {
-	margin-left: 120px;
+.asd{
+	background-color: #F6F7F9;
 }
 
 .h_container {
-	margin-left: 120px;
 	margin-top: 100px;
 }
 
 .h_container_cate {
-	margin-left: 120px;
 	margin-top: 100px;
 }
 
 .h_container_cont {
-	margin-left: 120px;
 	margin-top: 50px;
 }
 
@@ -62,7 +58,7 @@
 	border-radius: 7px;
 	position: absolute;
 }
-.search {
+.search1 {
 	width: 700px;
 	height: 66px;
 	font-size: 20px;
@@ -81,17 +77,14 @@
 }
 
 img {
-	margin-top: 20px;
+	margin-top: 2%;
 }
 
 .header2 {
 	background-color: #F6F7F9;
-	margin-top: 100px;
+	margin-top: 10%;
 }
 
-.h_bottom {
-	margin-left: 100px;
-}
 
 .list li {
 	display: inline-block;
@@ -99,11 +92,11 @@ img {
 }
 
 .list li b {
-	margin-left: 15px;
+	margin-left: 1.5%;
 }
 
 .h_underline {
-	margin-top: 20px;
+	margin-top: 2%;
 	border: solid;
 }
 
@@ -111,8 +104,7 @@ img {
 	border: none;
 	border-radius: 7px;
 }
-.btn{
-	margin-left : 120px;
+.btn input {
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -126,26 +118,27 @@ img {
 	background-color: #519d9e;
 	color: black;
 }
-.btn:hover{
+
+.btn input:hover {
 	background-color: #77af9c;
 	color: #d7fff1;
 }
 </style>
 </head>
-<body>
-	<jsp:include page="../include/admin_top.jsp"/>
+<body class="asd">
+	<jsp:include page="../include/chall_top.jsp"/>
 		<form method="post" action="question_update_check.do">
 		<input type="hidden" name="p_q_num" value="<%=content.getP_q_num() %>">
 		<input type="hidden" name="mem_id" value="${param.mem_id }">
-		<div id="container">
-		<div class="header">
+		<div id="container1">
+		<div class="header1">
 				<div class="h_container_num">
 					<h2>문의 번호</h2>
 					<input class="ansdmlnum" value="<%=content.getP_q_num() %>" readonly>
 				</div>
 				<div class="h_container">
 					<h2>제 목</h2>
-					<input class="search" value="<%=content.getP_q_title()%>" readonly>
+					<input class="search1" value="<%=content.getP_q_title()%>" readonly>
 				</div>
 				<div class="h_container_cate">
 					<h2>카테고리</h2>
@@ -162,7 +155,9 @@ img {
 				</div>
 				<br>
 				<br>
-				<input class="btn" type="submit" value="확인">
+				<div class="btn">
+					<input class="btn" type="submit" value="확인">
+				</div>
 			</div>
 		</div>
 		</form>

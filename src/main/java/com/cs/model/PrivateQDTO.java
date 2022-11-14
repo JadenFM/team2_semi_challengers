@@ -13,6 +13,7 @@ public class PrivateQDTO {
 	private String p_q_answer_regdate;
 	private int p_q_again_num;
 	private int p_q_answer_num; 
+	private int p_q_check;
 	 
 	 
 	public int getP_q_num() {
@@ -81,5 +82,13 @@ public class PrivateQDTO {
 	public void setP_q_answer_num(int p_q_answer_num) {
 		this.p_q_answer_num = p_q_answer_num;
 	}
+	public int getP_q_check() {
+		return p_q_check;
+	}
+	public void setP_q_check(int p_q_check) {
+		this.p_q_check = p_q_check;
+	}
+	
+	
 
 }

@@ -78,6 +78,24 @@ public class FAQDAO {
 		}
 		return result;
 	}
+	public int getTotalRecord_category(int faq_category_num) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from FAQ where faq_category_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,faq_category_num);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
 	public List<FAQDTO> getFAQList(int startNo, int lastNo) {
 		List<FAQDTO> list = new ArrayList<FAQDTO>();
 		openConn();
@@ -186,5 +204,58 @@ public class FAQDAO {
 			closeConn(rs, st, con);
 		}
 		return result;
+	}
+	
+	public List<FAQDTO> getCategoryList(int startNo , int lastNo , int num){
+		openConn();
+		List<FAQDTO> list = new ArrayList<FAQDTO>();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from faq where faq_category_num = ?) a where rownum <= ?) where rnum >= ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,num);
+			st.setInt(2,lastNo);
+			st.setInt(3,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				FAQDTO dto = new FAQDTO();
+				dto.setFaq_num(rs.getInt("faq_num"));
+				dto.setFaq_title(rs.getString("faq_title"));
+				dto.setFaq_content(rs.getString("faq_content"));
+				dto.setFaq_regdate(rs.getString("faq_regdate"));
+				dto.setFaq_category_num(rs.getInt("faq_category_num"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public String findout(String search){
+		String result = "";
+		openConn();
+		try {
+			sql = "select * from faq where faq_title like ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,"%"+search+"%");
+			rs = st.executeQuery();
+			result += "<searchs>";
+			while(rs.next()) {
+				result += "<search>";
+				result += "<faq_num>" + rs.getInt("faq_num")+ "</faq_num>";
+				result += "<faq_title>" + rs.getString("faq_title") + "</faq_title>";
+				result += "<faq_content>" + rs.getString("faq_content") + "</faq_content>";
+				result += "<faq_regdate>" + rs.getString("faq_regdate") + "</faq_regdate>";
+				result += "<faq_category_num>" + rs.getInt("faq_category_num") + "</faq_category_num>";
+				result += "</search>";				
+			}
+			result += "<searchs>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result; 
 	}
 }

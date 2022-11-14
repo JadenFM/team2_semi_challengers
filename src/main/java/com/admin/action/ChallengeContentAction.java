@@ -17,11 +17,12 @@ public class ChallengeContentAction implements Action{
 		
 		int chall_num = Integer.parseInt(request.getParameter("chall_num").trim());
 		int page = Integer.parseInt(request.getParameter("page").trim());
-		
+		String chall_category=request.getParameter("chall_category").trim();
 		ChallengeDAO dao = ChallengeDAO.getinstance();
 		ChallengeDTO content = dao.getChallengeContent(chall_num);
 		request.setAttribute("content",content);
 		request.setAttribute("page",page);
+		request.setAttribute("chall_category",chall_category);
 		
 		ActionForward forward = new ActionForward();
 		

@@ -24,32 +24,133 @@
 		$("#2").click(function(){						// 인증
 			$("#2").css('color','black');
 			$("#1,#3,#4").css('color','lightgray');
-			$(".all").show();
-			$(".rufwp,.tkdrma").hide();
-			$(".dlswmd").show();
+			$.ajax({
+				type : "post",
+				url : "/Semi_Challengers/certification_list.do",
+				data : {faq_category_num : "1"},
+				datatype : "html",
+				success : function(data){
+					$(".body").hide();
+					$(".asd").html(data);
+				},
+				error : function(){
+					alert("에러가 발생하였습니다.")
+				}
+			})
 		})
 		$("#3").click(function(){						// 결제
 			$("#3").css('color','black');
 			$("#1,#2,#4").css('color','lightgray');
-			$(".all").show();
-			$(".dlswmd,.tkdrma").hide();
-			$(".rufwp").show();
+			$.ajax({
+				type : "post",
+				url : "/Semi_Challengers/payment_list.do",
+				data : {faq_category_num : "2"},
+				datatype : "html",
+				success : function(data){
+					$(".body").hide();
+					$(".asd").html(data);
+				},
+				error : function(){
+					alert("에러가 발생하였습니다.")
+				}
+			})
 		})
 		$("#4").click(function(){						// 상금
 			$("#4").css('color','black');
 			$("#1,#2,#3").css('color','lightgray');
-			$(".all").show();
-			$(".rufwp,.dlswmd").hide();
-			$(".tkdrma").show();
+			$.ajax({
+				type : "post",
+				url : "/Semi_Challengers/prize_list.do",
+				data : {faq_category_num : "3"},
+				datatype : "html",
+				success : function(data){
+					$(".body").hide();
+					$(".asd").html(data);
+				},
+				error : function(){
+					alert("에러가 발생하였습니다.")
+				}
+			})
 		})
 		$("#1").click(function(){
 			$("#1").css('color','black');
 			$("#2,#3,#4").css('color','lightgray');
-			$(".dlswmd,.rufwp,.tkdrma").show();
+			$.ajax({
+				type : "post",
+				url : "/Semi_Challengers/all_list.do",
+				datatype : "html",
+				success : function(data){
+					$(".body").hide();
+					$(".asd").html(data);
+				},
+				error : function(){
+					alert("에러가 발생하였습니다.")
+				}
+			})
+		})
+
+		$(".search").on('keyup',function(){
+			let searching = $(".search").val();
+			$.ajax({
+				type : "post",
+				url : "FAQ/FAQ_search.jsp",
+				data : {keyword : searching},
+				datatype : "xml",
+				success : function(data){
+					$(".body").hide();
+					let table = "";
+					$(".asd").text('');
+					$(data).find("search").each(function(){
+						if($(this).find("faq_category_num").text() == "1"){
+							table += "<div class='all'><div class='dlswmd'><b> 인증 </b>";
+						}
+						else if($(this).find("faq_category_num").text() == "2"){
+							table += "<div class='all'><div class='rufwp'><b> 결제 </b>";
+						}
+						else if($(this).find("faq_category_num").text() == "3"){
+							table += "<div class='all'><div class='tkdrma'><b> 상금 </b>";
+						}
+						table += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+						table += "<a href='<%=request.getContextPath()%>/FAQ_modify.do?faq_num=" + $(this).find("faq_num").text() + "'>";
+						table += "Q. " + $(this).find("faq_title").text() + "</a> <br> </div> </div>";
+					})
+					$(".asd").append(table);
+					
+				},
+				error : function(){
+					alert("에러가 발생하였습니다.")
+				}
+			})
 		})
 	});
 </script>
 <style type="text/css">
+	.all_container{
+		margin-left: 20%;
+	}
+	.container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
 .pagination {
 	justify-content: center;
 }
@@ -81,7 +182,7 @@
 }
 
 .h_container {
-	margin-left: 120px;
+	margin-left: 19%;
 }
 
 .h_container2 {
@@ -129,33 +230,45 @@ img {
 	height: 3px;
 }
 
-.all {
-	margin-left: 150px;
-}
-
 .all a {
 	color: black;
 }
 
 .dlswmd, .tkdrma, .rufwp {
-	margin-top: 50px;
+	margin-top: 3%;
 }
 
 #dlswmd_1, #tkdrma_1, #rufwp_1 {
 	color: #787878;
 }
 #dlswmd_cont , #rufwp_cont , #tkdrma_cont{
-	margin-left: 100px;
+	margin-left: 10%;
 	color: gray;
 }
-.btn{
-	margin-left: 100px;
+.list{
+	margin-left: 14%;
+}
+.btn input {
+	border: none;
+	padding: 15px 30px;
+	border-radius: 7px;
+	font-family: "paybooc-Light", sans-serif;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+	text-decoration: none;
+	font-weight: 600;
+	transition: 0.25s;
+	background-color: #519d9e;
+	color: black;
+}
+
+.btn input:hover {
+	background-color: #77af9c;
+	color: #d7fff1;
 }
 </style>
 </head>
 <body>
 	<jsp:include page="../include/admin_top.jsp" />
-	<div>
 		<div class="header">
 			<div class="h_container">
 				<h4>검색어를 입력해 주십시오.</h4>
@@ -181,6 +294,11 @@ img {
 				</ul>
 			</div>
 		</div>
+		<div class="all_container">
+		<div class="asd"></div>
+		</div>
+		<div class="body">
+		<div class="all_container">
 		<c:set var="list" value="${list }" />
 
 		<c:if test="${!empty list }">
@@ -218,9 +336,11 @@ img {
 				</c:forEach>
 			</div>
 		</c:if>
-		<input type="button" value="글쓰기"
-			onclick="location.href='<%=request.getContextPath()%>/FAQ_write.do'">
-
+		<div class="btn">
+			<input type="button" value="글쓰기"
+				onclick="location.href='<%=request.getContextPath()%>/FAQ_write.do'">
+		</div>
+		</div>
 		<nav>
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link"
@@ -248,13 +368,9 @@ img {
 				</c:if>
 			</ul>
 		</nav>
+	
 	</div>
+	
 	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript">
-
-	
-
-</script>
 </html>

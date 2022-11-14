@@ -17,9 +17,15 @@ public class CSPrivateQListAction implements Action {
 			throws IOException, Exception {
 		
 		int pq_user_no = Integer.parseInt(request.getParameter("pq_user_no").trim());
-    	System.out.println(pq_user_no);
+    	System.out.println("CS_pq.jsp에서 넘겨준 session 정보 >>> 유저 번호: " +pq_user_no);
     
     	CScenterDAO dao = CScenterDAO.getinstance();
+    	
+    	// 페이지 변수 선언
+    	
+    	
+    	
+    	// getPagedPQList 메서드 완성 후 메서드 교체
     	String str = dao.getPQList(pq_user_no);
     	System.out.println(str);
     	

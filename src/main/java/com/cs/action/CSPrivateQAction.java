@@ -1,6 +1,7 @@
 package com.cs.action;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -18,17 +19,11 @@ public class CSPrivateQAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		CScenterDAO dao = CScenterDAO.getinstance();
 		PrintWriter out = response.getWriter();
 		ActionForward forward = new ActionForward();
 		  
 		HttpSession session = request.getSession();	
 		if (session.getAttribute("memberNum") != null) {
-			
-			int mem_num = (int)session.getAttribute("memberNum");
-			
-			List<PrivateQDTO> list = dao.privateQList(mem_num);
-			request.setAttribute("p_q_list", list);
 			
 			forward.setPath("CScenter/CS_pq.jsp");
 			forward.setRedirect(false);

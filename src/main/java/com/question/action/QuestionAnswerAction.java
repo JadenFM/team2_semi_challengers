@@ -38,8 +38,8 @@ public class QuestionAnswerAction implements Action {
 			UserDAO dao1 = UserDAO.getinstance();
 			UserDTO u_content = dao1.getMemberInfo(p_q_user_num);
 			request.setAttribute("u_content",u_content);
-			forward.setRedirect(false);
-			forward.setPath("../include/chall_top.jsp");
+			forward.setRedirect(true);
+			forward.setPath("category_control.do");
 		}
 		return forward;
 	}

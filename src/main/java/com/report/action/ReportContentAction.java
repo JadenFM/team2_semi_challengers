@@ -16,11 +16,10 @@ public class ReportContentAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)throws IOException, Exception {
 		
-		String mem_id = request.getParameter("mem_id").trim();
-		System.out.println(mem_id);
+		int report_num = Integer.parseInt(request.getParameter("report_num").trim());
 		ReportDAO dao = ReportDAO.getInstance();
-		List<ReportDTO> list = dao.getReportContent(mem_id);
-		request.setAttribute("list",list);
+		ReportDTO content = dao.getReportContent(report_num);
+		request.setAttribute("content",content);
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("report/report_content.jsp");

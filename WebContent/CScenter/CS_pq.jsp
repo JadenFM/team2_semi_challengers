@@ -5,113 +5,138 @@
 	<%
 		int mem_num = (int)session.getAttribute("memberNum");
 	%>
-	
+
 	<jsp:include page="../include/chall_top.jsp" />
 	<jsp:include page="../include/CS_top.jsp" />
+	
+	<script type="text/javascript">
+						
+			$(function(){
+			
+				function getPraviteQList() {
+					$.ajax({
+						url : "<%= request.getContextPath()%>/CS_privateQ_list.do",
+						data : {
+							pq_user_no : <%= mem_num%>,
+						},
+						datatype: "xml",
+						success : function(data){
+							
+							let result = "";
+							let answerStatus = "";
+							let answer = "";
+							
+							if ($(data).find("regdate").text() != null){
+									$("#PQ_Accordian_wrap").empty();
+								}
+							
+							$(data).find("PQNA").each(function(){
+								
+								if($(this).find("answerCont").text() == "null") {
+										answerStatus = "<font color='#bd3232'>접수중</font>";
+										answer = "<p>안녕하세요, 챌린저스입니다.</p>"
+										+ "<p>고객님의 일대일 문의가 접수되었습니다.</p>"
+										+ "<p>담당자가 확인하여 답변을 작성 중에 있습니다.</p>"
+										+ "<p>빠르게 답변드릴 수 있도록 노력하겠습니다.</p>"
+										+ "<p>감사합니다.</p>";
+										
+									}else if($(this).find("answerCont").text() != "null") {
+										answerStatus = "<font color='#324bbd'>답변완료</font>";
+										answer = "답변 등록일 : "+$(this).find("answerRegdate").text().substring(0, 10)+"<br><br>"+$(this).find("answerCont").text();
+									}
+								
+								result += "<div class='question'><span>"+$(this).find("num").text()+"</span>"				
+								result += "<span>"+$(this).find("title").text()+"</span>"
+								result += "<span>"+$(this).find("regdate").text().substring(0,10)+"</span>"
+								result += "<span>"+answerStatus + "</span></div>"
+								result += "<div class='answer'>"+"<span>"+$(this).find("content").text()+"</span>"+"<br><br>"+
+											"<div><span>"+answer+"</span></div>"+"</div>";
+								
+							});
 
-			<table class="full_table" id="PQ_table">
-				<tr>
+							$("#PQ_Accordian_wrap").append(result);
+							
+							$(".question").click(function(){
+								if ($(this).hasClass('show')){
+									$(this).next(".answer").slideUp(200);
+									$(this).removeClass('show');
+								}else {
+									$(this).next(".answer").stop().slideDown(200);
+									$(this).addClass('show');
+								}
+							});
+							
+						},
+						error : function(){
+							toastr.warning('데이터 통신 에러');
+						}
+						
+					}); // ajax 끝
+					
+
+				} // function getPraviteQList(); 끝 
+				
+				getPraviteQList();
+				
+			}); // $(document).ready(function(){}) 끝
+			
+			</script>
+			
+			<table class="full_table">
+				<tr class="contentTitle">
 					<td colspan="2">
 						<h1>일대일문의</h1>
+						<hr>
 					</td>
 				</tr>
-				<tr>
-					<td>접수번호</td>
-					<td>문의</td>
-					<td>등록일</td>
-					<td>상태</td>
-				</tr>
-				
-				<%-- <c:set value="${p_q_list}" var="list" />
-				<c:if test="${!empty list }">
-					<c:forEach items="${list }" var="dto">
-						<tr>
-							<td>접수번호</td>
-							<td>문의</td>
-							<td>날짜</td>
-							<td>상태</td>
-						</tr>
-						<tr>
-							<td>${dto.getP_q_num() }</td>
-							<td class="question">
-								<a href="<%=request.getContextPath() %>/CS_p_q_a.do?no=${dto.getP_q_num()}">
-									${dto.getP_q_title() }
-								</a>
-							</td>
-							
-							<td>${dto.getP_q_regdate().substring(0,10) }</td>
-							<c:if test="${empty dto.getP_q_answer_cont() }">
-								<td>접수중</td>
-							</c:if>
-							<c:if test="${!empty dto.getP_q_answer_cont() }">
-								<td>답변완료</td>
-							</c:if> 
-						</tr>
-						<tr class="answer">
-							<td>답변 내용</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${empty list }">
-					<tr>
-						<td>문의 내용이 없습니다.</td>
-					</tr>
-				</c:if> --%>
-				
 			</table>
-			
+			<div id = "PQ_content">
+				<div id="PQ_table_th">
+					<span>접수번호</span>
+					<span>문의</span>
+					<span>등록일</span>
+					<span>상태</span>
+				</div>
 				
-			<script type="text/javascript">
-							
-				$(document).ready(function(){
-					$.ajaxSetup({
-						ContentType: "application/x-www-form-urlencoded; charset=UTF-8",
-						type : "post"								
+				<div id="PQ_Accordian_wrap">
+					<div align ="center">
+					<p><span>아직 일대일 문의를 등록하지 않으셨네요!</span></p>
+					<p><span>오른쪽 하단의 문의하기 버튼을 이용해주세요.</span></p>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<script>
+				function pqWrite(){
+					
+					console.log('plz~~~');
+					
+					$.ajax({
+						url : "<%= request.getContextPath()%>/CScenter/CS_pq_write.jsp",
+						data : {
+							pq_user_no : <%= mem_num%>
+						},
+						datatype : "html",
+						success : function(data) {
+							$("#PQ_content").html(data);
+							$("#PQ_write_button").remove();
+						},
+						error : function() {
+							toastr.warning('데이터 통신 에러');
+						}
 					});
-
-					function getPraviteQList() {
-						$.ajax({
-							url : "<%= request.getContextPath()%>/CS_privateQ_list.do",
-							data : {
-								pq_user_no : <%= mem_num%>,
-							},
-							datatype: "xml",
-							success : function(data){
-								$("#PQ_table tr:gt(1)").remove();
-								let table = "";
-								let answerStatus = "";
-								$(data).find("PQNA").each(function(){
-									table += "<tr>";
-									table += "<td>"+$(this).find("num").text()+"</td>";				
-									table += "<td><div class='question'><span class='q_title'>"+$(this).find("title").text()+"</span></div></td>";				
-									table += "<td>"+$(this).find("regdate").text().substring(0,10)+"</td>";				
-										if($(this).find("answerCont").text() != "null") {
-											answerStatus = "답변완료";
-										}else{
-											answerStatus = "접수중";
-										}
-									table += "<td>"+ answerStatus + "</td>";
-									table += "</tr>";
-									table += "<tr>";
-									table += "<td colspan='4'><div class='answer'>"+$(this).find("answerCont").text()+"</div></td>"
-									table += "</tr>"
-										
-								});
-								$("#PQ_table tr:eq(1)").after(table);
-							},
-							error : function(){
-								alert('데이터 통신 에러');
-							}
-							
-						});
-					}  
-					
-					getPraviteQList();
-					
-				});
-							
-				</script>
+				
+				}
+				
+			</script>
+			
+			<div id="PQ_write_button">
+				<button onclick="pqWrite()">문의하기</button>
+			</div>
+			
+			
 			
 			
 	<jsp:include page="../include/CS_bottom.jsp" />

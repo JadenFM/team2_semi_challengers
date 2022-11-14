@@ -9,8 +9,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <style type="text/css">
+.container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
 .header {
 	background-color: #F6F7F9;
 	height: 247px;
@@ -18,7 +46,7 @@
 }
 
 .h_container {
-	margin-left: 120px;
+	margin-left: 19%;
 }
 
 .h_container2 {
@@ -130,29 +158,43 @@ img {
 	background-color: #519d9e;
     color: #9dc8c8;
 }
+.btn {
+	text-align: center;
+	margin-left: 46%;
+}
+
+.btn input {
+	display : inline-block;
+	border: none;
+	padding: 15px 30px;
+	border-radius: 7px;
+	font-family: "paybooc-Light", sans-serif;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+	text-decoration: none;
+	font-weight: 600;
+	transition: 0.25s;
+	background-color: #519d9e;
+	color: black;
+}
+
+.btn input:hover {
+	background-color: #77af9c;
+	color: #d7fff1;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../include/admin_top.jsp"/>
 	<c:set var="list" value="${list }"/>
-		<div class="header">
-			<div class="h_container">
-				<h4>검색어를 입력해 주십시오.</h4>
-				<div class="h_container2">
-					<img .class="eee"
-						src="https://chlngers.com/assets/svgs/icon-search-line-black.svg"
-						width="30" height="30">
-				</div>
-				<input class="search" name="search">
-			</div>
-		</div>
+		<br><br><br><br><br><br>
 		<div class="all">
 			<ul class="category_list">
 				<li>
 					<div class="training">
 						<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=1">
-							<img src="../uploadFile/admin/운동.png" width="64" height="54">
+							<img src="uploadFile/admin/운동.png" width="64" height="54">
 							<h2>운 동</h2>
+							<br>
 							<span class="tkdtpqhrl"> 상세보기 + </span>
 						</a>
 					</div>
@@ -162,6 +204,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=2">
 						<img src="uploadFile/admin/식습관.png" width="64" height="54">
 						<h2>식습관</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -171,6 +214,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=3">
 						<img src="uploadFile/admin/생활.png" width="64" height="54">
 						<h2>생 활</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -180,6 +224,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=4">
 						<img src="uploadFile/admin/정서.png" width="64" height="54">
 						<h2>정 서</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -189,6 +234,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=5">
 						<img src="uploadFile/admin/취미.png" width="64" height="54">
 						<h2>취 미</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -198,6 +244,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=6">
 						<img src="uploadFile/admin/환경.png" width="64" height="54">
 						<h2>환경+펫</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -207,6 +254,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=7">
 						<img src="uploadFile/admin/기타.png" width="64" height="54">
 						<h2>기 타</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -216,6 +264,7 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=8">
 						<img src="uploadFile/admin/공부.png" width="64" height="54">
 						<h2>공 부</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
@@ -225,13 +274,16 @@ img {
 					<a class="block" href="<%=request.getContextPath()%>/category_modify.do?category_num=9">
 						<img src="uploadFile/admin/공부.png" width="64" height="54">
 						<h2>셀프케어</h2>
+						<br>
 						<span class="tkdtpqhrl"> 상세보기 + </span>
 					</a>
 					</div>
 				</li>
 			</ul>
+		</div><br>
+		<div class="btn">
+			<input type="button" name="btn1" value="카테고리 추가" onclick="location.href='<%=request.getContextPath()%>/category/create_category.jsp'">
 		</div>
-	<input type="button" value="카테고리 추가" onclick="location.href='<%=request.getContextPath()%>/category/create_category.jsp'">
 	<jsp:include page="../include/chall_bottom.jsp"/>
 </body>
 

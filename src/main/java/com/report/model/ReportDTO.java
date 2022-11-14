@@ -4,9 +4,37 @@ public class ReportDTO {
 	private int report_num;
 	private int report_count;
 	private String report_content;
-	private String chall_title;
 	private String mem_id_reported;
 	private String mem_id_report;
+	private String report_title;
+	private String report_image;
+	private String report_cause;
+	private String mem_name_reported;
+	
+	public String getMem_name_reported() {
+		return mem_name_reported;
+	}
+	public void setMem_name_reported(String mem_name_reported) {
+		this.mem_name_reported = mem_name_reported;
+	}
+	public String getReport_title() {
+		return report_title;
+	}
+	public void setReport_title(String report_title) {
+		this.report_title = report_title;
+	}
+	public String getReport_image() {
+		return report_image;
+	}
+	public void setReport_image(String report_image) {
+		this.report_image = report_image;
+	}
+	public String getReport_cause() {
+		return report_cause;
+	}
+	public void setReport_cause(String report_cause) {
+		this.report_cause = report_cause;
+	}
 	public int getReport_num() {
 		return report_num;
 	}
@@ -27,13 +55,6 @@ public class ReportDTO {
 		this.report_content = report_content;
 	}
 	
-	
-	public String getChall_title() {
-		return chall_title;
-	}
-	public void setChall_title(String chall_title) {
-		this.chall_title = chall_title;
-	}
 	public String getMem_id_reported() {
 		return mem_id_reported;
 	}

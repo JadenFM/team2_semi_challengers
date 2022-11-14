@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.FAQ.model.FAQDTO;
 import com.user.model.UserDTO;
 
 public class QuestionDAO {
@@ -34,7 +35,7 @@ public class QuestionDAO {
 	public void openConn() {
 		
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/NCS/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -98,6 +99,36 @@ public class QuestionDAO {
 		openConn();
 		try {
 			sql = "select count(*) from private_q";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public int gettotalrecord_check_O() {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from private_q where p_q_answer_cont is not null";
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public int gettotalrecord_check_X() {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from private_q where p_q_answer_cont is null";
 			st = con.prepareStatement(sql);
 			rs = st.executeQuery();
 			if(rs.next()) {
@@ -225,5 +256,140 @@ public class QuestionDAO {
 			closeConn(rs, st, con);
 		}
 		return result;
+	}
+	public List<QuestionDTO> getAnswerCheckO(int startNo, int lastNo) {
+		List<QuestionDTO> list = new ArrayList<QuestionDTO>();
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from private_q where p_q_answer_cont is not null order by p_q_num desc) a where rownum <= ?) where rnum >= ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,lastNo);
+			st.setInt(2,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				QuestionDTO dto = new QuestionDTO();
+				dto.setP_q_num(rs.getInt("p_q_num"));
+				dto.setP_q_chall_num(rs.getInt("p_q_chall_num"));
+				dto.setP_q_title(rs.getString("p_q_title"));
+				dto.setP_q_content(rs.getString("p_q_content"));
+				dto.setP_q_category_num(rs.getInt("p_q_category_num"));
+				dto.setP_q_regdate(rs.getString("p_q_regdate"));
+				dto.setP_q_answer_cont(rs.getString("p_q_answer_cont"));
+				dto.setP_q_answer_regdate(rs.getString("p_q_answer_regdate"));
+				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
+				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
+				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+				dto.setP_q_check(rs.getInt("p_q_check"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public List<QuestionDTO> getAnswerCheckX(int startNo, int lastNo) {
+		List<QuestionDTO> list = new ArrayList<QuestionDTO>();
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from private_q where p_q_answer_cont is null order by p_q_num desc) a where rownum <= ?) where rnum >= ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1,lastNo);
+			st.setInt(2,startNo);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				QuestionDTO dto = new QuestionDTO();
+				dto.setP_q_num(rs.getInt("p_q_num"));
+				dto.setP_q_chall_num(rs.getInt("p_q_chall_num"));
+				dto.setP_q_title(rs.getString("p_q_title"));
+				dto.setP_q_content(rs.getString("p_q_content"));
+				dto.setP_q_category_num(rs.getInt("p_q_category_num"));
+				dto.setP_q_regdate(rs.getString("p_q_regdate"));
+				dto.setP_q_answer_cont(rs.getString("p_q_answer_cont"));
+				dto.setP_q_answer_regdate(rs.getString("p_q_answer_regdate"));
+				dto.setP_q_again_num(rs.getInt("p_q_again_num"));
+				dto.setP_q_answer_num(rs.getInt("p_q_answer_num"));
+				dto.setP_q_user_num(rs.getInt("p_q_user_num"));
+				dto.setP_q_check(rs.getInt("p_q_check"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return list;
+	}
+	public int getTotalRecord_search(String search) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "select count(*) from private_q where p_q_title like ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, "%"+search+"%");
+			rs = st.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public String findout(String search , int startNo , int lastNo) {
+		String result = "";
+		openConn();
+		try {
+			sql = "select * from (select rownum as rnum , a.* from (select * from private_q where p_q_title like ? order by p_q_num desc) a where rownum <= ?) where rnum >= ? ";
+			st = con.prepareStatement(sql);
+			st.setString(1,"%"+search+"%");
+			st.setInt(2,lastNo);
+			st.setInt(3,startNo);
+			rs = st.executeQuery();
+			result += "<questions>";
+			while(rs.next()) {
+				result += "<question>";
+				result += "<p_q_num>" + rs.getInt("p_q_num") + "</p_q_num>";
+				result += "<p_q_chall_num>" + rs.getInt("p_q_chall_num") + "</p_q_chall_num>";
+				result += "<p_q_title>" + rs.getString("p_q_title") + "</p_q_title>"; 
+				result += "<p_q_content>" + rs.getString("p_q_content") + "</p_q_content>";
+				result += "<p_q_category_num>" + rs.getInt("p_q_category_num") + "</p_q_category_num>";
+				result += "<p_q_regdate>" + rs.getString("p_q_regdate") + "</p_q_regdate>";
+				result += "<p_q_answer_cont>" + rs.getString("p_q_answer_cont") + "</p_q_answer_cont>";
+				result += "<p_q_asnwer_regdate>" + rs.getString("p_q_answer_regdate") + "</p_q_answer_regdate>";
+				result += "<p_q_again_num>" + rs.getInt("p_q_again_num") + "</p_q_again_num>";
+				result += "<p_q_answer_num>" + rs.getInt("p_q_answer_num") + "</p_q_asnwer_num>";
+				result += "<p_q_user_num>" + rs.getInt("p_q_user_num") + "</p_q_user_num>";
+				result += "<p_q_check>" + rs.getInt("p_q_check") + "</p_q_check>";
+				result += "</question>";
+			}
+			result += "</questions>";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return result;
+	}
+	public String pagination(int rowsize ,int block , int pages, int startNo , int lastNo , int startBlock , int lastBlock , int totalRecord , int allPage) {
+		String please = "";
+		please += "<paginations>";
+		please += "<pagination>";
+		please += "<rowsize>" + rowsize + "</rowsize>";
+		please += "<block>" + block + "</block>";
+		please += "<pages>" + pages + "</pages>";
+		please += "<startNo>" + startNo + "</startNo>";
+		please += "<lastNo>" + lastNo + "</lastNo>";
+		please += "<startBlock>" + startBlock + "</startBlock>";
+		please += "<lastBlock>" + lastBlock + "</lastBlock>";
+		please += "<totalRecord>" + totalRecord + "</totalRecord>";
+		please += "<allPage>" + allPage + "</allPage>";
+		please += "</pagination>";
+		please += "</paginations>";
+		
+		return please;
 	}
 }

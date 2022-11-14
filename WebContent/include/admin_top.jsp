@@ -135,7 +135,7 @@
 	nav ul {
 		display: grid;
 		list-style: none;
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(7, 1fr);
 		grid-column: -1/-2;
 		grid-row: 1/2;	
 		height: 66.65px;
@@ -184,6 +184,10 @@
 		grid-column: 5/6;
 		grid-row: 1/2;
 	}
+	.menu_li_5 {
+		grid-column: 6/7;
+		grid-row: 1/2;
+	}
 	
 	.foot_container {
 		display: grid;
@@ -225,10 +229,11 @@
 			
 		<nav class="navi">
 			<ul class="menu">
-				<li class="menu_li_4"><a href="<%=request.getContextPath()%>/admin/admin_home.jsp">관리자 홈</a></li>
-				<li class="menu_li_1"><a href="<%=request.getContextPath()%>/admin_control.do">회원 관리</a></li>
-				<li class="menu_li_2"><a href="<%=request.getContextPath() %>/category_control.do">카테고리 관리</a></li>
-				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/admin_customer_center.do">고객센터 관리</a></li>
+				<li class="menu_li_1"><a href="<%=request.getContextPath()%>/admin/admin_home.jsp">관리자 홈</a></li>
+				<li class="menu_li_2"><a href="<%=request.getContextPath()%>/admin_control.do">회원 관리</a></li>
+				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/category_control.do">카테고리 관리</a></li>
+				<li class="menu_li_4"><a href="<%=request.getContextPath() %>/FAQ_control.do">공지사항 관리</a></li>
+				<li class="menu_li_5"><a href="<%=request.getContextPath() %>/category_question.do">1:1문의 관리</a></li>
 			</ul>
 		</nav>
 	</div>

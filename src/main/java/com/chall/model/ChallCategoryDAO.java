@@ -18,7 +18,7 @@ public class ChallCategoryDAO {
 		
 	private ChallCategoryDAO() {} 
 	
-	public static ChallCategoryDAO getinstance() {
+	public static ChallCategoryDAO getInstance() {
 		if(instance == null) {
 			instance = new ChallCategoryDAO();
 		}

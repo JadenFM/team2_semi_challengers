@@ -14,7 +14,7 @@ public class ChallengeDTO {
 	private String chall_regitimestart;
 	private String chall_regitimeend;
 	private String chall_cont;
-	private int chall_depositdefault;
+	private String chall_depositdefault;
 	private String chall_depositmax;
 	private String chall_privatecode;
 	private String chall_maxpeople;
@@ -106,10 +106,11 @@ public class ChallengeDTO {
 	public void setChall_cont(String chall_cont) {
 		this.chall_cont = chall_cont;
 	}
-	public int getChall_depositdefault() {
+	
+	public String getChall_depositdefault() {
 		return chall_depositdefault;
 	}
-	public void setChall_depositdefault(int chall_depositdefault) {
+	public void setChall_depositdefault(String chall_depositdefault) {
 		this.chall_depositdefault = chall_depositdefault;
 	}
 	public String getChall_depositmax() {

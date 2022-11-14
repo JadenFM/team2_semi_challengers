@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
+import com.main.model.MainDAO;
 import com.search.model.SearchDAO;
 
 public class SearchListAction implements Action {
@@ -15,15 +16,29 @@ public class SearchListAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, Exception {
-
-		String text = request.getParameter("keyword").trim();
+		String str = "";
 		
-		System.out.println("text >>> " +text);
+		String keyword = request.getParameter("keyword").trim();
+		String category = request.getParameter("category").trim();
+		
+		System.out.println("리스트 액션 키워드 >>>" +keyword);
+		System.out.println("리스트 액션 카테고리 >>>" +category);
 		
 		SearchDAO dao = SearchDAO.getinstance();
 		
-		String str = dao.getSearchList(text);
+		if(!keyword.equals("") && keyword != null) {
+			str = dao.getSearchKeyList(keyword);
+		}else if(!category.equals("") && category != null) {
+			str = dao.getSearchCateList(category);
+		}else {
+			str = dao.getChallList();
+		}
 		
+		
+		
+		if(str.equals("<chall_lists></chall_lists>")) {
+			str = "1";
+		}
 		PrintWriter out = response.getWriter();
 		
 		out.println(str);
@@ -31,7 +46,6 @@ public class SearchListAction implements Action {
 		out.flush();
 		
 		System.out.println("str >>> " +str);
-		
 		
 		return null;
 	}

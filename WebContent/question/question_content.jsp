@@ -10,11 +10,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-	function question_answer() {
-		location.href="category_question.do";
-	}
+	$(function(){
+		$("#btn").click(function(){
+			history.back()
+		});
+	});
 	
 </script>
 <style type="text/css">
@@ -25,20 +28,16 @@
 	background-color: #F6F7F9;
 	height: 100%;
 	padding: 60px 0px 30px;
+	margin-left: 30%
 }
 
-.h_container {
-	margin-left: 120px;
-}
 
 .h_container_cate {
-	margin-left: 120px;
-	margin-top: 100px;
+	margin-top: 10%;
 }
 
 .h_container_cont {
-	margin-left: 120px;
-	margin-top: 50px;
+	margin-top: 10%;
 }
 
 .h_container2 {
@@ -69,18 +68,13 @@
 }
 
 img {
-	margin-top: 20px;
+	margin-top: 2%;
 }
 
 .header2 {
 	background-color: #F6F7F9;
-	margin-top: 100px;
+	margin-top: 10%;
 }
-
-.h_bottom {
-	margin-left: 100px;
-}
-
 .list li {
 	display: inline-block;
 	width: 70px;
@@ -100,7 +94,6 @@ img {
 	border-radius: 7px;
 }
 .btn{
-	margin-left : 120px;
 	position: relative;
 	border: none;
 	display: inline-block;
@@ -128,29 +121,29 @@ img {
 		<input type="hidden" name="p_q_user_num" value="<%=content.getP_q_user_num() %>">		
 		<div id="container">
 		<div class="header">
-				<div class="h_container">
-					<h2>제 목</h2>
-					<input class="search" value="<%=content.getP_q_title()%>" readonly>
-				</div>
-				<div class="h_container_cate">
-					<h2>카테고리</h2>
-					<input class="category_name"value="<%=content.getP_q_category_num()%>" readonly>
-				</div>
-				<div class="header2"></div>
-				<div class="h_container_cont">
-					<h2>내 용</h2>
-					<textarea class="cont" rows="20" cols="100" readonly><%=content.getP_q_content() %></textarea>
-				</div>
-				<div class="h_container_cont">
-					<h2>답 변</h2>
-					<textarea class="cont" rows="20" cols="100" name="p_q_answer_cont"></textarea>
-				</div>
-				<br>
-				<br>
-				<input class="btn" type="submit" value="답변하기" onclick="<%=request.getContextPath()%>/category_control.do">
+			<div class="h_container">
+				<h2>제 목</h2>
+				<input class="search" value="<%=content.getP_q_title()%>" readonly>
 			</div>
+			<div class="h_container_cate">
+				<h2>카테고리</h2>
+				<input class="category_name"value="<%=content.getP_q_category_num()%>" readonly>
 			</div>
-			</form>
+			<div class="header2"></div>
+			<div class="h_container_cont">
+				<h2>내 용</h2>
+				<textarea class="cont" rows="20" cols="100" readonly><%=content.getP_q_content() %></textarea>
+			</div>
+			<div class="h_container_cont_1">
+				<h2>답 변</h2>
+				<textarea class="cont" rows="20" cols="100" name="p_q_answer_cont"></textarea>
+			</div>
+			<br>
+			<br>
+			<input class="btn" type="submit" value="답변하기" onclick="<%=request.getContextPath()%>/category_control.do">
+		</div>
+		</div>
+		</form>
 	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 </html>

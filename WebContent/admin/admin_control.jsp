@@ -10,7 +10,31 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <style type="text/css">
-
+	
+	 .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+    
 	.pagination {
 		justify-content: center;
 	}
@@ -127,19 +151,28 @@ img {
 		<table class="member_list" width="1000px">
 		<c:if test="${!empty list }">
 			<tr>
-						<th>아이디</th>
-						<th>이름</th>
-						<th>레벨</th>
+						<th>신고 번호</th>
+						<th>신고자</th>
+						<th>피신고자</th>
 						<th>신고 누적 횟수</th>
+						<th>신고 제목</th>
+						<th>신고 사유</th>
 						<th>회원 삭제</th>
 			</tr>
 			<c:forEach items="${list }" var="dto">
 			<tr>
-						<td>${dto.mem_id }</td>
-						<td>${dto.mem_name }</td>
-						<td>${dto.mem_level }</td>
-						<td><a href="<%=request.getContextPath()%>/report_content.do?mem_id=${dto.mem_id}&page=${page}">${dto.mem_report_count }</a></td>
-						<td><input class="btn" type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?mem_id=${dto.mem_id }&page=${page }'" value="삭제하기"></td>
+						<td>${dto.report_num }</td>
+						<td>${dto.mem_id_report }</td>
+						<c:if test="${!empty dto.mem_id_reported }">
+							<td>${dto.mem_id_reported }</td>
+						</c:if>
+						<c:if test="${empty dto.mem_id_reported }">
+							<td>${dto.mem_name_reported }</td>
+						</c:if>
+						<td>${dto.report_count }</td>
+						<td>${dto.report_title }</td>
+						<td><a href="<%=request.getContextPath()%>/report_content.do?report_num=${dto.report_num}&page=${page}">${dto.report_cause }</a></td>
+						<td><input class="btn" type="button" onclick="location.href='<%=request.getContextPath()%>/admindelete.do?report_num=${dto.report_num }&page=${page }'" value="삭제하기"></td>
 			</tr>
 			</c:forEach>
 		</c:if>

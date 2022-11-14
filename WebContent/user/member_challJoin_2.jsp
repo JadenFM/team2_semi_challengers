@@ -11,25 +11,69 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-	
+	onload = function() {
+		let checkBox1 = document.getElementById("open-outlined");
+		let checkBox2 = document.getElementById("private-outlined");
+		const target = document.getElementById('next');
+		
+		checkBox1.onclick = function() {
+				 target.disabled = false;
+		}
+		
+		checkBox2.onclick = function() {
+				 target.disabled = false;
+		}
+	}
 
 </script>
 <style type="text/css">
 	.innerText {
 		text-align: left;
 	}
+
+	.join_hr {
+		border: 0;
+    	height: 3px;
+    	background: #ff4d54;
+    	opacity: 100;
+	}
+	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
+   .container{
+    margin-right: 0px;
+    margin-left: 0px;   
+    max-width: 100%;
+    padding: 0px;
+    box-sizing: content-box;
+      }
+   
+    .search_text{
+   box-sizing:content-box;
+    }
+    
+    .rogoImg{
+   box-sizing: content-box;
+    }
+    
+    .top{
+   margin: 16px 0px 16px 0px; 
+    }
+    
+    .menu li{
+    box-sizing: content-box;
+    }
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
+	
 </style>
 </head>
 <body>
 	<jsp:include page="../include/chall_top.jsp" />
 		<div align="center">
-			<form action="member_challJoin_3.do" method="post">
+			<!-- <form action="member_challJoin_3.do" method="post"> -->
+			<form method="post">
 			<h3><b>어떤 챌린지를 만드시겠어요?</b></h3> <br>
 			<h6>마지막 단계에서 수정하기 어려우니 신중히 골라주세요!</h6>
-			<hr width="50%" color="red">
+			<hr class="join_hr" width="50%" color="red">
 			<br>
-			<%-- <c:set var="test" value="${Test }"/>
-			<a>Oracle Cloud - CHALLENGE_CATEGORY 테이블에 있는 자료 : ${test }</a> --%>
 			
 			<input type="radio" class="btn-check" name="openRadio" id="open-outlined" autocomplete="off" value="open">
 			<label class="btn btn-outline-success" for="open-outlined"><b>&nbsp;&nbsp;공개 챌린지🙌</b>
@@ -44,8 +88,8 @@
 			<br>(초대받은 사람만 참여할 수 있어요)</label>
 			
 			<br><br><br>
-			<button type="submit" class="btn btn-dark">다음</button>
-			<!-- 버튼은 비활성화되어있다가 라디오버튼 하나라도 선택하면 활성화되게 -->
+			<!-- <button id="tempSave_btn" type="submit" class="btn btn-secondary" formaction="member_challJoin_2_save.do">임시저장</button> -->
+			<button id="next" type="submit" class="btn btn-dark" formaction="member_challJoin_3.do" disabled>다음</button>
 			</form>
 		</div>
 		<br>

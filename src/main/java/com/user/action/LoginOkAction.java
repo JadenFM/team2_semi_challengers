@@ -51,7 +51,6 @@ public class LoginOkAction implements Action {
 			session.setAttribute("memberName", dto.getMem_name());
 			session.setAttribute("memberNum", dto.getMem_num());
 			session.setAttribute("list",list);
-			session.setAttribute("member_id", member_id);
 			forward.setRedirect(true);
 			
 			// 메인 페이지로 이동

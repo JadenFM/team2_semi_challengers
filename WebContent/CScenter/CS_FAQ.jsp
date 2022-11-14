@@ -10,55 +10,105 @@
 	<jsp:include page="../include/chall_top.jsp" />
 	<jsp:include page="../include/CS_top.jsp" />
 
-				
-			<table class="full_table" id="FAQ_table">
-				<tr>
+
+			<table class="full_table">
+				<tr class="contentTitle">
 					<td colspan="2">
 						<h1>FAQ</h1>
+						<hr>
 					</td>
 				</tr>
-
+				<tr>
+					<td>
+						<nav>
+							<ul class="FAQ_menu">
+								<li class="FAQ_cate" value="0">전체</li>
+								<li class="FAQ_cate" value="1">인증</li>
+								<li class="FAQ_cate" value="2">결제</li>
+								<li class="FAQ_cate" value="3">상금</li>							
+							</ul>
+						</nav>
+					</td>
+				</tr>
+				
 				<c:set value="${FAQList}" var="list" />
 				<c:if test="${!empty list }">
 					<c:forEach items="${list }" var="dto">
 						<tr>
 						<td>
-						<div id="FAQ_Accordian_wrap">  
-							<div class="question">
-								<span class="q_cate">
-									<c:if test="${dto.getFAQ_category_num() == 1}">
-										[인증]
-									</c:if>
-									<c:if test="${dto.getFAQ_category_num() == 2}">
-										[결제]
-									</c:if>
-									<c:if test="${dto.getFAQ_category_num() == 3}">
-										[상금]
-									</c:if>
-								</span>
-								
-								<span class="q_title">
-									${dto.getFAQ_title() }
-								</span>
-								<div class="q_arrow-wrap">
-									<div class="q_arrow-top">
-										<i class="bi bi-arrow-up"></i>
+							<c:choose>
+								<c:when test="${dto.getFAQ_category_num() == 1}">
+									<div class="FAQ_cate_proof">
+										<div class="question">
+											<span class="q_cate">[인증]</span>
+											<span class="q_title">${dto.getFAQ_title() }</span>
+											<div class="q_arrow-wrap">
+												<div class="q_arrow-top">
+													<i class="bi bi-arrow-up"></i>
+												</div>
+												<div class="q_arrow-bottom">
+													<i class="bi bi-arrow-down"></i>
+												</div>
+											</div>
+										</div>
+										
+										<div class="answer">
+											<span>
+												${fn:replace(dto.getFAQ_content(), replaceEnter, "<br/>") }
+											</span>
+										</div>
 									</div>
-									<div class="q_arrow-bottom">
-										<i class="bi bi-arrow-down"></i>
+								</c:when>
+								<c:when test="${dto.getFAQ_category_num() == 2}">
+									<div class="FAQ_cate_pay">
+										<div class="question">
+											<span class="q_cate">[결제]</span>
+											<span class="q_title">${dto.getFAQ_title() }</span>
+											<div class="q_arrow-wrap">
+												<div class="q_arrow-top">
+													<i class="bi bi-arrow-up"></i>
+												</div>
+												<div class="q_arrow-bottom">
+													<i class="bi bi-arrow-down"></i>
+												</div>
+											</div>
+										</div>
+										
+										<div class="answer">
+											<span>
+												${fn:replace(dto.getFAQ_content(), replaceEnter, "<br/>") }
+											</span>
+										</div>
 									</div>
-								</div>
-							</div>
-							
-							<div class="answer">
-								<span>
-									${fn:replace(dto.getFAQ_content(), replaceEnter, "<br/>") }
-								</span>
-							</div>
-						</div>
+								</c:when>
+								<c:when test="${dto.getFAQ_category_num() == 3}">
+									<div class="FAQ_cate_reward">
+										<div class="question">
+											<span class="q_cate">[상금]</span>
+											<span class="q_title">${dto.getFAQ_title() }</span>
+											<div class="q_arrow-wrap">
+												<div class="q_arrow-top">
+													<i class="bi bi-arrow-up"></i>
+												</div>
+												<div class="q_arrow-bottom">
+													<i class="bi bi-arrow-down"></i>
+												</div>
+											</div>
+										</div>
+										
+										<div class="answer">
+											<span>
+												${fn:replace(dto.getFAQ_content(), replaceEnter, "<br/>") }
+											</span>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
 						</td>
 						</tr>
 						</c:forEach>
+						
+							
 				</c:if>
 				<c:if test="${empty list }">
 					<tr>
@@ -67,5 +117,40 @@
 				</c:if>
 
 			</table>
+			
+			<script>
+			
+				$(".question").click(function(){
+					if ($(this).hasClass('show')){
+						$(this).next(".answer").slideUp(200);
+						$(this).removeClass('show');
+					}else {
+						$(this).next(".answer").stop().slideDown(200);
+						$(this).addClass('show');
+					}
+				});
+			
+				$(".FAQ_cate").click(function(){
+					if ($(this).attr('value') == 0){
+						$(".FAQ_cate_proof").show();
+						$(".FAQ_cate_pay").show();
+						$(".FAQ_cate_reward").show();
+					}else if($(this).attr('value') == 1){
+						$(".FAQ_cate_proof").show();
+						$(".FAQ_cate_pay").hide();
+						$(".FAQ_cate_reward").hide();
+					}else if($(this).attr('value') == 2){
+						$(".FAQ_cate_proof").hide();
+						$(".FAQ_cate_pay").show();
+						$(".FAQ_cate_reward").hide();
+					}else if($(this).attr('value') == 3){
+						$(".FAQ_cate_proof").hide();
+						$(".FAQ_cate_pay").hide();
+						$(".FAQ_cate_reward").show();
+					}
+				});
+				
+			</script>
+		
 	<jsp:include page="../include/CS_bottom.jsp" />
 	<jsp:include page="../include/chall_bottom.jsp" />
