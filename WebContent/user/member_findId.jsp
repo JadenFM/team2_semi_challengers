@@ -20,7 +20,7 @@
 		display: grid;
 		place-items: center;
 		grid-template-columns: 20% 60% 20%;
-		grid-template-rows: 100px 50px 500px 50px;
+		grid-template-rows: 100px 50px 1fr 50px;
 	}
 
 	.findId_top{
@@ -80,7 +80,7 @@
 		display: grid;
 		place-items: center;
 		grid-template-columns: 5% 90% 5%;
-		grid-template-rows: repeat(4,110px);	
+		grid-template-rows: repeat(3,1fr);	
 	}
 	
 	.findId_content label{
@@ -109,15 +109,9 @@
 		margin-bottom: 20px;	
 	}
 	
-	.textbox3{
-		grid-column: 2/3;
-		grid-row: 3/4;	
-		margin-bottom: 20px;	
-	}
-	
 	.findId_btn{
 		grid-column: 2/3;
-		grid-row: 4/5;	
+		grid-row: 3/4;	
 		width: 317.22px;
 		height: 50px;	
 		border: 0;
@@ -136,45 +130,12 @@
 	
 </style>
 <script type="text/javascript">
+	
 
 	$(function(){
-		// 선택자 바꾸기~~~
-    	$("#reqError1").hide();
-    	
-    	/* 공통 함수 start*/    	
-    	// 에러메세지를 띄우는 함수
-   		function showMsg(msgDiv,msg){
-	        	msgDiv.text(msg);
-	        	msgDiv.show();
-   		} 	
-    	
-    	// 에러메세지를 숨기는 함수
-   		function hideMsg(msgDiv){
-	        	msgDiv.hide();     			
-   		} 	
-    	/* 공통함수 end */
     	
     	
-    	// 입력창 포커스가 사라질 때 유효성 검사 함수 호출	
-    	$("#idInput").blur(function() {
-    		checkId();
-    	});
-	
-  	
-    	// 아이디 유효성 검사 함수
-    	function checkId(){
-        	let inputId = $("#idInput");
-        	let msgDiv = $("#reqError");
-        	let msg = "아이디를 입력하세요.";
-        	
-        	// 필수값 검사
-    		if (inputId.val() == ""){	
-    			showMsg(msgDiv,msg);
-    		}else{
-    			hideMsg(msgDiv);
-    		}
-    	}		
-		
+
 	});
 
 </script>
@@ -201,21 +162,14 @@
 			  		<label for="text">이  름</label>
 			  		<br>
 			  		<input class="inputBox" id="nameInput" name="name" required="" type="text" />
-			   		<div class="error" id="reqError1" >이름을 입력하세요.  </div>
+			   		<div class="error" id="nameDiv" ></div>
 			 	</div>
-			 	
+			 				 	
 				<div class="textbox2">
-			  		<label for="text">휴대전화</label>
-			  		<br>
-			  		<input class="inputBox" id="idInput" name="id" required="" type="text" />
-			   		<div class="error" id="reqError2">휴대전화 번호를 입력하세요.  </div>
-			 	</div>
-			 	
-				<div class="textbox3">
 			  		<label for="email">이메일</label>
 			  		<br>
-			  		<input class="inputBox" id="emailInput" name="email" required="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)?$/i" type="email" />
-			  	<div class="error" id="reqError3">유효하지 않은 이메일주소 입니다.  </div>
+			  		<input class="inputBox" id="emailInput" name="email"/>
+			  	<div class="error" id="emailDiv"></div>
 				</div>
 			   	<input type="submit" class="findId_btn" value="아이디찾기">
 			</form>

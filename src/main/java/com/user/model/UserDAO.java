@@ -310,7 +310,7 @@ public class UserDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into user_member (mem_num, mem_id, mem_pwd, mem_name, mem_age, mem_gender, mem_email, mem_phone, mem_addr, regdate, mem_birth, emailid, emaildomain, postcode, roadAddress, jibunAddress, detailAddress, extraAddress, nationNo , phoneNo, kakaoAccount) values(?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, 'NO' )";
+			sql = "insert into user_member (mem_num, mem_id, mem_pwd, mem_name, mem_age, mem_gender, mem_email, mem_phone, mem_addr, regdate, mem_birth, emailid, emaildomain, postcode, roadAddress, jibunAddress, detailAddress, extraAddress, nationNo , phoneNo, kakaoAccount, mem_img) values(?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, 'NO', ? )";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -333,6 +333,7 @@ public class UserDAO {
 			pstmt.setString(17, dto.getExtraAddress());
 			pstmt.setString(18, dto.getNationNo());
 			pstmt.setString(19, dto.getPhoneNo());
+			pstmt.setString(20, dto.getMem_img());
 			
 			result = pstmt.executeUpdate();
 			
@@ -798,6 +799,36 @@ public class UserDAO {
 		}
 	}	// updateXp() end
 
+	
+	//  회원 가입시 입력받은 이메일이 DB의 회원 테이블에 존재하는 지 중복 체크하는 메소드
+	public int checkEmailDuplication(String email) {
+		
+		int count = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select count(*) from user_member where mem_email = ? ";
+				
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}finally{
+			closeConn(rs, pstmt, con);
+		}
+		return count;
+	}	// checkEmailDuplication() 메소드 end
+	
+
 	public int DeleteMember(String mem_id, String mem_name) {
 		int result = 0;
 		openConn();
@@ -876,12 +907,59 @@ public class UserDAO {
 				mem_name = rs.getString("mem_name");
 			}
 		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}finally {
 			closeConn(rs, pstmt, con);
 		}
+
 		return mem_name;
-	}
+	}		
+
+	// 해당 회원 번호의 회원 정보를 수정하는 메소드
+	public int updateMemberInfo(int member_num, UserDTO dto) {
+		
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "update user_member set mem_id=?, mem_pwd=?, mem_name=?, mem_birth=?, mem_gender=?, mem_age=?, mem_email=?, emailId=?, emailDomain=?, mem_phone=?, nationNo=?, phoneNo=?, mem_addr=?, postcode=?, roadAddress=?, JibunAddress=?, detailAddress=?, extraAddress=?, mem_img=? where mem_num = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, dto.getMem_id());
+			pstmt.setString(2, dto.getMem_pwd());
+			pstmt.setString(3, dto.getMem_name());
+			pstmt.setString(4, dto.getMem_birth());
+			pstmt.setString(5, dto.getMem_gender());
+			pstmt.setInt(6, dto.getMem_age());
+			pstmt.setString(7, dto.getMem_email());
+			pstmt.setString(8, dto.getEmailId());
+			pstmt.setString(9, dto.getEmailDomain());
+			pstmt.setString(10, dto.getMem_phone());
+			pstmt.setString(11, dto.getNationNo());
+			pstmt.setString(12, dto.getPhoneNo());
+			pstmt.setString(13, dto.getMem_addr());
+			pstmt.setInt(14, dto.getPostcode());
+			pstmt.setString(15, dto.getRoadAddress());
+			pstmt.setString(16, dto.getJibunAddress());
+			pstmt.setString(17, dto.getDetailAddress());
+			pstmt.setString(18, dto.getExtraAddress());
+			pstmt.setString(19, dto.getMem_img());
+			pstmt.setInt(20, member_num);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+	}	// updateMemberInfo() 메소드 end
+
 
 	public String getMemberId(String mem_name) {
 		String mem_id = "";
@@ -895,10 +973,13 @@ public class UserDAO {
 				mem_id = rs.getString("mem_id");
 			}
 		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}finally {
 			closeConn(rs, pstmt, con);
 		}
+
 		return mem_id;
 	}
+
 }
