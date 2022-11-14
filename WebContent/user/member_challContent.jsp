@@ -1,22 +1,71 @@
+<%@page import="com.review.model.ReviewDAO"%>
 <%@page import="com.chall.model.ChallJoinDTO"%>
 <%@page import="com.user.model.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%
+	ChallJoinDTO dto = (ChallJoinDTO)request.getAttribute("challContent");
+	int chall_num = dto.getChall_num();
+	System.out.println("챌린지 번호~~~~" + chall_num);
+	
+	ReviewDAO dao = ReviewDAO.getinstance();
+	int reviewCheck = dao.checkReview(chall_num);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>챌린지 상세페이지</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="searchJS/getLocal.js"></script>
 
-<%
-	ChallJoinDTO dto = (ChallJoinDTO)request.getAttribute("challContent");
-%>
+<script type="text/javascript">
+
+function getReviewPreview(challNo){
+	
+	if (<%=reviewCheck%> == 1){
+
+		$.ajax({
+			url : "<%=request.getContextPath()%>/review_preview.do",
+			data : {
+				challNo : challNo
+			},
+			datatype : "html",
+			success : function(data){
+				$("#chall-reivew-write-btn").remove();
+				$("#chall-review-preview").empty();
+				$("#chall-review-preview").html(data);			
+			},
+			error : function(){
+				$("#chall-review-preview").html("<p><font color='gray'>데이터 통신 오류입니다.</font></p>");
+			}
+		});
+	}else {
+		$("#chall-review-preview").html("<br><font color='gray'><p>아직 작성된 리뷰가 없어요.</p><p>첫 번째 리뷰를 작성해보세요!</p></font>");
+		$("#chall-reivew-btn").remove();
+		$("#chall-reivew-write-btn").css('display', 'block');
+	}
+	
+	
+}
+
+function getReveiwAll(challNo){
+	$(location).attr('href', "<%=request.getContextPath() %>/review/review_main.jsp?challNo="+challNo);
+}
+
+$(function(){
+	getReviewPreview(<%=chall_num %>);
+	
+});
+
+</script>
+
 <style type="text/css">
 	.title_hr {
 		border: 0;
@@ -57,6 +106,31 @@
     box-sizing: content-box;
     }
 /* 부트스트랩 적용 후 바뀌는 부분(include) end */
+
+/* 리뷰 div 스크롤바 꾸미기*/
+
+#chall-review-wrap{
+	visibility: hidden;
+}
+
+#chall-review-preview, #chall-review-wrap:hover {
+	visibility: visible;
+}
+
+#chall-review-wrap::-webkit-scrollbar {
+	width: 2px; /*스크롤바의 너비*/
+}
+
+#chall-review-wrap::-webkit-scrollbar-thumb {
+	animation : fadein 1s;
+    background-color: lightgray; /*스크롤바의 색상*/
+    border-radius: 10px;
+}
+
+#chall-review-wrap::-webkit-scrollbar-track {
+    background-color: transparent; /*스크롤바 트랙 색상*/
+}
+
 </style>
 </head>
 <body>
@@ -138,7 +212,22 @@
 					<br>
 					<hr class="join_hr" width="50%" color="red">
 					<h4>참가자 후기</h4>
-					<button type="button" class="btn btn-dark" onclick="후기 전체보기 경로">후기 모두 보기</button>
+					
+					<!-- 리뷰 div -->
+					<div id="chall-review-wrap" style="width:50%; overflow-x:scroll; white-space: nowrap;">
+						<div id="chall-review-preview">
+							<br><br>
+						</div>
+					</div>
+					<br>
+					<div id="chall-reivew-btn">
+						<button type="button" class="btn btn-dark" onclick="getReveiwAll(<%= chall_num %>)">후기 모두 보기</button>
+					</div>
+					<div id="chall-reivew-write-btn" style="display : hidden;">
+						<button type="button" class="btn btn-dark" onclick="getReveiwAll(<%= chall_num %>)">리뷰 작성하기</button>
+					</div>
+					<!-- 리뷰 끝 -->
+					
 				</c:when>
 				<c:otherwise>
 					<hr class="join_hr" width="50%" color="red">

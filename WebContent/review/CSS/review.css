@@ -20,6 +20,74 @@
     }
 /* 부트스트랩 적용 후 바뀌는 부분(include) end */
 
+
+#reviewContent {
+	text-align: center;
+}
+
+#review-btn{
+	text-align: right;
+	padding-right: 20%;
+}
+
+/* #review-btn button {
+	padding: 10px;
+	border: 1px solid gray;
+	border-radius: 0.375rem;
+	background-color: rgb(240, 240, 240);
+	color : gray;
+}
+
+#review-btn button:hover {
+	background-color: rgb(240, 240, 240);
+} */
+
+.btn-primary {
+    color: #fff !important;
+    background-color: #ff8589 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-primary:hover {
+	background-color: #ff4d54 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-primary:active{
+    color: #fff;
+    background-color: #ff4d54;
+    border-color: #ff4d54;
+}
+
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #d1565b;
+    border-color: #d1565b;
+}
+
+.btn-outline-primary {
+    color: #e74349 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #ff4d54 !important;
+    border-color: #e74349 !important;
+}
+
+.btn-outline-primary:active {
+	color: #fff;
+    background-color: #ff4d54;
+    border-color: #ff4d54;
+}
+
+.btn-outline-primary:disabled {
+	color: #d1565b;
+    background-color: transparent;
+    border-color: #d1565b;
+}
+
 #reviewList {
 	display : grid; 
 	width : 60%; 
@@ -29,19 +97,28 @@
 }
 
 .review-wrap {
+	text-align: left;
 	margin : 10px;
 	border-radius: 10px;
 	background-color: rgb(240, 240, 240);
 	padding : 20px;
+	padding-top: 15px;
 }
 
 .dropdown-content{
 	display : none;
+	width: 93%;
+	padding-left : 20px;
+}
+
+.dropdown-content a {
+	text-decoration: none;
+	color: gray;
 }
 
 .dropdown-content.show{
 	display:block;
-	width: 92%;
+	width: 93%;
 	height: 300px;
 	position: absolute;
 	background-color: white;
@@ -49,13 +126,133 @@
 	border-top : 0px;
 	overflow: scroll;
 	overflow-x: hidden;
+	z-index:10;
+}
+
+.dropdown-content.show a {
+	text-decoration: none;
+	color: gray;
+}
+
+.dropdown-content.show a:hover{
+	cursor : pointer;
+	color: #ff4d54;
+	font-size: 1.05em;
+	font-weight: bold;
 }
 
 .dropdown-content.show span {
 	cursor : pointer;
 }
 
-.chall-list:hover{
+.reviewForm fieldset{
+    display: inline; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    direction: rtl;
+    border: 0; /* 필드셋 테두리 제거 */
+}
+.starRadio{
 	cursor : pointer;
+    display: none; /* 라디오박스 감춤 */
+}
+
+.starRadio:checked ~ .starLabel{
+	cursor : pointer;
+    filter: none;
 	color: #ff4d54;
+}
+.starLabel {
+	cursor : pointer;
+    font-size: 1.2em; /* 이모지 크기 */
+    filter: grayscale(100%);
+    text-shadow:  -1px 0px gray, 0px 1px gray, 1px 0px gray, 0px -1px gray;
+}
+
+.starLabel:hover {
+	cursor : pointer;
+	filter: none;
+	color: #ff4d54;
+}
+
+.starLabel:hover ~ .starLabel {
+	cursor : pointer;
+	filter: none;
+	color: #ff4d54;
+}
+
+.raitingStar {
+	cursor: default;
+	font-size: 0.8em; /* 이모지 크기 */
+	filter: none;
+	text-shadow: -1px 0px gray, 0px 1px gray, 1px 0px gray, 0px -1px gray;
+}
+
+.emptyStar{
+	cursor: default;
+	font-size:0.8em;
+	filter: grayscale(100%);
+	text-shadow: -1px 0px gray, 0px 1px gray, 1px 0px gray, 0px -1px gray;
+}
+
+
+#review-page-block {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+li.page-item.active a.page-link {
+	background-color: #ff4d54;
+    border-color: #ff4d54;
+}
+
+a.page-link {
+    border-color: light-gray;
+    color : gray;
+}
+
+a.page-link:hover {
+   	background-color: rgb(240, 240, 240);
+    color : black;
+}
+
+
+a:active {
+	outline : none;
+	border : none;
+	text-shadow: none;
+}
+
+.review-content-header {
+	text-align: justify;
+}
+
+.review-content-header:after{
+content: "";
+display: inline-block;
+width: 100%;
+}
+
+.review-name {
+	display: inline-block;
+	text-align: left;
+}
+
+.wrap-star {
+	display: inline-block;
+	text-align: right;
+}
+
+.review-delete {
+	z-index:10;
+}
+
+.review-update, .review-foot {
+	font-size:0.7em; 
+	cursor: pointer;
+}
+
+.review-update a, .review-foot a {
+	text-decoration: none;
+	color: gray; 
 }

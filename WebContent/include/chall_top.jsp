@@ -437,13 +437,13 @@ input::-webkit-search-results-decoration{
 				<ul class="top">
 					
 					<c:if test="${empty memberName }">
-						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_main.do">고객센터</a></li>
+						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_center/CS_main.jsp">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath()%>/member_login.do">마이페이지</a></li>					
 						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_login.do">로그인</a></li>
 					</c:if>
 					
 					<c:if test="${!empty memberName }">
-						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_main.do">고객센터</a></li>
+						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_center/CS_main.jsp">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
 						<li class="top_li_3"><a href="#" onclick="javascript:document.frm.submit();">로그아웃</a></li>
 						<form name="frm" action="<%=request.getContextPath() %>/member_logout.do" method="POST">

@@ -72,9 +72,32 @@
 			<input type="hidden" name="keyword" value="">				
 			<input type="hidden" id="form_category" name="category" value="">				
 			</form>	
-<a href="<%=request.getContextPath() %>/review/review_main.jsp" >임시리뷰페이지</a>	
+
+				<div class="most_container">
+					<div class="container_title">
+						<span class="title">인기 챌린지</span>
+					</div>
+					<div id="input_items2">
+					</div>
+				</div>
 			
-	</article>	
-	<jsp:include page="include/chall_bottom.jsp" />	
-</body>	
+				<div class="admin_container">
+					<div class="container_title">
+						<span class="title">전문 멘토와 함께하는 챌린지</span>
+					</div>
+					<div id="input_items3">
+					</div>
+				</div>
+			</div>
+			
+			<form id="form" method='post' action="<%=request.getContextPath()%>/search.do">
+			<input type="hidden" name="keyword" value="">			
+			<input type="hidden" id="form_category" name="category" value="">			
+			</form>
+		
+	</article>
+	<jsp:include page="include/chall_bottom.jsp" />
+</body>
 </html>
+
+

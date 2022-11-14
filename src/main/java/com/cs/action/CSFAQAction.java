@@ -21,9 +21,10 @@ public class CSFAQAction implements Action {
 		  
 		List<FAQDTO> list = dao.getFAQList();
 		request.setAttribute("FAQList", list);
+		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("CScenter/CS_FAQ.jsp");
+		forward.setPath("CS_center/CS_FAQ.jsp");
 		
 		return forward;
 	}
