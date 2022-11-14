@@ -23,10 +23,10 @@
 <link rel="stylesheet" href="../CSS/CScenter.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="../JS/CScenter.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/searchJS/location.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/searchJS/location.js"></script>
+
+<script type="text/javascript" src="searchJS/location.js"></script>
 <script type="text/javascript" src="searchJS/local.js"></script>
-<!-- <script type="text/javascript" src="../searchJS/move.js"></script>
+
 <script type="text/javascript" src="searchJS/move.js"></script> -->
 
 
