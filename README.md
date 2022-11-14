@@ -7,14 +7,23 @@
 <br>
 <br>
 
-<h2>Tools</h2>
-<li>Eclipse IDE for Enterprise Java Developers - Ver. 2020-09(4.17.0)
-<li>Oracle Cloud Database
-<li>apache-tomcat-9.0.65
-
-<h2>API</h2>
-[BootStrap](http://www.dropwizard.io/1.0.2/docs/) <https://getbootstrap.com/>
-<li>moment.js
+## Tools
+* Eclipse IDE for Enterprise Java Developers - Ver. 2020-09(4.17.0)
+* Oracle Cloud Database
+* Oracle SQL developer
+* apache-tomcat-9.0.65
+* Notion
 
 ## API
 * [BootStrap](https://getbootstrap.com)
+* [moment.js(날짜 표기&연산)](https://momentjs.com/)
+* [iamport(결제)](https://www.iamport.kr)
+
+## Work
+* JadenFM
+  * 프로젝트 세팅
+  * 챌린지 개설 / 결제 / 상세페이지 / 인증
+  
+* OOO
+  * ...
+  * ...
