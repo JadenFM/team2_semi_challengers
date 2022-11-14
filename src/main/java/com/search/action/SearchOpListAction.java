@@ -152,6 +152,7 @@ public class SearchOpListAction implements Action {
 		
 		PrintWriter out = response.getWriter();
 		
+		System.out.println(str);
 		out.println(str);
 		
 		

@@ -478,5 +478,27 @@ public class ReviewDAO {
 	}
 	
 	
+	public int deleteReview(int review_num) {
+	      int result = 0;
+	      
+	      try {
+
+	         openConn();
+	         
+	         sql = "delete from review where review_num = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, review_num);
+	         result = pstmt.executeUpdate();
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         closeConn(rs, pstmt, con);
+	      }
+	      
+	      return result;
+	   }
+	
+	
 
 }

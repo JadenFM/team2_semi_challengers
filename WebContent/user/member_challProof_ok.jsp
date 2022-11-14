@@ -98,7 +98,7 @@
 		<span><%=gained_deposit%>원</span><br>
 		
 		<br><br>
-		<button class="btn btn-dark" onclick="경로">확인</button> *메인 페이지 or 마이페이지 메인으로 경로 설정해야 함
+		<button class="btn btn-dark" onclick="location.href='member_challProof.do'">인증페이지 다시 가기</button>
 	</div>
 <jsp:include page="/include/chall_bottom.jsp" />
 </body>

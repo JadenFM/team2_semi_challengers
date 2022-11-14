@@ -55,9 +55,9 @@ $(function(){
 		<tr class="contentTitle">
 			<td colspan="2">
 				<h1>FAQ</h1>
-				<div style="text-align :right">
+				<!-- <div style="text-align :right">
 					<span><i class="bi bi-search"></i> <input id="faq-search" type="text" class="form-control" style="display: inline-block; width:25%;" placeholder="검색..."></span>
-				</div>
+				</div> -->
 					<hr>
 				</td>
 			</tr>

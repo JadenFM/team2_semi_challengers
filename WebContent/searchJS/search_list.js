@@ -55,6 +55,8 @@ $(document).ready(function(){
 		
 		let decodeHashURI = decodeURI(hash);
 		
+		console.log('---' +decodeHashURI);
+		
 		let regEx = /#([a-zA-z]+)/;	
 		
 		let match = decodeHashURI.match(regEx);
@@ -62,17 +64,68 @@ $(document).ready(function(){
 		if(match){
 			let category = match[1];
 			
+			console.log('category>' +category);
+			
 			if(category == "search"){
+					console.log('res search');
 					let regEx = /#search\/keyword=(.*)/i;
 					let match = decodeHashURI.match(regEx);
 					let code = match[1];
 					let define = "";
 					getSearchList(code, define, page);
 					scroll_option = "search";
+			}else{
+		console.log('ref 해시 이벤트');
+		$("#card_chall").empty();
+		
+		let hash = document.location.hash;
+		
+		let decodeHashURI = decodeURI(hash);
+		
+		let regEx = /#([a-zA-z]+)/;	
+		
+		let match = decodeHashURI.match(regEx);
+		
+		if(hash!=""){
+			if(match){
+				let category = match[1];
+				
+				if(category == "option"){
+					let regEx = /#([a-zA-z]+)\/keyword=(.*)&cycle=(.*)&duration=(.*)&category=(.*)/i;
+					let match = decodeHashURI.match(regEx);
+					let key = match[2];
+					let cycle = match[3];
+					let duration = match[4];
+					let category = match[5];
+					
+					getSearchListOption(key, cycle, duration, category);
+					
+				}else if(category == "search"){
+					
+					let regEx = /#search\/keyword=(.*)/i;
+					let match = decodeHashURI.match(regEx);
+					let code = match[1];
+					let define = "";
+					
+					scroll_option = "search";
+					getSearchList(code, define, page);
+					
+				}else if(category == "category"){
+					let regEx = /#category\/category=(.*)/i;
+					let match = decodeHashURI.match(regEx);
+					let code = match[1];
+					let define = "";
+					
+					getSearchList(define, code, page);
+					
+				}
+			}
+		}
 			}
 		}else{
-			if(check(category)){
+				if(check(category)){
 					console.log('시작카테고리');
+					scroll_option = "category";
 					getHashCategory(category);
 					getCheckCategory(category);
 				}else{
@@ -132,7 +185,7 @@ $(document).ready(function(){
 						card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
 						card += "<p>" +$(this).find("chall_title").text()+ "</p><a>";
 						card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
-						card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "</span>&nbsp;";
+						card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "주</span>&nbsp;";
 						card += "</div>";
 						
 						if(count % 4 == 0){
@@ -200,7 +253,7 @@ $(document).ready(function(){
 						card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
 						card += "<p>" +$(this).find("chall_title").text()+ "</p><a>";
 						card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
-						card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "</span>&nbsp;";
+						card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "주</span>&nbsp;";
 						card += "</div>";
 						
 						if(count % 4 == 0){
@@ -307,22 +360,25 @@ $(document).ready(function(){
 					let category = match[5];
 					
 					getSearchListOption(key, cycle, duration, category);
-					scroll_option = "option";
+					
 				}else if(category == "search"){
 					
 					let regEx = /#search\/keyword=(.*)/i;
 					let match = decodeHashURI.match(regEx);
 					let code = match[1];
 					let define = "";
-					getSearchList(code, define, page);
+					
 					scroll_option = "search";
+					getSearchList(code, define, page);
+					
 				}else if(category == "category"){
 					let regEx = /#category\/category=(.*)/i;
 					let match = decodeHashURI.match(regEx);
 					let code = match[1];
 					let define = "";
+					
 					getSearchList(define, code, page);
-					scroll_option = "category";
+					
 				}
 			}
 		}
@@ -333,6 +389,8 @@ $(document).ready(function(){
 	
 
 	$("#search_option").on("click", function(){
+		
+		scroll_option = "option";
 		
 		$("#card_chall").empty();
 		page = 1;

@@ -21,7 +21,7 @@ public class MemberJoinOkAction implements Action {
 			throws IOException, Exception {
 		
 		
-		String saveFolder = "C:\\Users\\user\\git\\team2_semi_challengers\\WebContent\\memUpload";
+		String saveFolder = "C:\\Users\\VVIP\\git\\team2_semi_challengers\\WebContent\\memUpload";
 		int fileSize = 10 * 1024 * 1024; // 10MB
 
 		MultipartRequest multi = new MultipartRequest(

@@ -26,7 +26,7 @@ public class MyOngoingChallAction implements Action {
 		MyChallDAO dao = MyChallDAO.getinstance();
 		
 		// 해당 회원이 참가중인 챌린지 수를 반환하는 메소드 호출.
-		int count = dao.getOngoingChallCount(member_num);
+	     int count = dao.getTotalChallCount(member_num);
 		
 		// 해당 회원의 전체 챌린지 참여 수, 완수한 챌린지 수, 경험치를 반환하는 메소드 호출
 		UserDTO dto = dao.getUserChallengeInfo(member_num);

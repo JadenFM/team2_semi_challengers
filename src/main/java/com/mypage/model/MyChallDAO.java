@@ -65,68 +65,7 @@ public class MyChallDAO {
 	} // closeConn() END
 	
 	
-	// 회원이 참여중인 챌린지 테이블의 전체 게시물의 수를 확인하는 메소드
-	public int getOngoingChallCount(int member_num) {
-		
-		int count = 0;
-		
-		UserDTO dto = new UserDTO();
-		
-		try {
-			openConn();
-			
-			// 1. 해당 회원이 참여하고 있는 챌린지를 조회.
-			sql="select my_challenge1, my_challenge2, my_challenge3, my_challenge4, my_challenge5, my_challenge6, my_challenge7, my_challenge8, my_challenge9, my_challenge10 from user_member where mem_num=? ";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, member_num);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				dto.setMy_challenge1(rs.getInt("my_challenge1"));
-				dto.setMy_challenge2(rs.getInt("my_challenge2"));
-				dto.setMy_challenge3(rs.getInt("my_challenge3"));
-				dto.setMy_challenge4(rs.getInt("my_challenge4"));
-				dto.setMy_challenge5(rs.getInt("my_challenge5"));
-				dto.setMy_challenge6(rs.getInt("my_challenge6"));
-				dto.setMy_challenge7(rs.getInt("my_challenge7"));
-				dto.setMy_challenge8(rs.getInt("my_challenge8"));
-				dto.setMy_challenge9(rs.getInt("my_challenge9"));
-				dto.setMy_challenge10(rs.getInt("my_challenge10"));
-			}
-			
-			// my_challenge 컬럼 = 챌린지 고유 번호!
-			Integer my_chall1 = dto.getMy_challenge1();
-			Integer my_chall2 = dto.getMy_challenge2();
-			Integer my_chall3 = dto.getMy_challenge3();
-			Integer my_chall4 = dto.getMy_challenge4();
-			Integer my_chall5 = dto.getMy_challenge5();
-			Integer my_chall6 = dto.getMy_challenge6();
-			Integer my_chall7 = dto.getMy_challenge7();
-			Integer my_chall8 = dto.getMy_challenge8();
-			Integer my_chall9 = dto.getMy_challenge9();
-			Integer my_chall10 = dto.getMy_challenge10();
-			
-			Integer [] my_challenges = {my_chall1, my_chall2, my_chall3, my_chall4, my_chall5, my_chall6, my_chall7, my_chall8, my_chall9, my_chall10};
-			
-			// 2. 각 컬럼 값이 있다면 count 변수에 +1.
-			for(int i=0 ; i<10; i++ ) {
-				if(my_challenges[i] != null) {
-					count += 1;
-				}
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			closeConn(rs, pstmt, con);
-		}
-		
-		return count;
-	}	// getOngoingChallCount() 메소드 end	
+	
 	
 	// 해당 회원의 전체 챌린지 참여 수(challenge_count), 완수한 챌린지 수(challenge_complete_count), 경험치(mem_xp) 컬럼값을 반환하는 메소드.
 	public UserDTO getUserChallengeInfo(int member_num) {
@@ -399,7 +338,27 @@ public class MyChallDAO {
 		return list;
 	}	// getMoneyLog() 메소드 end
 	
-	
+	   public int getTotalChallCount(int member_num) {
+		      int count = 0;
+		         try {
+		            openConn();
+		            sql = "select distinct count(proof_chall_num) from proof_shot where proof_mem_num = ?";
+		            pstmt = con.prepareStatement(sql);
+		            pstmt.setInt(1, member_num);
+		            rs = pstmt.executeQuery();
+		            
+		            if(rs.next()) {
+		               count=rs.getInt(1);
+		            }
+		            
+		      } catch (SQLException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      }finally {
+		         closeConn(rs, pstmt, con);
+		      }
+		         return count;
+		   }	
 	
 	
 }

@@ -981,5 +981,70 @@ public class UserDAO {
 
 		return mem_id;
 	}
+	
+	// 이름과 이메일이 일치하는 회원이 DB의 회원 테이블에 존재하는 지 확인하는 메소드
+	   public int doesExistIdAndEmail(String name, String email) {
+	         
+	         int count = 0;
+	      try {
+	         openConn();
+	         
+	         sql = "select count(*) from user_member where mem_name=? and mem_email=?";
+	         
+	         pstmt = con.prepareStatement(sql);
+	         
+	         pstmt.setString(1, name);
+	         pstmt.setString(2, email);
+	         
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()){
+	            count = rs.getInt(1);
+	         }
+	         
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         closeConn(rs, pstmt, con);
+	      }
+	      
+	      return count;
+	      
+	   }   //doesExistIdAndEmail() 메소드 end
+	   
+	   
+	   // 이름과 이메일에 해당하는 회원 정보가 있으면 아이디를 반환하는 메소드
+	   public String checkIdAndEmail(String name, String email) {
+	      
+	      String mem_id = "";
+	      
+	      openConn();
+	      
+	      sql = "select mem_id from user_member where mem_name=? and mem_email=?";
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, name);
+	         pstmt.setString(2, email);
+	         
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()){
+	            mem_id = rs.getString("mem_id");
+	         }      
+	         
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         closeConn(rs, pstmt, con);
+	      }
+	      
+	      return mem_id;
+
+	   }   // checkIdAndEmail() 메소드 end
+	   
+
 
 }

@@ -1,103 +1,103 @@
 @charset "UTF-8";
 
 a{
-	color: #000;
+   color: #000;
 }
 
 img{
-	border-radius: 30px;
-	
+   border-radius: 30px;
+   
 }
 
 .main_container{
-	width: 100%;
-	height: 100%;
+   width: 100%;
+   height: 100%;
 }
 
 .slide:not(.active){
-	display: none;
+   display: none;
 }
 
 .event{
-	background-color: #FC9;	
+   background-color: #FC9;   
 }
 .slide_container{
-	
-	position:relative;
-	width: 100%;
-	height: 300px;
-	
+   
+   position:relative;
+   width: 100%;
+   height: 300px;
+   
 }
 
 .slide{
-	position: absolute;
-	width: 80%;
-	height: 300px;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
-	
+   position: absolute;
+   width: 80%;
+   height: 300px;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
+   
 }
 
 .fade_img {
-	width: 1000px;
-	height: 100%;
-	object-fit: fill;
+   width: 1000px;
+   height: 100%;
+   object-fit: fill;
 }
 
 .fade{
-	animation-name: fade;
-	animation-duration: 1.5s;
+   animation-name: fade;
+   animation-duration: 1.5s;
 }
 
 .prev{
-	cursor: pointer;
-	position: absolute;
-	top: 35%;
-	width: auto;
-	padding: 16px;
-	margin-top: 40px;
-	color: black;
-	font-weight: bold;
-	font-size: 50px;
-	transition: 0.6s ease;
-	border-radius: 0 3px 3px 0;
-	left:10%;
+   cursor: pointer;
+   position: absolute;
+   top: 35%;
+   width: auto;
+   padding: 16px;
+   margin-top: 40px;
+   color: black;
+   font-weight: bold;
+   font-size: 50px;
+   transition: 0.6s ease;
+   border-radius: 0 3px 3px 0;
+   left:10%;
 }
 .next{
-	cursor: pointer;
-	position: absolute;
-	top: 35%;
-	width: auto;
-	padding: 16px;
-	margin-top: 40px;
-	color: black;
-	font-weight: bold;
-	font-size: 50px;
-	transition: 0.6s ease;
-	border-radius: 0 3px 3px 0;
-	left: 80%;
-	right: 0;
+   cursor: pointer;
+   position: absolute;
+   top: 35%;
+   width: auto;
+   padding: 16px;
+   margin-top: 40px;
+   color: black;
+   font-weight: bold;
+   font-size: 50px;
+   transition: 0.6s ease;
+   border-radius: 0 3px 3px 0;
+   left: 80%;
+   right: 0;
 }
 
 
 .prev:hover, .next:hover{
-	background-color: raba(0,0,0,0.8);
+   background-color: raba(0,0,0,0.8);
 }
 
 .container_title{
-	font-size: 20px;
-	font-weight: 700;
-	color: #000;
-	letter-spacing: -.1px;
-	text-align: left;
-	overflow: auto;
-	position: absolute;
-	width: 80%;
-	height: 400px;
-	top:40%;
-	left:50%;
-	transform: translate(-50%, -50%);
+   font-size: 20px;
+   font-weight: 700;
+   color: #000;
+   letter-spacing: -.1px;
+   text-align: left;
+   overflow: auto;
+   position: absolute;
+   width: 80%;
+   height: 400px;
+   top:40%;
+   left:50%;
+   transform: translate(-50%, -50%);
 }
 
 
@@ -105,220 +105,280 @@ img{
 /* 컨테이너 카테고리 */
 
 .category_container{
-	
-	position:relative;
- 	margin-top: 20px;
-	width: 100%;
-	height: 500px;
-	overflow: auto;
-	
+   
+   position:relative;
+    margin-top: 20px;
+   width: 100%;
+   height: 500px;
+   overflow: auto;
+   
 }
 
 .card_category{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 50px;
-	flex-wrap:wrap;
-	align-content: space-between;
-	font-weight: bold;
-}	
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 50px;
+   flex-wrap:wrap;
+   align-content: space-between;
+   font-weight: bold;
+}   
 
 #input_items{
-	overflow: auto;
-	position: absolute;
-	width: 80%;
-	height: 480px;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
+   overflow: auto;
+   position: absolute;
+   width: 80%;
+   height: 480px;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
 }
 
 .category_items{
-	cursor: pointer;
+   cursor: pointer;
 }
 
 .category_items p{
-	margin-bottom: 0px;
+   margin-bottom: 0px;
 }
 
 .category_image{
-	
-	width: 226px;
-	height: 100px;
+   
+   width: 226px;
+   height: 100px;
 }
 
 .category_items{
-	margin: 0px 20px;
+   margin: 0px 20px;
 }
 
 
 /* 컨테이너 인기챌린지 */
 
 .most_container{
-	
-	position:relative;
- 	margin-top: 20px;
-	width: 100%;
-	height: 500px;
-	overflow: auto;
-	
+   
+   position:relative;
+    margin-top: 20px;
+   width: 100%;
+   height: 500px;
+   overflow: auto;
+   
 }
 
 .card_most_chall{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 50px;
-	flex-wrap:wrap;
-	align-content: space-between;
-	font-weight: bold;
-}	
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 50px;
+   flex-wrap:wrap;
+   align-content: space-between;
+   font-weight: bold;
+}   
 
 #input_items2{
-	position: absolute;
-	width: 80%;
-	height: 480px;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
+   position: absolute;
+   width: 80%;
+   height: 480px;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
 }
 
 .most_chall_items{
-	cursor: pointer;
-	text-align: left;
+   cursor: pointer;
+   text-align: left;
 }
 
 .most_chall_items{
-	margin: 0px 20px;
+   margin: 0px 20px;
 }
 
 .img_wrap{
-	width: 100%;
-	position: relative;
+   width: 100%;
+   position: relative;
 }
 
 .most_chall_image{
-	height: 282px;
-	width: 282px;
+   height: 282px;
+   width: 282px;
 }
 
 .img_text{
-	position: absolute;
-	top: 10%;
-	left: 80%;
-	transform: translate(-50%, -50%);
-	font-size: 25%px;
-	text-align: center;
-	color: #fff;
-	background-color: #000;
-	width: 25%;
+   position: absolute;
+   top: 10%;
+   left: 80%;
+   transform: translate(-50%, -50%);
+   font-size: 25px;
+   text-align: center;
+   color: #fff;
+   background-color: #000;
+   width: 25%;
 }
 
 .icon_people{
-	width: 25%;
+   width: 25%;
 }
 
 .span_wrap{
-	background-color: #ccc;
-	border: 2px solid #ccc;
-	border-radius: 10px;
-	opacity: 0.7;
+   background-color: #ccc;
+   border: 2px solid #ccc;
+   border-radius: 10px;
+   opacity: 0.7;
 }
 
 .most_chall_items p{
-	margin-bottom: 0px;
+   margin-bottom: 0px;
 }
+
+
+
+/* 컨테이너 신규챌린지 */
+
+.new_container{
+   
+   position:relative;
+    margin-top: 20px;
+   width: 100%;
+   height: 500px;
+   overflow: auto;
+   
+}
+
+.card_new_chall{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 50px;
+   flex-wrap:wrap;
+   align-content: space-between;
+   font-weight: bold;
+}   
+
+#input_items4{
+   position: absolute;
+   width: 80%;
+   height: 480px;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
+}
+
+.new_chall_items{
+   cursor: pointer;
+   text-align: left;
+}
+
+.new_chall_items{
+   margin: 0px 20px;
+}
+
+.new_chall_image{
+   height: 282px;
+   width: 282px;
+}
+
+.new_chall_items p{
+   margin-bottom: 0px;
+}
+
+
+
+
+
+
+
+
+
 
 
 /* 전문 멘토 챌린지 컨테이너 */
 
 .admin_container{
-	
-	position:relative;
- 	margin-top: 20px;
-	width: 100%;
-	height: 500px;
-	overflow: auto;
-	
+   
+   position:relative;
+    margin-top: 20px;
+   width: 100%;
+   height: 500px;
+   overflow: auto;
+   
 }
 
 .card_admin_chall{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 50px;
-	flex-wrap:wrap;
-	align-content: space-between;
-	font-weight: bold;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 50px;
+   flex-wrap:wrap;
+   align-content: space-between;
+   font-weight: bold;
 }
 
 #input_items3{
-	position: absolute;
-	width: 80%;
-	height: 480px;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
+   position: absolute;
+   width: 80%;
+   height: 480px;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
 }
 
 .admin_chall_items{
-	margin: 0px 20px;
-	text-align: left;
+   margin: 0px 20px;
+   text-align: left;
 }
 
 
 .admin_chall_items{
-	cursor: pointer;
+   cursor: pointer;
 }
 
 .admin_chall_items p{
-	margin-bottom: 0px;
+   margin-bottom: 0px;
 }
 
 .category_items:hover{
-	
-	transform:scale(1.2);
+   
+   transform:scale(1.2);
 }
 
 .chall_title{
-	text-align: left;
-	font-weight: bold;
-	font-size: 20px;	
-	
+   text-align: left;
+   font-weight: bold;
+   font-size: 20px;   
+   
 }
 
 
 .profil{
-	width: 20px;
-	height: 20px;	
+   width: 20px;
+   height: 20px;   
 }
 
 .ongoing_container{
-	position:relative;
- 	margin-top: 20px;
-	width: 100%;
-	height: 100px;
-	background-color: #E1E1E1;
-	overflow: auto;
+   position:relative;
+    margin-top: 20px;
+   width: 100%;
+   height: 100px;
+   background-color: #E1E1E1;
+   overflow: auto;
 }
 
 .ongoing_box{
-	position: absolute;
-	width: 60%;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
-	text-align: left;
-	font-size: 30px;
-	font-weight: bold;
+   position: absolute;
+   width: 60%;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
+   text-align: left;
+   font-size: 30px;
+   font-weight: bold;
 }
 
 
 .ongoing_box img{
-	width: 30px;
+   width: 30px;
 }
 
 #input_ongoing{
-	float: right;
+   float: right;
 }

@@ -55,7 +55,8 @@ $(document).ready(function() {
 					}
 					
 				});
-				card +="<a class='category_items' href='#'><img class='category_image' src='" +getContextPath+ "/uploadFile/CategoryAll.jpg'>";
+				card +="<div class='category_items'>";
+				card +="<a class='formSubmit' data-value=''><img class='category_image' src='" +getContextPath()+ "/uploadFile/CategoryAll.png'>";
 				card += "<p>전체보기</p></a>";
 				card += "</div>";
 				$("#input_items").append(card);
@@ -92,7 +93,7 @@ $(document).ready(function() {
 					card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
 					card += "<p class='chall_title'>" +$(this).find("chall_title").text()+ "</p></a><br>";
 					card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
-					card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "</span>";
+					card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "주</span>";
 					card += "</div>";
 					
 				});
@@ -105,42 +106,41 @@ $(document).ready(function() {
 		});
 	}
 	
-	function getAdminchall(){
-		
-		$.ajax({
-			
-			url : getContextPath() +"/main_admin_chall.do",
-			datatype : "xml",
-			async : false,
-			success : function(data){
-				
-				$("#input_items3").empty();
-					
-				let card = "<div class='card_admin_chall'>";
-				
-				$(data).find("chall_list").each(function() {
-					card += "<div class='admin_chall_items'>";
-					card += "<a  class='local' href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";
-					card += "<div class='img_wrap'>";
-					card += "<img class='most_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
-					card += "<div class='img_text'><span><img class='icon_people' src='" +getContextPath()+ "/search_image/people.jpg'></span>&nbsp;" +$(this).find("chall_ongoingpeople").text()+ "명</div></div>";
-					card += "<span class='span_img'><img class='profil' src='"+getContextPath()+"/memUpload/" +$(this).find("chall_creater_img").text()+ "'></span>&nbsp;";
-					card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
-					card += "<p class='chall_title'>" +$(this).find("chall_title").text()+ "</p></a><br>";
-					card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
-					card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "</span>";
-					card += "</div>";
-					
-				});
-				$("#input_items3").append(card);				
-				
-			},
-			error : function(){
-				alert('인기챌린지 불러오기 실패');
-			}
-		});
-	}
-	
+   function getNewchall(){
+      
+      $.ajax({
+         
+         url : getContextPath() +"/main_new_chall.do",
+         datatype : "xml",
+         async : false,
+         success : function(data){
+            
+            $("#input_items4").empty();
+               
+            let card = "<div class='card_new_chall'>";
+            
+            $(data).find("chall_list").each(function() {
+               card += "<div class='new_chall_items'>";
+               card += "<a  class='local' href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";
+               card += "<div class='img_wrap'>";
+               card += "<img class='new_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
+               card += "<div class='img_text'><span><img class='icon_people' src='" +getContextPath()+ "/search_image/people.jpg'></span>&nbsp;" +$(this).find("chall_ongoingpeople").text()+ "명</div></div>";
+               card += "<span class='span_img'><img class='profil' src='"+getContextPath()+"/memUpload/" +$(this).find("chall_creater_img").text()+ "'></span>&nbsp;";
+               card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
+               card += "<p class='chall_title'>" +$(this).find("chall_title").text()+ "</p></a><br>";
+               card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
+               card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "주</span>";
+               card += "</div>";
+               
+            });
+            $("#input_items4").append(card);            
+            
+         },
+         error : function(){
+            alert('신규챌린지 불러오기 실패');
+         }
+      });
+   }	
 	function getOngoinPeople(){
 		
 		$.ajax({
@@ -171,11 +171,48 @@ $(document).ready(function() {
 		
 	}
 	
+		function getAdminchall(){
+		
+		$.ajax({
+			
+			url : getContextPath() +"/main_admin_chall.do",
+			datatype : "xml",
+			async : false,
+			success : function(data){
+				
+				$("#input_items3").empty();
+					
+				let card = "<div class='card_admin_chall'>";
+				
+				$(data).find("chall_list").each(function() {
+					card += "<div class='admin_chall_items'>";
+					card += "<a  class='local' href='" +getContextPath()+ "/search_content.do?num=" +$(this).find("chall_num").text()+ "'>";
+					card += "<div class='img_wrap'>";
+					card += "<img class='most_chall_image' src='" +getContextPath()+ "/uploadFile/" +$(this).find("chall_mainimage").text()+ "'>";
+					card += "<div class='img_text'><span><img class='icon_people' src='" +getContextPath()+ "/search_image/people.jpg'></span>&nbsp;" +$(this).find("chall_ongoingpeople").text()+ "명</div></div>";
+					card += "<span class='span_img'><img class='profil' src='"+getContextPath()+"/memUpload/" +$(this).find("chall_creater_img").text()+ "'></span>&nbsp;";
+					card += "<span class='span_creater'>" +$(this).find("chall_creater_name").text()+ "</span><br>";
+					card += "<p class='chall_title'>" +$(this).find("chall_title").text()+ "</p></a><br>";
+					card += "<span class='span_wrap'>" +$(this).find("chall_cycle").text()+ "</span>&nbsp;";
+					card += "<span class='span_wrap'>" +$(this).find("chall_duration").text()+ "주</span>";
+					card += "</div>";
+					
+				});
+				$("#input_items3").append(card);				
+				
+			},
+			error : function(){
+				alert('인기챌린지 불러오기 실패');
+			}
+		});
+	}
+
+	
 	getCategory();
 	getMostchall();
 	getAdminchall();
-	getOngoinPeople()
-	
+	getOngoinPeople();
+	getNewchall();
 	
 	$(".formSubmit").on("click", function(){
 		let name = $(this).attr('data-value');

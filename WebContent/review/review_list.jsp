@@ -13,6 +13,11 @@
     	mem_num = (int)session.getAttribute("memberNum");
     }
     
+    int chall_no = 0;
+    if (request.getAttribute("chall_no") != null){
+       chall_no = (int)request.getAttribute("chall_no");
+    }
+
     
     int currentPage = (int)request.getAttribute("currentPage");
     int rowsize = (int)request.getAttribute("rowsize");
@@ -64,12 +69,12 @@ $(function(){
 			<input type="hidden" value="${dto.getReview_mem_num() }">
 			<div class="review-content-header">
 				<c:set var="review_mem_num" value="<%=mem_num %>"/>
-				<c:if test="${review_mem_num == dto.getReview_mem_num() }">
+				<%-- <c:if test="${review_mem_num == dto.getReview_mem_num() }">
 					<div class="review-update" align="right"><a href="#">삭제</a>│<a href="#">수정</a></div>
 				</c:if>
 				<c:if test="${review_mem_num != dto.getReview_mem_num() }">
 					<div class="review-update">&nbsp;</div>
-				</c:if>
+				</c:if> --%>
 				<div class="review-name"><span style="font-weight:bold;">${dto.getReview_mem_name() }</span>님</div>
 				    
 				<div class="wrap-star" >
@@ -105,7 +110,7 @@ $(function(){
 		    	</div>
 		    	<div class="modal-footer" style="display :block !important">
 		    		<div class="review-foot" style="display:flex;">
-			        	<span style="flex: 3;">참여 챌린지 : ${dto.getReview_chall_title() }</span><span style="flex:5;"></span><span style="flex:2; text-align: right;"><a href="#">삭제</a>│<a href="#">수정</a></span>
+			        	<span style="flex: 3;">참여 챌린지 : ${dto.getReview_chall_title() }</span><span style="flex:5;"></span><span style="flex:2; text-align: right;"><a href="#" onclick="deleteReview(${dto.getReview_num()})">삭제</a></span>
 			        </div>
 		    	</div>
 		    </div><!-- /.modal-content -->
@@ -148,19 +153,47 @@ $(function(){
 <script>
 
 function goReviewPage(page){
-	
-	$.ajax({
-		url : "<%= request.getContextPath() %>/review_list.do?page="+page,
-		datatype : "html",
-		success : function(data){
-			$("#reviewContent").html(data);
-		},
-		error : function(){
-			toastr.warning('데이터 통신 에러');
-		}		
-	});
-	
-} // goReviewPage() 끝
+	   
+	   $.ajax({
+	      url : "<%= request.getContextPath() %>/review_list.do?page="+page,
+	      data : {
+	         chall_no : <%=chall_no%>
+	      },
+	      datatype : "html",
+	      success : function(data){
+	         $("#reviewContent").html(data);
+	      },
+	      error : function(){
+	         toastr.warning('데이터 통신 에러');
+	      }      
+	   });
+	   
+	} // goReviewPage() 끝
+
+
+
+	function deleteReview(review_num){
+		   $.ajax({
+		      url : "<%= request.getContextPath() %>/review_delete.do",
+		      data : {
+		         review_num : review_num
+		      },
+		      datatype : "txt",
+		      success : function(data){
+		         if (data > 0){
+		            toastr.success('리뷰 삭제 성공!');
+		            $("#modalBox").modal("hide");
+		            goReviewPage(1);
+		            
+		         }
+		      },
+		      error : function(){
+		         toastr.warning('데이터 통신 에러');
+		      }      
+		   });
+		}
+
+
 
 
 </script>
