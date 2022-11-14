@@ -86,8 +86,9 @@
 	<%
 		}
 	%> --%>
-	<jsp:include page="../include/chall_top.jsp" />
-	<aside id="side_category">
+	<jsp:include page="/include/chall_top.jsp" />
+	
+				<aside id="side_category">
 		<ul class="search_menu">
 			<li class="option1">
 				<a>필터</a>
@@ -133,19 +134,27 @@
 			</li>
 		</ul>
 		
-		<input type="button" id="test" class="test" value="선택완료">
-		<input type="button" id="test2" value="기능 테스트">
+		<input type="button" id="search_option" class="search_option" value="선택완료">
 		
 	</aside>
 	
+	
+	
 	<article id="art" align="center">
+
 		<div id="card_container" align="center">
-			<div id="card_chall">
-			
+			<div id="input_chall">
+				<div id="card_chall">
+				</div>
 			</div>
 		</div>		
 	</article>
-	<jsp:include page="../include/chall_bottom.jsp" />
+	
+	<div class="top_btn">
+			<img src="<%=request.getContextPath()%>/search_image/Top.PNG">
+	</div>
+
+ 	<jsp:include page="../include/chall_bottom.jsp" />
 </body>
 <style>
 
@@ -259,17 +268,24 @@ input[type="checkbox"]:checked +label a{
 	float: left;
 }
 
+.search_option{
+	width: 100%;
+	background-color: #ff4d54;
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+	border-radius: 5px;
+}
+
 /* 챌린지 아이템 */
 
 #card_container{
-	position:relative;
  	margin-top: 20px;
-	width: 100%;
-	height: 500px;
 	overflow: auto;
 }
 
-#card_chall{
+
+.card_chall{
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -279,18 +295,93 @@ input[type="checkbox"]:checked +label a{
 	font-weight: bold;
 }
 
+
 .chall_items{
-	overflow: auto;
-	position: absolute;
-	width: 80%;
-	height: 480px;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
+	margin: 0px 20px;
+}
+
+
+.chall_none{
+	width: 282px;
+	height: 384px;
 }
 
 
 
+.img_wrap{
+	width: 100%;
+	position: relative;
+}
 
+.most_chall_image{
+	height: 282px;
+	width: 282px;
+}
 
+.img_text{
+	position: absolute;
+	top: 10%;
+	left: 80%;
+	transform: translate(-50%, -50%);
+	font-size: 25%;
+	text-align: center;
+	color: #fff;
+	background-color: #000;
+	width: 25%;
+}
+
+.icon_people{
+	width: 25%;
+}
+
+.span_wrap{
+	background-color: #ccc;
+	opacity: 0.7;
+}
+
+.none2{
+	margin: 300px auto;
+	text-align: center;
+	font-size: 16px;
+	color: #AAA;
+}
+
+.profil{
+	width: 20px;
+	height: 20px;	
+}
+
+.chall_items{
+	text-align: left;
+	color: black;
+}
+
+.chall_items p{
+	text-align: left;
+	color: black;
+}
+
+.span_creater{
+	color: black;
+}
+
+.top_btn{
+	position: fixed;
+	bottom: 150px;
+    right: 20px;
+    width: 44px;
+    height: 48px;
+    padding-top: 4px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.top_btn img{
+	width: 50px;
+	opacity: 0.6;
+}
+
+.top_btn img:hover {
+	opacity: 1;
+}
 </html>

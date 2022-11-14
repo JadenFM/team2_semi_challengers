@@ -32,7 +32,6 @@ function getLocalStorage(name){
 /*챌린지를 볼 경우 호출*/
 function moveItemViewPage(itemNum, itemTitle, itemImagePath){
 	
-	console.log('로컬등록 함수 실행');
 	
 	let latelyItemListJson = getLocalStorage('latelyItemList');
 	let viewTime = new Date();
@@ -88,15 +87,11 @@ function moveItemViewPage(itemNum, itemTitle, itemImagePath){
 
 $(document).ready(function(){
 	
-	console.log('getLocal JS 실행');
 	
 	let num = $("#local_num").val();
 	let title = $("#local_title").val();
 	let image = $("#local_image").val();	
 	
-	console.log('num >>> ' +num);
-	console.log('title >>> ' +title);
-	console.log('image >>> ' +image);
 	
 	moveItemViewPage(num, title, image);
 });

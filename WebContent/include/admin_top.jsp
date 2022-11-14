@@ -8,19 +8,34 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%
+	HttpSession session1 = request.getSession();
+	String admin_id =(String)session1.getAttribute("admin_id");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+	function login_check(){
+		console.log("<%=admin_id%>");
+		if("<%=admin_id%>" == "null"){
+			alert("로그인이 필요합니다.")
+			location.href="main.do"
+		}
+	}
+	
+	
+	
+</script>
 <style type="text/css">
 	
 	body {
 	 width: 100vw;
 	 height: 100vh;
 	 margin : 0;
-	 
 	}
 	
 	.container {
@@ -54,33 +69,12 @@
 	}
 	
 	.top{
-		width: 420px;
+		width: 450px;
 		display: grid;
-		grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 2fr 1fr;
 		grid-template-rows: 50px;
 		grid-auto-columns: auto;
 		column-gap : 1px;
-	}
-	
-	.top_li_1 {
-		list-style: none;
-		grid-column: 3/4;
-		grid-row: 1/2;
-		font-size: 16px;
-	}
-	
-	.top_li_2 {
-		list-style: none;
-		grid-column: 4/5;
-		grid-row: 1/2;
-		font-size: 16px;
-	}
-	
-	.top_li_3 {
-		list-style: none;
-		grid-column: 5/6;
-		grid-row: 1/2;
-		font-size: 16px;
 	}
 	
 	.top_li_4 {
@@ -90,7 +84,7 @@
 		font-size: 16px;
 	}
 	.top_li_5 {
-		grid-column: 1/2;
+		grid-column: 3/4;
 		grid-row: 1/2;	
 		list-style: none;
 		font-size: 16px;
@@ -209,12 +203,12 @@
 	
 </style>
 </head>
-<body>
+<body onload="login_check()">
 	<div class="container" align="center">
 		
 		<header class="head">
 		
-			<a  href="<%=request.getContextPath() %>/main.do"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/challengers_manager_logo.png"> </a>
+			<a  href="<%=request.getContextPath() %>/admin/admin_home.jsp"> <img class="rogoImg" alt="챌린저스 로고" src="<%=request.getContextPath() %>/uploadFile/challengers_manager_logo.png"> </a>
 			
 		</header>
 			<c:set var="dto" value="${admin_name }" />
@@ -223,16 +217,16 @@
 				<ul class="top">
 					<c:if test="${!empty admin_name }">
 						<li class="top_li_4"><b>${admin_name }</b> 관리자님 안녕하세요!</li>
+						<li class="top_li_5"><a href="admin_logout.do">로그아웃</a>
 					</c:if>
 				</ul>
 			</div>
-			
 		<nav class="navi">
 			<ul class="menu">
 				<li class="menu_li_1"><a href="<%=request.getContextPath()%>/admin/admin_home.jsp">관리자 홈</a></li>
-				<li class="menu_li_2"><a href="<%=request.getContextPath()%>/admin_control.do">회원 관리</a></li>
+				<li class="menu_li_2"><a href="<%=request.getContextPath()%>/admin_control.do">회원 신고 관리</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/category_control.do">카테고리 관리</a></li>
-				<li class="menu_li_4"><a href="<%=request.getContextPath() %>/FAQ_control.do">공지사항 관리</a></li>
+				<li class="menu_li_4"><a href="<%=request.getContextPath() %>/FAQ_control.do">자주 하는 질문</a></li>
 				<li class="menu_li_5"><a href="<%=request.getContextPath() %>/category_question.do">1:1문의 관리</a></li>
 			</ul>
 		</nav>

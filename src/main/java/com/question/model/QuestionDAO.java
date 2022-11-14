@@ -395,4 +395,28 @@ public class QuestionDAO {
 		
 		return please;
 	}
+	public int deleteQuestion(String mem_id) {
+		openConn();
+		int user_num = 0;
+		int res = 0;
+		sql = "select mem_num from user_member where mem_id = ? ";
+		try {
+			st = con.prepareStatement(sql);
+			st.setString(1, mem_id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				user_num = rs.getInt("mem_num");
+				System.out.println("user_num : "+user_num);
+			}
+			sql = "delete from private_q where p_q_user_num = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1, user_num);
+			res = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+		return res;
+	}
 }

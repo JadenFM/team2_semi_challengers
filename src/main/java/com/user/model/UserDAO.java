@@ -13,7 +13,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -796,6 +798,7 @@ public class UserDAO {
 			closeConn(rs, pstmt, con);
 		}
 	}	// updateXp() end
+
 	
 	//  회원 가입시 입력받은 이메일이 DB의 회원 테이블에 존재하는 지 중복 체크하는 메소드
 	public int checkEmailDuplication(String email) {
@@ -819,15 +822,100 @@ public class UserDAO {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+		}finally{
+			closeConn(rs, pstmt, con);
+		}
+		return count;
+	}	// checkEmailDuplication() 메소드 end
+	
+
+	public int DeleteMember(String mem_id, String mem_name) {
+		int result = 0;
+		openConn();
+		try {
+			sql = "delete from user_member where mem_id = ? or mem_name = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_id);
+			pstmt.setString(2, mem_name);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			closeConn(rs, pstmt, con);
 		}
-		
-		return count;
-		
-	}	// checkEmailDuplication() 메소드 end
-	
+		return result;
+	}
+
+	public List<UserDTO> getUserMember() {
+		List<UserDTO> list = new ArrayList<>();
+		openConn();
+		try {
+			sql = "select * from user_member";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				UserDTO dto = new UserDTO();
+				dto.setMem_num(rs.getInt("mem_num"));
+				dto.setMem_id(rs.getString("mem_id"));
+				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_pwd(rs.getString("mem_pwd"));
+				dto.setMem_age(rs.getInt("mem_age"));
+				dto.setMem_phone(rs.getString("mem_phone"));
+				dto.setMem_addr(rs.getString("mem_addr"));
+				dto.setMem_xp(rs.getInt("mem_xp"));
+				dto.setMem_level(rs.getString("mem_level"));
+				dto.setRegdate(rs.getString("regdate"));
+				dto.setMem_money(rs.getInt("mem_money"));
+				dto.setMem_reward(rs.getInt("mem_reward"));
+				dto.setChallenge_count(rs.getInt("challenge_count"));
+				dto.setChallenge_complete_count(rs.getInt("challenge_complete_count"));
+				dto.setMem_report_count(rs.getInt("mem_report_count"));
+				dto.setMem_email(rs.getString("mem_email"));
+				dto.setMem_gender(rs.getString("mem_gender"));
+				dto.setMem_img(rs.getString("mem_img"));
+				dto.setChallenge_made_count(rs.getInt("challenge_made_count"));
+				dto.setChallenge_rating(rs.getInt("challenge_rating"));
+				dto.setMem_birth(rs.getString("mem_birth"));
+				dto.setPostcode(rs.getInt("postcode"));
+				dto.setRoadAddress(rs.getString("roadaddress"));
+				dto.setJibunAddress(rs.getString("jibunaddress"));
+				dto.setDetailAddress(rs.getString("detailaddress"));
+				dto.setExtraAddress(rs.getString("extraaddress"));
+				dto.setEmailId(rs.getString("emailid"));
+				dto.setEmailDomain(rs.getString("emaildomain"));
+				dto.setNationNo(rs.getString("nationno"));
+				dto.setPhoneNo(rs.getString("phoneno"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		return list;
+	}
+
+	public String getMemberName(String mem_id) {
+		String mem_name = "";
+		openConn();
+		try {
+			sql = "select mem_name from user_member where mem_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mem_name = rs.getString("mem_name");
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+
+		return mem_name;
+	}		
+
 	// 해당 회원 번호의 회원 정보를 수정하는 메소드
 	public int updateMemberInfo(int member_num, UserDTO dto) {
 		
@@ -865,11 +953,33 @@ public class UserDAO {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}finally {
 			closeConn(rs, pstmt, con);
 		}
 		
 		return result;
 	}	// updateMemberInfo() 메소드 end
-}
+
+
+	public String getMemberId(String mem_name) {
+		String mem_id = "";
+		openConn();
+		try {
+			sql = "select mem_id from user_member where mem_name = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_name);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mem_id = rs.getString("mem_id");
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+
+		return mem_id;
+	}
+
+

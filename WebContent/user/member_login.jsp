@@ -123,10 +123,11 @@
 		list-style: none;
 		padding: 0;
 	}
-	
-	.sns_btn{
-		width: 183px;
-		height: 45px;
+	.member_login{
+		color : #ff4d54;
+	}
+	.admin_login {
+		color : #289828;
 	}
 	
 </style>
@@ -146,7 +147,7 @@
 			<br>
 			<br>
 			<hr width="80%" color="#ff4d54">
-			<h1 class="login_title">로그인</h1>
+						<h1 class="login_title"><a class="member_login" href="#">회원 로그인</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="admin_login" href="admin_login.do">관리자 로그인</a></h1>
 		</header>
 		
 		<article class="log_content">
@@ -168,9 +169,10 @@
 				</ul>
 				
 				<ul class="sns_login">
-					<li><a href="https://kauth.kakao.com/oauth/authorize?client_id=617a393522b6cb65ea54d2ed4350878e&redirect_uri=http://localhost:8282/Semi_Challengers/member_kakaoLoginOk.do&response_type=code&scope=account_email,gender,birthday,profile_image,profile_nickname&prompt=login" ><img class="sns_btn" alt="카카오 로그인" src="<%=request.getContextPath() %>/uploadFile/kakao_login_medium_narrow.png"></a></li>
-					<li><a href=""><img class="sns_btn" alt="네이버 로그인" src="<%=request.getContextPath() %>/uploadFile/네이버 로그인 버튼.png"></a></li>
+					<li><a href="https://kauth.kakao.com/oauth/authorize?client_id=617a393522b6cb65ea54d2ed4350878e&redirect_uri=http://localhost:8282/Semi_Challengers/member_kakaoLoginOk.do&response_type=code&scope=account_email,gender,birthday" ><img alt="카카오 로그인" src="<%=request.getContextPath() %>/uploadFile/kakao_login_medium_narrow.png"></a></li>
+					<li><a href="">네이버로 시작</a></li>
 				</ul>
+				
 				
 		</article>
 	</div>
