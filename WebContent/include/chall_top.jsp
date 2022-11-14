@@ -484,5 +484,61 @@ input::-webkit-search-results-decoration{
 		
 	</div>
 	<hr width=100% align="center">
+			<div id="search_layer">
+		<div class="search_box">
+			<div class="search_box_position">
+				<input id="close" type="button"  value="닫기">
+				<div id="search_bar" class="search" align="center">
+					<form id="form_search" method="post" action="<%=request.getContextPath()%>/search.do">
+						<input type="search" id="search_text2" class="search_text2" name="keyword" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
+						<input type="hidden" id="category" class="category" name="category" value="">&nbsp;&nbsp;
+						<input id="search_btn2" class="search_btn2" type="submit" value="검색">
+					</form>
+				</div>
+				<div id="search_cont">
+					<div id="search_wrap">
+						<div id="search_card1" class="search_card">
+							<div class="search_title">
+								<span class="title">인기 검색어</span>
+							</div>
+							<div id="card_most_keyword">
+
+							</div>
+						</div>
+
+						<div id="search_card2" class="search_card">
+							<div class="search_title">
+								<span class="title">인기 카테고리</span>
+							</div>
+							<div id="card_most_category">
+							</div>
+						</div>
+
+						<div id="search_card3" class="search_card">
+							<div class="search_title">
+							<span class="title">최근 조회한 챌린지</span>
+							</div>
+							<div id="card_qurency">
+
+							</div>
+						</div>
+					</div>
+
+					<div id="search_wrap2">
+						<div id="search_card4" class="search_card">
+							<div id="card_keyword">
+
+							</div>
+						</div>
+					</div>
+
+					<form id="form_search2" method='post' action="<%=request.getContextPath()%>/search.do">
+						<input type="hidden" id="form_search_keyword" name="keyword" value="">			
+						<input type="hidden" id="form_search_category" name="category" value="">			
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<%-- 이하 영역은 본문 영역이 됨 --%>
