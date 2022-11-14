@@ -39,7 +39,6 @@ public class MainDAO {
 		String url = oju.getUrl();
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
-
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);

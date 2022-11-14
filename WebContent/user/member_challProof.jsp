@@ -55,18 +55,23 @@
 <title>챌린지 인증페이지</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript" src="js/jquery-3.6.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script type="text/javascript">
-	// modal 창 관련
-	/* const myModal = document.getElementById('myModal')
-	const myInput = document.getElementById('myInput')
-	
-	myModal.addEventListener('shown.bs.modal', () => {
-	  myInput.focus()
-	}) */
-	// modal 창 관련 끝
-	
+	function previewFile() { 
+	    var preview = document.querySelector('#image_proof'); 
+	    var file = document.querySelector('#proof_image_input').files[0]; 
+	    var reader  = new FileReader(); 
+	    reader.onloadend = function () {
+	          preview.src = reader.result; 
+	   } 
+	   if (file) {
+	         reader.readAsDataURL(file); 
+	   } else {
+	         preview.src = ""; 
+	   } 
+	}
+
 	onload = function() {
 		moment.locale("ko");    //한글 날짜 형식으로 지정
 		var dto_startDate = ${dto.getChall_startDate()};
@@ -76,32 +81,45 @@
 		$("#startDate").text(startDate); 
 		$("#endDate").text(endDate);
 	}
-	
-	function previewFile1() { 
-        var preview = document.querySelector('#image_proof'); 
-        var file = document.querySelector('#proof_image_input').files[0]; 
-        var reader  = new FileReader(); 
-        reader.onloadend = function () {
-              preview.src = reader.result; 
-       } 
-       if (file) {
-             reader.readAsDataURL(file); 
-       } else {
-             preview.src = ""; 
-       } 
-    }
 </script>
 <style type="text/css">
+	.title_hr {
+		border: 0;
+    	height: 2px;
+    	background: #ff4d54;
+    	opacity: 100;
+    	width: 13%;
+	}
 	.join_hr {
 		border: 0;
-    	height: 5px;
+    	height: 2px;
     	background: #ff4d54;
     	opacity: 80;
+    	width: 40%;
 	}
 	.progress{
-		width: 50%;
+		width: 40%;
 	}
 
+	.proofOrder{
+		color: red;
+		font-size: 1.5em;
+	}
+	.space_between_modal{
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+	.space_between_achv{
+		display: flex;
+		justify-content: space-between;
+		width: 40%;
+	}
+	.space_between_proof{
+		display: flex;
+		justify-content: space-between;
+		width: 31.5%;
+	}
 </style>
 </head>
 <body>
@@ -119,18 +137,15 @@
 		<div align="center">
 			<br>
 				<h3><b>챌린지 인증 페이지</b></h3>
-			<hr class="join_hr" width="50%" color="red">
+			<hr class="title_hr" color="red">
 			<br>
 			
 			<img id="image" height="300" width="300" border="2" src="<%=request.getContextPath()%>/memUpload/${challContent.getChall_mainImage() }" class="rounded mx-auto d-block">
-			<br>
 			
 			<br>
 			<h2>${challContent.getChall_title() }</h2>
 			
 			<br>
-			<br>
-			
 			<span class="badge rounded-pill text-bg-primary">${challContent.getChall_cycle() }</span>
 			<span class="badge rounded-pill text-bg-success">${challContent.getChall_duration() }주</span>
 			<br>
@@ -139,7 +154,7 @@
 			<br>
 			
 			
-			<hr class="join_hr" width="50%" color="red">
+			<hr class="join_hr" color="red">
 			
 		   	<!-- Button trigger 인증방법 modal -->
 			<button id="proofGuide" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proofGuideModal">
@@ -168,7 +183,7 @@
 					<br>
 			      	${challContent.getChall_guide() }
 					<br>
-					<hr class="join_hr" width="50%" color="red">
+					<hr class="join_hr" color="red">
 					<h4>챌린지 진행 시 꼭 알아주세요!</h4>
 					${challContent.getChall_regiTimeStart() } ~ ${challContent.getChall_regiTimeEnd() } 사이에 인증 하셔야 합니다.<br>
 					${challContent.getChall_duration() }주 동안 ${challContent.getChall_cycle() } 인증샷을 촬영하셔야 합니다.<br>
@@ -196,13 +211,21 @@
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
-			        <span>100% 성공</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>예치금 전액 환급 + 상금</span><br>
-			        <span>85% 성공</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>예치금 전액 환급</span><br>
-			        <span>85% 미만 성공</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>예치금 일부 환급(성공률 만큼)</span><br>
-			        <hr class="join_hr" width="50%" color="red">
+			      	<div class="space_between_modal">
+			        <span>100% 성공</span><span>예치금 전액 환급 + 상금</span>
+			        </div>
+			      	<div class="space_between_modal">
+			        <span>85% 성공</span><span>예치금 전액 환급</span>
+			        </div>
+			      	<div class="space_between_modal">
+			        <span>85% 미만 성공</span><span>예치금 일부 환급(성공률 만큼)</span>
+			        </div>
+			        <hr class="join_hr" color="red">
+			        <div align="left">
 			        ● 상금은 85% 미만 성공한 참가자들의 벌금으로 마련돼요.<br>
 			        ● 최종 상금은 내가 건 돈에 비례해서 정해져요. 그래서 예치금이 많을수록 상금도 높아져요!<br>
 			        ● 인증을 놓쳤을 때는 인증패스를 사용해서 만회할 수 있어요. 단, 인증패스를 사용해서 100% 성공한 경우 공정성을 위해 상금은 받을 수 없어요.
+			        </div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-light" data-bs-dismiss="modal">확인</button>
@@ -229,7 +252,7 @@
 					      </div>
 					      <div class="modal-body">
 					        <span>${challContent.getChall_privateCode()}</span>
-					        <hr class="join_hr" width="50%" color="red">
+					        <hr class="join_hr" color="red">
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-light" data-bs-dismiss="modal">확인</button>
@@ -243,27 +266,35 @@
 				</c:otherwise>
 			</c:choose>
 			
-			<hr class="join_hr" width="50%" color="red">
+			<hr class="join_hr" color="red">
 			<h4>나의 인증 현황</h4>
 			<br>
-			<span>현재 달성률</span><br>
-			<span><%=achv_rate%>%</span>
+			현재 달성률 : 
+			<span style="font-size: 25px; font-weight: bold;">
+			<%=achv_rate%>%</span>
 			<div class="progress">
 			  <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="width: <%=achv_rate%>%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
+			<div class="space_between_achv">
 			<span>현재 확보한 예치금</span><br>
-			<span><%=gained_deposit%>원</span><br>
-			<span>걸어둔 예치금</span><br>
-			<span><%=Ch_deposit_SC%>원</span>
+			<span>걸어둔 예치금</span>
+			</div>
+			<div class="space_between_achv">
+			<span style="font-size: 18px; font-weight: bold;"><fmt:formatNumber><%=gained_deposit%></fmt:formatNumber>원</span><br>
+			<span style="font-size: 18px; font-weight: bold;"><fmt:formatNumber><%=Ch_deposit_SC%></fmt:formatNumber>원</span>
+			</div>
 			<br>
-			<hr class="join_hr" width="50%" color="red">
-			<br>
-			<span>인증 성공</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>남은 인증</span><br>
-			<span><%=proof_count%>회</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><%=remainProof_count%>회</span>
-			<hr class="join_hr" width="50%" color="red">
-			<br>
+			<hr class="join_hr" color="red">
 			
+			<br>
 			<h4>나의 인증샷</h4>
+			<div class="space_between_proof">
+			<span>인증 성공</span><span>남은 인증</span>
+			</div>
+			<div class="space_between_proof">
+			<span style="font-size: 18px; font-weight: bold; color: red;"><%=proof_count%>회</span>
+			<span style="font-size: 18px; font-weight: bold;"><%=remainProof_count%>회</span>
+			</div>
 			
 			<table>
 			<tr>
@@ -273,10 +304,14 @@
 							<c:when test="${(i.index%3) == 0}">
 								</tr>
 								<tr>
-							    	<td><img id="image1" height="200" width="200" border="2" src="<%=request.getContextPath()%>/ProofUpload/${dto.getProof_image() }" class="rounded mx-auto d-block"></td>
+							    	<td align="center"><img id="image1" height="200" width="200" border="2" src="<%=request.getContextPath()%>/ProofUpload/${dto.getProof_image() }" class="rounded mx-auto d-block">
+							    	<b class="proofOrder">${i.index+1}</b><fmt:parseDate value="${dto.getProof_regdate() }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+							    	<fmt:formatDate pattern="yyyy.MM.dd a hh:mm" value="${regDate }"/></td>
 							</c:when>
 							<c:otherwise>
-						    	<td><img id="image1" height="200" width="200" border="2" src="<%=request.getContextPath()%>/ProofUpload/${dto.getProof_image() }" class="rounded mx-auto d-block"></td>
+						    	<td align="center"><img id="image1" height="200" width="200" border="2" src="<%=request.getContextPath()%>/ProofUpload/${dto.getProof_image() }" class="rounded mx-auto d-block">
+							    	<b class="proofOrder">${i.index+1}</b><fmt:parseDate value="${dto.getProof_regdate() }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+							    	<fmt:formatDate pattern="yyyy.MM.dd a hh:mm" value="${regDate }"/></td>
 							</c:otherwise>
 						</c:choose>
 				</c:forEach>
@@ -285,6 +320,8 @@
 			</table>
 			
 			<br><br>
+			
+			<form id="form" method="post" enctype="multipart/form-data" action="member_challProofOk.do">
 			
 			<c:choose>
 				<c:when test="${LastDate == Today}">
@@ -306,18 +343,16 @@
 					        <h1 class="modal-title fs-5" id="uploadProofShotModalLabel">인증샷 올리기</h1>
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
-					      <form id="form" method="post" enctype="multipart/form-data" action="member_challProofOk.do">
 					      <div class="modal-body"> <!-- 내용 부분 시작 -->
-					        <input type='text' name="proof_img" id='proof_img' style='display: none;'> 
+					      	<input type='text' name="proof_img" id='proof_img' style='display: none;'> 
 							<img id="image_proof" src='<%=request.getContextPath()%>/uploadFile/proof_shot_upload.jpg' height="300" width="300" border="2" onclick='document.all.proofImgFile.click(); document.all.proof_img.value=document.all.proofImgFile.value' class="rounded mx-auto d-block">
 							<input type="file" name="proofImgFile" id="proof_image_input" accept="image/jpg, image/jpeg, image/png, image/gif"
-							  	onchange="previewFile1()" style='display: none;'>
+							  	onchange="previewFile()" style='display: none;'>
 					      </div>
 					      <div class="modal-footer"> <!-- 내용 부분 끝 -->
 					        <button type="button" class="btn btn-light" data-bs-dismiss="modal">닫기</button>
 					        <button type="submit" class="btn btn-primary">인증하기</button>
 					      </div>
-					      </form>
 					    </div>
 					  </div>
 					</div>
@@ -325,7 +360,8 @@
 					
 				</c:otherwise>
 			</c:choose>
-			<button class="btn btn-dark" onclick="location.href='member_challContent.do'">챌린지 소개 페이지가기</button>
+			<button type="button" class="btn btn-dark" onclick="location.href='member_challContent.do'">챌린지 소개 페이지가기</button>
+			</form>
 		</div>
 		<br>
 		<br>

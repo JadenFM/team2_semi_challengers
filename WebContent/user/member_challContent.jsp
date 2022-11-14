@@ -18,11 +18,19 @@
 	ChallJoinDTO dto = (ChallJoinDTO)request.getAttribute("challContent");
 %>
 <style type="text/css">
+	.title_hr {
+		border: 0;
+    	height: 2px;
+    	background: #ff4d54;
+    	opacity: 100;
+    	width: 13%;
+	}
 	.join_hr {
 		border: 0;
-    	height: 5px;
+    	height: 2px;
     	background: #ff4d54;
     	opacity: 80;
+    	width: 40%;
 	}
 	/* 부트스트랩 적용 후 바뀌는 부분 조절(include) */      
    .container{
@@ -68,13 +76,13 @@
 			<br>
 			<c:choose>
 				<c:when test="${dto.getChall_status() eq '진행중'}">
-					<h3><b>챌린지 개설 상세 페이지</b></h3>
+					<h3><b>챌린지 상세 페이지</b></h3>
 				</c:when>
 				<c:otherwise>
 					<h3><b>챌린지 개설 미리보기 페이지</b></h3>
 				</c:otherwise>
 			</c:choose>
-			<hr class="join_hr" width="50%" color="red">
+			<hr class="title_hr" color="red">
 			<br>
 			
 			
@@ -107,20 +115,14 @@
 					공식챌린지
 				</c:when>
 				<c:otherwise>
-					<!-- 프로필사진도 불러오기 -->
-					${user_dto.getMem_id()} 님
 				</c:otherwise>
 			</c:choose>
-			<br>
 			
-			<br>
 			<h2>${dto.getChall_title() }</h2>
 			
 			<br>
-			<br>
-			
-			<br>
-			인증빈도 : ${dto.getChall_cycle() } / 챌린지 기간 : ${dto.getChall_duration() }주<br>
+			<span class="badge rounded-pill text-bg-primary">${dto.getChall_cycle() }</span>
+			<span class="badge rounded-pill text-bg-success">${dto.getChall_duration() }주</span><br>
 			<span id="startDate"></span> - <span id="endDate"></span>
 			
 			<br>
@@ -141,10 +143,10 @@
 				<c:otherwise>
 					<hr class="join_hr" width="50%" color="red">
 					<h4>챌린지 리더</h4>
-					<img id="image" height="300" width="300" border="2" 
-					src="<%=request.getContextPath()%>/memUpload/${user_dto.getMem_img()}" 
-					class="rounded mx-auto d-block">
-					${user_dto.getMem_id()} 님 <br>
+					<img id="image" height="70" width="70" border="2" 
+					src="<%=request.getContextPath()%>/memUpload/${user_dto.getMem_img() }" 
+					style="border-radius: 50%">
+					${user_dto.getMem_id()} <br>
 					챌린지개설 : ${user_dto.getChallenge_made_count()}개 / 평점 : ${user_dto.getChallenge_rating()}<br><!-- 챌린지개설 수와 평점 불러오기 -->
 				</c:otherwise>
 			</c:choose>
@@ -179,9 +181,6 @@
 			${dto.getChall_duration() }주 동안 ${dto.getChall_cycle() } 인증샷을 촬영하셔야 합니다.<br>
 			
 			<hr class="join_hr" width="50%" color="red">
-			<br>
-			<h4>왜 돈을 걸어야 하나요?</h4>
-			확실한 동기 부여를 위해 돈을 걸어요<!-- 버튼 만들어 소개 페이지 따로 연결 -->
 			
 			<br><br>
 			<c:choose>
