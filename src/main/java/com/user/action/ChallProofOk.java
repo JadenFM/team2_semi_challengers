@@ -24,7 +24,7 @@ public class ChallProofOk implements Action {
 			throws IOException, Exception {
 		response.setContentType("text/html; charset=UTF-8");
 		
-		String saveFolder = "C:\\Users\\VVIP\\git\\team2_semi_challengers\\WebContent\\ProofUpload";
+		String saveFolder = "C:\\ncs\\workspace(WEB)\\Semi_Challengers2_1113_backup\\WebContent\\ProofUpload";
 		int fileSize = 10 * 1024 * 1024; // 10MB
 		MultipartRequest multi = new MultipartRequest(
 				request,						// 일반적인 request 객체

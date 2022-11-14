@@ -37,7 +37,6 @@ public class MainDAO {
 		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/download/Wallet_ProjectChallengers";
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
-
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);

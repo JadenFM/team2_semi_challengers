@@ -4,7 +4,7 @@ public class OjdbcUrl {
 	
 	public String getUrl() {
 		
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/Users/sulee/Wallet_ProjectChallengers/";
+		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=C:/ncs/download/apache-tomcat-9.0.65/Wallet_ProjectChallengers/";
 		
 	return url;
 	} 

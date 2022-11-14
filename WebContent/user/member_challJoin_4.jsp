@@ -166,7 +166,7 @@
     display: inline;
     }
     #code{
-    width: 10%;
+    width: 15%;
     display: inline;
     }
     #maxPeopleInput{

@@ -207,7 +207,7 @@ function previewFile3() {
     .menu li{
     box-sizing: content-box;
     }
-    
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
     #title {
     	width: 15%;
     }
@@ -217,7 +217,6 @@ function previewFile3() {
     #cont {
     	width: 30%;
     }
-/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
 <body>
