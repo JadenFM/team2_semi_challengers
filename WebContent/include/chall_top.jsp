@@ -25,6 +25,7 @@
 <script src="../JS/CScenter.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/searchJS/location.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/searchJS/location.js"></script>
+<script type="text/javascript" src="searchJS/local.js"></script>
 <!-- <script type="text/javascript" src="../searchJS/move.js"></script>
 <script type="text/javascript" src="searchJS/move.js"></script> -->
 
