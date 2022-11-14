@@ -1,7 +1,6 @@
-package com.review.action;
+package com.cs.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,20 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
-import com.review.model.ReviewDAO;import com.review.model.ReviewDTO;
+import com.cs.model.CScenterDAO;
+import com.cs.model.PrivateQDTO;
 
-public class ReviewListAction implements Action {
+public class CSPQListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, Exception {
 		
-		ReviewDAO dao = ReviewDAO.getinstance();
+		CScenterDAO dao = CScenterDAO.getinstance();
 		
-		int chall_no = 0;
-		if (request.getParameter("chall_no") != null) {
-			chall_no = Integer.parseInt(request.getParameter("chall_no").trim());
-		}
+		int pq_user_no = Integer.parseInt(request.getParameter("mem_num").trim());
 		
 		int page = 0;
 		if (request.getParameter("page") != null) {
@@ -32,20 +29,12 @@ public class ReviewListAction implements Action {
 			// 처음으로 "전체 게시물 목록" a 태그를 클릭한 경우
 			page = 1; // 1페이지
 		}
-		int rowsize = 9;
+		int rowsize = 5;
 		int block = 3;
 		int totalRecord = 0;
+		totalRecord = dao.getPQCount(pq_user_no);
 		
-		int check = dao.checkReview(chall_no);
-		System.out.println("리뷰체크~~~~"+check);
-		
-		if (check > 0) {
-			totalRecord = dao.getReviewChallCount(chall_no);
-			System.out.println("리뷰토탈~~~"+totalRecord);
-		}else {
-			totalRecord = dao.getReviewCount();
-		}
-		
+
 		int allPage = 0 ;
 		allPage = (int)Math.ceil(totalRecord / (double)rowsize);
 		
@@ -57,16 +46,10 @@ public class ReviewListAction implements Action {
 		if (endBlock > allPage) {
 			endBlock = allPage;
 		}
+
+		List<PrivateQDTO> pqList = dao.getPQList(pq_user_no, page, rowsize);
+		System.out.println(pqList.get(0).getP_q_title());
 		
-		
-		List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
-		
-		if (check > 0) {
-			reviewList = dao.getReviewAll(chall_no, page, rowsize);
-		}else {
-			reviewList = dao.getReviewList(page, rowsize);
-		}
-	
 		request.setAttribute("currentPage", page);
 		request.setAttribute("rowsize", rowsize);
 		request.setAttribute("block", block);
@@ -76,11 +59,11 @@ public class ReviewListAction implements Action {
 		request.setAttribute("endNo", endNo);
 		request.setAttribute("startBlock", startBlock);
 		request.setAttribute("endBlock", endBlock);
-		request.setAttribute("reviewList", reviewList);
+		request.setAttribute("pqList", pqList);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("review/review_list.jsp");
+		forward.setPath("CS_center/CS_pq_list.jsp");
 		
 		return forward;
 	}

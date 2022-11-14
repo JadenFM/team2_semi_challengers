@@ -213,7 +213,7 @@ function getPrivateQList(page) {
 		<nav id="paging"></nav>
 		
 		<div id="PQ_write_button">
-			<button onclick="pqWrite()">문의하기</button>
+			<button class="btn btn-primary" onclick="pqWrite()">문의하기</button>
 		</div>
 		
 

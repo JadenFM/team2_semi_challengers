@@ -9,7 +9,14 @@ public class ReviewDTO {
 	private int review_star;
 	private String review_regdate;
 	private String review_mem_name;
+	private String review_chall_title;
 	
+	public String getReview_chall_title() {
+		return review_chall_title;
+	}
+	public void setReview_chall_title(String review_chall_title) {
+		this.review_chall_title = review_chall_title;
+	}
 	public String getReview_mem_name() {
 		return review_mem_name;
 	}

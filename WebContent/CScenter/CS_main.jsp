@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
 <!-- js & css -->
-<link rel="stylesheet" href="CScenter/CScenter.css?a">
+<link rel="stylesheet" href="CScenter/CScenter.css">
 
 </head>
 <body>

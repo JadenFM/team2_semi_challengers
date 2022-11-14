@@ -5,14 +5,12 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <%
-    
-    List<ReviewDTO> reviewList = (List<ReviewDTO>)request.getAttribute("reviewList"); 
-    
     int mem_num = 0;
     if (session.getAttribute("memberNum") != null) {
     	mem_num = (int)session.getAttribute("memberNum");
     }
     
+    List<ReviewDTO> reviewList = (List<ReviewDTO>)request.getAttribute("reviewList"); 
     
     int currentPage = (int)request.getAttribute("currentPage");
     int rowsize = (int)request.getAttribute("rowsize");
@@ -29,6 +27,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="CSS/review.css">
+<!-- bootstrp -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 
 <script type="text/javascript">
 $(function(){

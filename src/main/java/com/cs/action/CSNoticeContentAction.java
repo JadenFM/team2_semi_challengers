@@ -1,4 +1,4 @@
-package com.cs.model;
+package com.cs.action;
 
 import java.io.IOException;
 
@@ -17,6 +17,11 @@ public class CSNoticeContentAction implements Action {
 			throws IOException, Exception {
 		
 		int notice_no = Integer.parseInt(request.getParameter("no").trim());
+		int page = 1;
+		
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page").trim());
+		}
 		
 		CScenterDAO dao = CScenterDAO.getinstance();
 		NoticeDTO dto = dao.getNoticeContent(notice_no);
@@ -30,10 +35,11 @@ public class CSNoticeContentAction implements Action {
 		request.setAttribute("noticeContent", dto);
 		request.setAttribute("noticeContentPrev", dtoPrev);
 		request.setAttribute("noticeContentNext", dtoNext);
+		request.setAttribute("notice_page", page);
 		
 		ActionForward forward = new ActionForward();
 		
-		forward.setPath("CScenter/CS_notice_content.jsp");	
+		forward.setPath("CS_center/CS_notice_content.jsp");	
 		forward.setRedirect(false);
 		
 		return forward;

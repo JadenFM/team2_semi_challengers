@@ -12,7 +12,7 @@
 	</tr>
 </table>
 
-<table>
+<table class="table">
 <c:set value="${NoticeList}" var="list" /> 
 <c:if test="${!empty list }">
 	<c:forEach items="${list }" var="dto">
@@ -47,31 +47,33 @@
 	</tr>
 </c:if>
 
-<tr>
-	<td align="center">
-	</td>
-</tr>
 </table>
+
+	<div style="text-align :right">
+		<span>검색 &nbsp; <input type="text" class="form-control" style="display: inline-block; width:25%;"></span>
+	</div>
 
 <nav>
 	  <ul class="pagination">
 	  	<c:if test="${page > block }">
-		    <li><a href="CS_main.do?page=1"><i class="bi bi-chevron-double-left"></i></a></li>
-		    <li><a href="CS_main.do?page=${startBlock -1}"><i class="bi bi-chevron-left"></i></a></li>
+		    <li class="page-item"><a class='page-link' href="CS_main.do?page=1"><i class="bi bi-chevron-double-left"></i></a></li>
+		    <li class="page-item"><a class='page-link' href="CS_main.do?page=${startBlock -1}"><i class="bi bi-chevron-left"></i></a></li>
 	    </c:if>
 	    <c:forEach begin="${startBlock }" end="${endBlock }" var="i">
 			<c:if test="${i == page }">
-				<li aria-current="page"><a href="CS_main.do?page=${i }">${i }</a>
+				<li class="page-item active" aria-current="page"><a class='page-link' href="CS_main.do?page=${i }">${i }</a>
 			</c:if>
 			<c:if test="${i != page }">
-				<li aria-current="page"><a href="CS_main.do?page=${i }">${i }</a>
+				<li class="page-item" aria-current="page"><a class='page-link' href="CS_main.do?page=${i }">${i }</a>
 			</c:if>
 		</c:forEach>
 		
 	    <c:if test="${endBlock < allPage}">
-			 <li><a href="CS_main.do?page=${endBlock + 1}"><i class="bi bi-chevron-right"></i></a>
-			 <li><a href="CS_main.do?page=${allPage}"><i class="bi bi-chevron-double-right"></i></a></li>
+			 <li class="page-item"><a class='page-link' href="CS_main.do?page=${endBlock + 1}"><i class="bi bi-chevron-right"></i></a>
+			 <li class="page-item"><a class='page-link' href="CS_main.do?page=${allPage}"><i class="bi bi-chevron-double-right"></i></a></li>
 		</c:if>
 	    
 	  </ul>
 	</nav>
+	
+	

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- css -->
-<link rel="stylesheet" href="CScenter/CScenter.css">
+<link rel="stylesheet" href="CScenter/CS_center.css">
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <!-- toastr -->

@@ -1,3 +1,5 @@
+<%@page import="com.review.model.ReviewDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,6 +8,13 @@
     if (session.getAttribute("memberNum") != null){
     	mem_num = (int)session.getAttribute("memberNum");
     }
+    
+    
+    int chall_no = 0;
+    if (request.getParameter("challNo") != null) {
+    	chall_no = Integer.parseInt(request.getParameter("challNo").trim());
+    }
+    
     %>
     
 <!DOCTYPE html>
@@ -33,6 +42,9 @@ $(document).ready(function(){
 		
 		$.ajax({
 			url : "<%= request.getContextPath() %>/review_list.do?page="+page,
+			data : {
+				chall_no : <%=chall_no%>
+			},
 			datatype : "html",
 			success : function(data){
 				$("#reviewContent").html(data);
@@ -142,7 +154,7 @@ $(document).ready(function(){
 		$("#review-write-chall").val(challResult);
 		let review_chall_num = $("#review-write-chall").val();
 		console.log(review_chall_num);
-		let review_star = $("#review-write-star").val();
+		let review_star = $("input[name='review-write-star']:checked").val();
 		console.log($("#review-write-star").val());
 		let review_content = $("#review-write-content").val();
 		console.log($("#review-write-content").val());
@@ -161,7 +173,8 @@ $(document).ready(function(){
 					toastr.success('리뷰가 등록되었습니다.');
 					$("#review-write-modal").modal('hide');
 					$("#review-write-chall").val("");
-					$("#review-write-star").val("");
+					$("#review-write-chall-show").val("");
+					$("input:radio[name='review-write-star']").prop('checked', false);
 					$("#review-write-content").val("");
 					goReviewPage(1);
 				}else {
@@ -179,7 +192,6 @@ $(document).ready(function(){
 		reviewInsert();		
 	});
 	
-	
 });
 
 
@@ -193,13 +205,12 @@ $(document).ready(function(){
 
 <div id="reviewContent"></div>
 
-<div>
-	<button type="button" id="reviewWriteBtn">리뷰 작성</button>
-	<button type="button" onclick="toastr.warning('테스트')">테스트</button>
+<div id="review-btn">
+	<button type="button" id="reviewWriteBtn" class="btn btn-primary">리뷰 작성</button>
 </div>
 
 
-<!-- 모달 -->
+<!-- 리뷰 작성 모달 -->
 <div class="modal fade" id="review-write-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -208,7 +219,7 @@ $(document).ready(function(){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      	<form>
+      	<form class="reviewForm" autocomplete="off">
       		<label for="review-write-chall" class="form-label">챌린지<span>*</span></label>
       		<input type="hidden" id="review-write-chall">
       		<input type="text" id="review-write-chall-show" class="form-control" placeholder="검색" >
@@ -216,14 +227,22 @@ $(document).ready(function(){
       			<div id="chall-list-wrap">
       			</div>
       		</div>
-      		<label for="review-write-star" class="form-label">별점<span>*</span></label>
+      		<br>
+      		<!-- <label for="review-write-star" class="form-label">별점<span>*</span></label>
       		<input type="text" id="review-write-star" class="form-control" placeholder="별 이미지 css로 시각화">
+      		 -->
+      		<label for="review-write-star" class="form-label">별점<span>*</span></label>
+      		<br>
+      		<fieldset>
+	      		<input class="starRadio" type="radio" name="review-write-star" value="5" id="rate1"><label class="starLabel" for="rate1">⭐</label><input class="starRadio" type="radio" name="review-write-star" value="4" id="rate2"><label class="starLabel" for="rate2">⭐</label><input class="starRadio" type="radio" name="review-write-star" value="3" id="rate3"><label class="starLabel" for="rate3">⭐</label><input class="starRadio" type="radio" name="review-write-star" value="2" id="rate4"><label class="starLabel" for="rate4">⭐</label><input class="starRadio" type="radio" name="review-write-star" value="1" id="rate5"><label class="starLabel" for="rate5">⭐</label>
+		    </fieldset>
+      		<br><br>
       		<label for="review-write-content" class="form-label">리뷰 내용<span>*</span></label>
       		<textarea id="review-write-content" class="form-control"></textarea>
       	</form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="review-close-btn">닫기</button>
         <button type="button" class="btn btn-primary" id="review-write-confirm">등록</button>
       </div>
     </div>

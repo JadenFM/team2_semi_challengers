@@ -752,5 +752,48 @@ public class UserDAO {
 		
 	}	// dao.updatePwd() 메소드 end 
 	
+	public int getmemberid(String mem_id_reported) {
+	      int result = 0;
+	      openConn();
+	      try {
+	         sql = "select mem_id from user_member where mem_id = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, mem_id_reported);
+	         rs = pstmt.executeQuery();
+	         if(rs.next()) {
+	            result = 1;
+	         }
+	         
+	         sql = "select mem_name from user_member where mem_name = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1,mem_id_reported);
+	         rs = pstmt.executeQuery();
+	         if(rs.next()) {
+	            result = 2;
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         closeConn(rs, pstmt, con);
+	      }
+	      return result;
+	   }   
+	   
+	   // 인증 완료 시 경험치(mem_xp) +25
+	   public void updateXp(int memberNum) {
+	      try {
+	         openConn();
+	         sql = "update user_member set mem_xp = mem_xp+25 where mem_num = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, memberNum);
+	         pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         closeConn(rs, pstmt, con);
+	      }
+	   }   // updateXp() end
+	
 	
 }

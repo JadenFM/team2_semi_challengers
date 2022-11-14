@@ -15,6 +15,9 @@
 				<tr class="contentTitle">
 					<td colspan="2">
 						<h1>FAQ</h1>
+						<div style="text-align :right">
+		<span>검색 &nbsp; <input type="text" class="form-control" style="display: inline-block; width:25%;"></span>
+	</div>
 						<hr>
 					</td>
 				</tr>
