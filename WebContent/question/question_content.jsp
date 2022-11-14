@@ -122,7 +122,7 @@ img {
 		<div id="container">
 		<div class="header">
 			<div class="h_container">
-				<h2>제 목</h2>
+				<h2>제 목<%=content.getP_q_user_num() %></h2>
 				<input class="search" value="<%=content.getP_q_title()%>" readonly>
 			</div>
 			<div class="h_container_cate">

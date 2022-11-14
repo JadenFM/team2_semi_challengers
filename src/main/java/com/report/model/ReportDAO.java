@@ -259,6 +259,20 @@ public class ReportDAO {
 		}
 		return result;
 	}
+	public void deleteReport(String mem_id, String mem_name) {
+		openConn();
+		try {
+			sql = "delete from member_report where mem_id_reported = ? or mem_name_reported = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, mem_id);
+			st.setString(2, mem_name);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, st, con);
+		}
+	}
 }
 
 

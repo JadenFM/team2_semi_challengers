@@ -295,6 +295,7 @@ function pagination(page){
 <body>
 	<jsp:include page="../include/admin_top.jsp"/>
 		<c:set var="list" value="${list }"/>
+		<c:set var="user_list" value="${user_list }"/>
 		<div class="header">
 			<div class="h_container">
 				<h4>검색어를 입력해 주십시오.</h4>
