@@ -8,6 +8,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+    String access_token = (String)session.getAttribute("access_token");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -15,19 +18,18 @@
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 
-<!-- jQuery -->
+<!-- CS센터 페이지에서 쓰는 부분 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="../CSS/CScenter.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<!-- toastr -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script type="text/javascript" src="../searchJS/location.js"></script>
-
-<!-- js & css -->
-<link rel="stylesheet" href="CScenter/CScenter.css?a">
+<script src="../JS/CScenter.js"></script>
 
 <script type="text/javascript" src="searchJS/location.js"></script>
 <script type="text/javascript" src="searchJS/local.js"></script>
+
+<script type="text/javascript" src="searchJS/move.js"></script> -->
+
+
 
 <style type="text/css">
 	
@@ -65,7 +67,8 @@
 	}
 	
 	.top{
-		width: 420px;
+		padding: 0px;
+		width: 500px;
 		display: grid;
 		grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
 		grid-template-rows: 50px;
@@ -122,10 +125,6 @@
 		border-color: black;
 		border-radius: 5px;
 		font-size: 16px;
-	}
-	
-	#search_text{
-		cursor: pointer;
 	}
 	
 	.search_btn{
@@ -216,8 +215,11 @@
 	.footer a{
 		color: gray;
 	}
-	
-	/* 검색버튼 팝업창 css */
+	#search_text{
+		cursor: pointer;
+	}
+
+/* 검색버튼 팝업창 css */
 	#search_layer {
 	position:fixed;
 	top:0;
@@ -300,7 +302,6 @@
 	
 	#search_card1{
 		margin: 0px 0px 28px;
-
 		
 	}
 	
@@ -312,7 +313,6 @@
 		margin: 0px 0px 40px;
 		height: 300px;
 	}
-
 	.card_image {
 	width: 100px;
 	height: 100px;
@@ -421,7 +421,6 @@ input::-webkit-search-results-decoration{
 	background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
 	cursor: pointer;
 }
-
 </style>
 </head>
 <body>
@@ -446,19 +445,19 @@ input::-webkit-search-results-decoration{
 					<c:if test="${!empty memberName }">
 						<li class="top_li_1"><a href="<%=request.getContextPath()%>/CS_center/CS_main.jsp">고객센터</a></li>
 						<li class="top_li_2"><a href="<%=request.getContextPath() %>/member_mypage.do?no=${memberNum}">마이페이지</a></li>	
-						<li class="top_li_3"><a href="<%=request.getContextPath() %>/member_logout.do">로그아웃</a></li>
+						<li class="top_li_3"><a href="#" onclick="javascript:document.frm.submit();">로그아웃</a></li>
+						<form name="frm" action="<%=request.getContextPath() %>/member_logout.do" method="POST">
+							<input type="hidden" name="access_token" value="${access_token }">
+						</form>	
 						<li class="top_li_4"><b>${memberName }</b> 님 안녕하세요!</li>
-
+	
 						<c:if test="${!empty list}">
 							<span class="top_li_5">
 											<a href="<%=request.getContextPath() %>/question_check_answer.do?mem_num=${memberNum}&p_q_check=1&mem_id=${memberId}"><img src="uploadFile/다운로드.png" width="30" height="30"></a>
 											${fn:length(list)}
 							</span>
 						</c:if>
-						
-						
 					</c:if>
-
 				</ul>
 			</div>
 
@@ -476,7 +475,7 @@ input::-webkit-search-results-decoration{
 			<ul class="menu">
 			
 				<li class="menu_li_1"><a href="<%=request.getContextPath() %>/main.jsp">홈</a></li>
-				
+
 				<li class="menu_li_2"><a href="#" id="move_search" onclick="return false;">챌린지 조회</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/member_challJoin.do">챌린지 개설</a></li>
 				<li class="menu_li_4"><a href="#">내 챌린지</a></li>
@@ -485,8 +484,7 @@ input::-webkit-search-results-decoration{
 		
 	</div>
 	<hr width=100% align="center">
-	
-		<div id="search_layer">
+			<div id="search_layer">
 		<div class="search_box">
 			<div class="search_box_position">
 				<input id="close" type="button"  value="닫기">
@@ -504,10 +502,10 @@ input::-webkit-search-results-decoration{
 								<span class="title">인기 검색어</span>
 							</div>
 							<div id="card_most_keyword">
-	
+
 							</div>
 						</div>
-						
+
 						<div id="search_card2" class="search_card">
 							<div class="search_title">
 								<span class="title">인기 카테고리</span>
@@ -515,25 +513,25 @@ input::-webkit-search-results-decoration{
 							<div id="card_most_category">
 							</div>
 						</div>
-						
+
 						<div id="search_card3" class="search_card">
 							<div class="search_title">
 							<span class="title">최근 조회한 챌린지</span>
 							</div>
 							<div id="card_qurency">
-							
+
 							</div>
 						</div>
 					</div>
-					
+
 					<div id="search_wrap2">
 						<div id="search_card4" class="search_card">
 							<div id="card_keyword">
-								
+
 							</div>
 						</div>
 					</div>
-					
+
 					<form id="form_search2" method='post' action="<%=request.getContextPath()%>/search.do">
 						<input type="hidden" id="form_search_keyword" name="keyword" value="">			
 						<input type="hidden" id="form_search_category" name="category" value="">			

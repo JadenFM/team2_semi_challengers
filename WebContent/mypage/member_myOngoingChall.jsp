@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-  
+
+<% 
+
+
+%> 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -21,7 +25,7 @@
 			place-items: center;
 			width: 100%;
 			grid-template-columns: 1fr 3fr 1fr;
-			grid-template-rows: 100px 130px 130px 1000px 100px;	
+			grid-template-rows: 100px 130px 130px 3fr 100px;	
 		}
 		
 		.ongoingChall_title {
@@ -41,7 +45,7 @@
 			grid-row: 3/4;		
 		}
 		
-		.ongoingChal_content{
+		.ongoingChall_content{
 			grid-column: 2/3;
 			grid-row: 4/5;		
 		}
@@ -189,7 +193,7 @@
 		}
 		/* 챌린지 상태 CSS end*/
 		
-		.ongoingChal_content table {
+		.ongoingChall_content table {
 			width: 1000px;
 			font-size: 18px;
 			text-align: center;
@@ -258,29 +262,29 @@
 					</ul>
 				</div>
 				
-				<article class="ongoingChal_content">
-					<table>
+				<article class="ongoingChall_content">
+					<table id="ongoingChall_table">
 						<tr>
-							<th></th> <th>챌린지 이름</th>
+							<th></th> <th>[챌린지 번호] 챌린지 이름</th>
 							<th>챌린지 기간</th> <th>챌린지 상태</th>
 						</tr>
 						
 						<c:set var="list" value="${List }" />
 						<c:if test="${!empty list }">
-							<c:forEach items="${list }" var="dto">
+							<c:forEach items="${list }" var="listDto">
 								<tr>
-									<td><a><img src="<%=request.getContextPath()%>/uploadFile/${dto.getChall_mainimage()}"></img></a></td>
+									<td><a href="<%=request.getContextPath() %>/member_myOngoingChallContent.do?chall_num=${listDto.getChall_num() }"><img width="200px" src="<%=request.getContextPath()%>/uploadFile/${listDto.getChall_mainimage()}"></img></a></td>
 									
 									<td>
-									${dto.getChall_title() }
+									[${listDto.getChall_num() }] ${listDto.getChall_title() }
 									</td>
 									
 									<td>
-									${dto.getChall_duration()}
+									${listDto.getChall_duration()}
 									</td>
 									
 									<td>
-									${dto.getChall_status() }
+									${listDto.getChall_status() }
 									</td>
 									
 								</tr>

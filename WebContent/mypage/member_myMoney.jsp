@@ -20,7 +20,7 @@
 			place-items: center;
 			width: 100%;
 			grid-template-columns: 1fr 3fr 1fr;
-			grid-template-rows: 100px 400px 100px;	
+			grid-template-rows: 100px 1fr 100px;	
 		}
 		
 		.ongoingChall_title {
@@ -64,7 +64,7 @@
 	
 		<div class="ongoingChall_container" >
 		
-			<h2 class="ongoingChall_title" >나의 예치금 / 상금</h2>
+			<h2 class="ongoingChall_title" >나의 예치금</h2>
 
 				<article class="ongoingChal_content">
 					<h3>예치금 전체 내역</h3>
@@ -73,9 +73,22 @@
 							<th>날짜</th> <th>관련 챌린지</th> <th>내용</th> <th>금액</th> <th>잔액</th>
 						</tr>
 						
-						<tr>
-							<td>날짜</td> <td>관련 챌린지</td> <td>내용</td> <td>금액</td> <td>잔액</td>
-						</tr>					
+						<c:set var="list" value="${List }" />
+						<c:if test="${!empty list }">
+							<c:forEach items="${list }" var="dto">
+								<tr>
+									<td>${dto.getLog_date() }</td> <td>${dto.getChall_num() }</td> <td>${dto.getMoney_log_kind() }</td> <td>${dto.getMoney_log_content() }</td> <td>${dto.getMoney_log_my_deposit() }</td>
+								</tr>	
+							</c:forEach>
+						</c:if>	
+						
+						<c:if test="${empty list }">
+							<tr>
+								<td colspan="5" align="center">
+									<h3>예치금 내역이 없습니다.</h3>
+								</td>
+							</tr>					
+						</c:if>			
 					</table>
 						
 				</article>

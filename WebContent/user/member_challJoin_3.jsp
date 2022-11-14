@@ -51,6 +51,7 @@
 <script type="text/javascript" src="js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 onload = function() {
+	
 	if('${open}' == 'admin') {
 		$("#tempSave_btn").hide();
 	}
@@ -206,7 +207,7 @@ function previewFile3() {
     .menu li{
     box-sizing: content-box;
     }
-    
+/* 부트스트랩 적용 후 바뀌는 부분(include) end */
     #title {
     	width: 15%;
     }
@@ -216,12 +217,15 @@ function previewFile3() {
     #cont {
     	width: 30%;
     }
-/* 부트스트랩 적용 후 바뀌는 부분(include) end */
 </style>
 </head>
 <body>
-   <jsp:include page="/include/chall_top.jsp" />
-   
+	<c:if test="${open=='admin'}">
+		<jsp:include page="/include/admin_top.jsp" />
+	</c:if>
+	<c:if test="${open!='admin'}">
+   		<jsp:include page="/include/chall_top.jsp" />
+   </c:if>
 		<div align="center">
 			<br>
 			<h3><b>챌린지를 만들어주세요!</b></h3>

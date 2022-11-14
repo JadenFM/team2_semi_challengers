@@ -10,6 +10,7 @@ import com.admin.model.AdminDAO;
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.report.model.ReportDTO;
+import com.user.model.UserDAO;
 import com.user.model.UserDTO;
 
 public class AdminControlAction implements Action{
@@ -36,8 +37,20 @@ public class AdminControlAction implements Action{
 	    }
 		
 		List<ReportDTO> list = dao.getReportList(startNo,lastNo);
+		
+		UserDAO dao1 = UserDAO.getinstance();
+		List<UserDTO> list_user = dao1.getUserMember();
+		request.setAttribute("list_user", list_user);
 		request.setAttribute("list",list);
+		request.setAttribute("rowsize",rowsize);
 		request.setAttribute("page",page);
+		request.setAttribute("block", block);
+		request.setAttribute("startNo", startNo);
+		request.setAttribute("lastNo",lastNo);
+		request.setAttribute("startBlock", startBlock);
+		request.setAttribute("lastBlock", lastBlock);
+		request.setAttribute("totalRecord",totalRecord);
+		request.setAttribute("allPage", allPage);
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("admin/admin_control.jsp");

@@ -1,6 +1,7 @@
 package com.mypage.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
+import com.mypage.model.MoneyLogDTO;
+import com.mypage.model.MyChallDAO;
 import com.user.model.UserDAO;
 import com.user.model.UserDTO;
 
@@ -21,11 +24,14 @@ public class MyMoneyAction implements Action {
 		HttpSession session = request.getSession();	
 		int member_num = (int) session.getAttribute("memberNum");
 		
-		UserDAO dao = UserDAO.getinstance();
+		MyChallDAO dao = MyChallDAO.getinstance();
 		
-		UserDTO dto = dao.getMemberInfo(member_num);
+		//	해당 회원의 예치금 로그를 불러오는 메소드 호출
+		List<MoneyLogDTO> list = dao.getMoneyLog(member_num);
 		
-		request.setAttribute("dto", dto);
+		// 해당 회원의 예치금 로그
+		
+		request.setAttribute("List", list);
 		
 		ActionForward forward = new ActionForward();
 		

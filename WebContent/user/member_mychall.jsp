@@ -158,7 +158,7 @@
 					<ul class="mychall_ul">
 						<li><a href="<%=request.getContextPath()%>/member_myOngoingChall.do">참가중</a></li>
 						<li><a href="<%=request.getContextPath()%>/member_myCompleteChall.do">완료</a></li>
-						<li><a href="<%=request.getContextPath()%>/member_myCreateChall.do?no=<%=member_num %>">개설</a></li>
+						<li><a href="<%=request.getContextPath()%>/member_myCreateChall.do">개설</a></li>
 					</ul>
 			</section>	
 		</article>		

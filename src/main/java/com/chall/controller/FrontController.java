@@ -36,7 +36,7 @@ public class FrontController extends HttpServlet {
 		Properties pro = new Properties();
 
 		FileInputStream fis = new FileInputStream(
-				"C:\\Users\\6541h\\git\\team2_semi_challengers\\src\\main\\java\\com\\chall\\controller\\mapping.properties");
+				"C:\\ncs\\workspace(WEB)\\Semi_Challengers2_1113_backup\\src\\main\\java\\com\\chall\\controller\\mapping.properties");
 		pro.load(fis);
 
 		String value = pro.getProperty(command);

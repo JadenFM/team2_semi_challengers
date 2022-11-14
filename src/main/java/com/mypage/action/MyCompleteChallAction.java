@@ -11,6 +11,7 @@ import com.chall.controller.Action;
 import com.chall.controller.ActionForward;
 import com.chall.model.ChallengeDTO;
 import com.mypage.model.MyChallDAO;
+import com.user.model.UserDTO;
 
 public class MyCompleteChallAction implements Action {
 
@@ -24,10 +25,31 @@ public class MyCompleteChallAction implements Action {
 		
 		MyChallDAO dao = MyChallDAO.getinstance();
 		
-		// 해당 회원이 참가했던, 챌린지 상태가 '완료'인 챌린지 목록을 반환하는 메소드 호출.
-		List<ChallengeDTO> list = dao.getCompelteChallList(member_num);		
+		// 해당 회원이 참가중인 챌린지 수를 반환하는 메소드 호출.
+		int count = dao.getOngoingChallCount(member_num);
 		
-		return null;
-	}
+		// 해당 회원의 전체 챌린지 참여 수, 완수한 챌린지 수, 경험치를 반환하는 메소드 호출
+		UserDTO dto = dao.getUserChallengeInfo(member_num);
+		
+		double challenge_count = dto.getChallenge_count();
+		double challenge_complete_count=dto.getChallenge_complete_count();
+		
+		double completePercentage = (challenge_complete_count/challenge_count)*100;	// 평균 달성률 = 완수한 챌린지 수/전체 챌린지 참여 수
+				
+		// 해당 회원이 참가했던, 챌린지 상태가 '완료'인 챌린지 목록을 반환하는 메소드 호출.
+		List<ChallengeDTO> list = dao.getCompelteChallList(member_num);
+		
+		request.setAttribute("Dto", dto);
+		request.setAttribute("completePercentage", completePercentage);
+		request.setAttribute("Count", count);
+		request.setAttribute("List", list);		
 
+		ActionForward forward = new ActionForward();
+		
+		forward.setRedirect(false);
+		
+		forward.setPath("member_myCompleteChallOk.do");				
+		
+		return forward;
+	}
 }

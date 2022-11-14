@@ -25,6 +25,7 @@ public class SearchOpListAction implements Action {
 		String optionCa = request.getParameter("optionCa").trim();
 		String optionDu = request.getParameter("optionDu").trim();
 		String keyword = request.getParameter("keyword").trim();
+		int page = Integer.parseInt(request.getParameter("page").trim());
 		
 		// 카테고리를 마지막 인자에 추가
 		if(!optionCy.equals("")) { 
@@ -42,10 +43,6 @@ public class SearchOpListAction implements Action {
 		String[] spOptionDu = null;
 		String[] spOptionCa = null;
 		String str = "";
-		
-		System.out.println("받은 옵션Cy >>> " +optionCy);
-		System.out.println("받은 옵션Du >>> " +optionDu);
-		System.out.println("받은 옵션Ca >>> " +optionCa);
 		
 		SearchDAO dao = SearchDAO.getinstance();
 		
@@ -69,7 +66,7 @@ public class SearchOpListAction implements Action {
 				spOptionCa = new String[1];
 				spOptionCa[0] = optionCa;
 			}
-			str = dao.getOptionList(spOptionCy, spOptionDu, spOptionCa, keyword);
+			str = dao.getOptionList(spOptionCy, spOptionDu, spOptionCa, keyword, page);
 			
 			
 		}else if(!optionCy.equals("") && !optionDu.equals("") && optionCa.equals("")) { // 기간, 빈도 두 개만 선택한 경우
@@ -86,7 +83,7 @@ public class SearchOpListAction implements Action {
 				spOptionDu = new String[1];
 				spOptionDu[0] = optionDu;
 			}
-			str = dao.getOptionList(spOptionCy, spOptionDu, keyword);
+			str = dao.getOptionList(spOptionCy, spOptionDu, keyword, page);
 			
 		}else if(!optionCy.equals("") && optionDu.equals("") && !optionCa.equals("")){ // 기간, 카테고리 두 개만 선택한 경우
 			if(optionCy.contains(",")) { // 체크박스 2개 이상 선택
@@ -101,7 +98,7 @@ public class SearchOpListAction implements Action {
 				spOptionCa = new String[1];
 				spOptionCa[0] = optionCa;
 			}
-			str = dao.getOptionList(spOptionCy, spOptionCa, keyword);
+			str = dao.getOptionList(spOptionCy, spOptionCa, keyword, page);
 			
 		}else if(optionCy.equals("") && !optionDu.equals("") && !optionCa.equals("")){ // 빈도, 카테고리 두 개만 선택한 경우
 			if(optionCa.contains(",")) { // 체크박스 2개 이상 선택
@@ -116,7 +113,7 @@ public class SearchOpListAction implements Action {
 				spOptionDu = new String[1];
 				spOptionDu[0] = optionDu;
 			}
-			str = dao.getOptionList(spOptionCa, spOptionDu, keyword);
+			str = dao.getOptionList(spOptionCa, spOptionDu, keyword, page);
 			
 		}else if(!optionCy.equals("")) { // 기간만 선택한 경우
 			
@@ -126,7 +123,7 @@ public class SearchOpListAction implements Action {
 				spOptionCy = new String[1];
 				spOptionCy[0] = optionCy;
 			}
-			str = dao.getOptionList(spOptionCy, keyword);
+			str = dao.getOptionList(spOptionCy, keyword, page);
 				
 		}else if(!optionDu.equals("")) { // 빈도만 선택한 경우
 			
@@ -136,7 +133,7 @@ public class SearchOpListAction implements Action {
 				spOptionDu = new String[1];
 				spOptionDu[0] = optionDu;
 			}
-			str = dao.getOptionList(spOptionDu, keyword);
+			str = dao.getOptionList(spOptionDu, keyword, page);
 		}else if(!optionCa.equals("")) { // 카테고리만 선택한 경우
 			
 			if(optionCa.contains(",")) {
@@ -145,9 +142,13 @@ public class SearchOpListAction implements Action {
 				spOptionCa = new String[1];
 				spOptionCa[0] = optionCa;
 			}
-			str = dao.getOptionList(spOptionCa, keyword);
+			str = dao.getOptionList(spOptionCa, keyword, page);
 		}
 			
+		
+		if(str.equals("<chall_lists></chall_lists>")) {
+			str = "1";
+		}
 		
 		PrintWriter out = response.getWriter();
 		

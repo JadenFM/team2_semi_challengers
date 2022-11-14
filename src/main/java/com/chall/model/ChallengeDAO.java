@@ -242,7 +242,7 @@ public class ChallengeDAO {
 		try {
 			sql = "select * from (select rownum as rnum , a.* from (select * from challenge_list where chall_category_code_fk = ? order by chall_num desc) a where rownum <= ?) where rnum >= ?";
 			st = con.prepareStatement(sql);
-			st.setString(1,category_code);
+		st.setString(1,category_code);
 			st.setInt(2,lastNo);
 			st.setInt(3,startNo);
 			rs = st.executeQuery();

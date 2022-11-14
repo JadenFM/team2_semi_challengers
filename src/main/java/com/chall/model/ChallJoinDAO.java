@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import com.chall.controller.OjdbcUrl;
 
 import com.user.model.UserDTO;
 
@@ -25,12 +26,13 @@ public class ChallJoinDAO {
 		return instance;
 	}
 	
+	OjdbcUrl oju = new OjdbcUrl();
 
 // Connection을 가져오는 메서드
 	public void openConn() {
 	
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/downloads/ProjectChallengers/Wallet_ProjectChallengers/";
+		String url = oju.getUrl();
 		String user = "ADMIN";
 		String password = "WelcomeTeam2";
 	
@@ -510,4 +512,30 @@ public class ChallJoinDAO {
 		}
 	}	// memChallJoinUpdate() end
 	
+	
+	// 비공개 코드 확인
+	public int checkPrivateCode(int challNum, String paramCode) {
+		String originalCode = "";
+		int result = 0;   // 아이디 중복 여부 체크 변수
+		try {
+			openConn();
+			sql = "select chall_privateCode from challenge_list where chall_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, challNum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				// 중복이 되는 경우
+				originalCode = rs.getString("chall_privateCode");
+				if((originalCode).equals(paramCode)) {
+					result = 1;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}	// checkPrivateCode() end
 }

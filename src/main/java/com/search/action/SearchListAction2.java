@@ -20,6 +20,7 @@ public class SearchListAction2 implements Action {
 		
 		String keyword = request.getParameter("keyword").trim();
 		String category = request.getParameter("category").trim();
+		int page = Integer.parseInt(request.getParameter("page").trim());
 		
 		System.out.println("리스트 액션 키워드 >>>" +keyword);
 		System.out.println("리스트 액션 카테고리 >>>" +category);
@@ -29,9 +30,9 @@ public class SearchListAction2 implements Action {
 		if(!keyword.equals("") && keyword != null) {
 			str = dao.getSearchKeyList2(keyword);
 		}else if(!category.equals("") && category != null) {
-			str = dao.getSearchCateList(category);
+			str = dao.getSearchCateList(category, page);
 		}else {
-			str = dao.getChallList();
+			str = dao.getChallList(page);
 		}
 		
 		

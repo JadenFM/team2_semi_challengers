@@ -72,4 +72,11 @@ $(document).ready(function(){
 	}); // 체크박스 선택 이벤트 end
 	
 	
+	$(".top_btn").on("click", function(){
+	
+		window.scrollTo(0,0);
+	
+	})
+	
+	
 });

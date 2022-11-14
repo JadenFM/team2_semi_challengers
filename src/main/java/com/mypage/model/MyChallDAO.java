@@ -168,6 +168,8 @@ public class MyChallDAO {
 	// 해당 회원이 참여하고 있는,(챌린지 상태가 '진행중'인) 챌린지 리스트를 반환하는 메소드.
 	public List<ChallengeDTO> getOngoingChallList(int member_num) {
 		
+		ChallengeDTO challDto = null;
+		
 		List<ChallengeDTO> list = new ArrayList<ChallengeDTO>();
 		
 		try {
@@ -181,34 +183,41 @@ public class MyChallDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			while{
+			while(rs.next()){	
+				challDto = new ChallengeDTO();
 				
+				challDto.setChall_num(rs.getInt("chall_num"));
+				challDto.setChall_category_code_fk(rs.getString("CHALL_CATEGORY_CODE_FK"));
+				challDto.setChall_mainimage(rs.getString("CHALL_MAINIMAGE"));
+				challDto.setChall_title(rs.getString("CHALL_TITLE"));
+				challDto.setChall_duration(rs.getString("CHALL_DURATION"));
+				challDto.setChall_status(rs.getString("CHALL_STATUS"));
+				
+				list.add(challDto);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
 		}
 		
-		
-		
-		
-		
-		
-
+		return list;
 	
 	}	// getOngoingChallList() 메소드 end
 	
 	// 해당 회원이 참가했던, 챌린지 상태가 '완료'인 챌린지 목록을 반환하는 메소드.
 	public List<ChallengeDTO> getCompelteChallList(int member_num){
 		
+		ChallengeDTO challDto =null;
 		
-			List<ChallengeDTO> list = null;
+		List<ChallengeDTO> list = null;
 			
 		try {
 			openConn();
 			
-			sql = "select * from challenge_list where chll_num = (select proof_chall_num from proof_shot where proof_mem_num = ? )";
+			sql = "select * from challenge_list where (chall_num in (select proof_chall_num from proof_shot where proof_mem_num = ?) and (chall_num in (select chall_num from challenge_list where chall_status='완료'))) order by chall_num desc";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -220,14 +229,14 @@ public class MyChallDAO {
 				
 				list = new ArrayList<ChallengeDTO>();
 				
-				ChallengeDTO challDto = new ChallengeDTO();
+				challDto = new ChallengeDTO();
 				
 				challDto.setChall_num(rs.getInt("chall_num"));
 				challDto.setChall_category_code_fk(rs.getString("CHALL_CATEGORY_CODE_FK"));
-				challDto.setChall_status(rs.getString("chall_status"));
-				challDto.setChall_title(rs.getString("chall_title"));
-				challDto.setChall_duration(rs.getString("chall_duration"));
-				challDto.setChall_mainimage(rs.getString("chall_mainImage"));	
+				challDto.setChall_mainimage(rs.getString("CHALL_MAINIMAGE"));
+				challDto.setChall_title(rs.getString("CHALL_TITLE"));
+				challDto.setChall_duration(rs.getString("CHALL_DURATION"));
+				challDto.setChall_status(rs.getString("CHALL_STATUS"));
 				
 				list.add(challDto);
 			}
@@ -241,6 +250,52 @@ public class MyChallDAO {
 		return list;
 		
 	} // getCompelteChallList() 메소드 end
+	
+	
+	// 해당 회원이 참가했던, 챌린지 상태가 '완료'인 챌린지 목록을 반환하는 메소드.
+	public List<ChallengeDTO> getMyCreateChallList(int member_num){
+		
+		ChallengeDTO challDto =null;
+		
+		List<ChallengeDTO> list = null;
+			
+		try {
+			openConn();
+			
+			sql = "select * from challenge_list where CHALL_CREATER_NUM = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, member_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				list = new ArrayList<ChallengeDTO>();
+				
+				challDto = new ChallengeDTO();
+				
+				challDto.setChall_num(rs.getInt("chall_num"));
+				challDto.setChall_category_code_fk(rs.getString("CHALL_CATEGORY_CODE_FK"));
+				challDto.setChall_mainimage(rs.getString("CHALL_MAINIMAGE"));
+				challDto.setChall_title(rs.getString("CHALL_TITLE"));
+				challDto.setChall_duration(rs.getString("CHALL_DURATION"));
+				challDto.setChall_status(rs.getString("CHALL_STATUS"));
+				
+				list.add(challDto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return list;
+		
+	} // getMyCreateChallList() 메소드 end	
 	
 	// 현재 경험치를 받아 현재 레벨을 알려주는 메소드
 	public String getPresentLevel(int myXp) {
@@ -302,6 +357,49 @@ public class MyChallDAO {
 		
 		return xpToNextLevel;
 	}	// getXpToNextLevel() 메소드 end
+	
+	// 해당 회원의 예치금 로그를 불러오는 메소드
+	public List<MoneyLogDTO> getMoneyLog(int member_num){
+	
+		MoneyLogDTO dto = null;
+		
+		List<MoneyLogDTO> list = new ArrayList<MoneyLogDTO>();
+		
+		try {
+			openConn();
+			
+			sql = "select to_char(log_date,'YYYY/MM/DD') as log_date, mem_num, chall_num, money_log_content, money_log_kind, money_log_my_deposit from money_log where mem_num = ? order by log_date desc";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, member_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				dto = new MoneyLogDTO();
+				dto.setLog_date(rs.getString("log_date"));
+				dto.setMem_num(rs.getInt("mem_num"));
+				dto.setChall_num(rs.getInt("chall_num"));
+				dto.setMoney_log_content(rs.getInt("money_log_content"));
+				dto.setMoney_log_kind(rs.getString("money_log_kind"));
+				dto.setMoney_log_my_deposit(rs.getInt("money_log_my_deposit"));
+				
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return list;
+	}	// getMoneyLog() 메소드 end
+	
+	
 	
 	
 }
