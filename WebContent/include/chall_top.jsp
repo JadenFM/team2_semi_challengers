@@ -464,8 +464,10 @@ input::-webkit-search-results-decoration{
 
 		<div class="search">
 			<form id="form_searchText" method="post" onsubmit="return false;">
-				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!">&nbsp;&nbsp;
+				<a id="open">
+				<input id="search_text" class="search_text" name="search_text" placeholder="  당신의 챌린지를 찾아보세요!" readonly>&nbsp;&nbsp;
 				<input id="search_btn" class="search_btn" type="button" value="검색">
+				</a>
 			</form>	
 		</div>
 
