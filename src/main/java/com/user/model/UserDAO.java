@@ -982,4 +982,4 @@ public class UserDAO {
 		return mem_id;
 	}
 
-
+}
