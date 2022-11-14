@@ -280,7 +280,7 @@
 									</td>
 									
 									<td>
-									${listDto.getChall_duration()}
+									${listDto.getChall_duration()}주 
 									</td>
 									
 									<td>

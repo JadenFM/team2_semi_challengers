@@ -22,7 +22,7 @@ public class ReportInsertAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)throws IOException, Exception {
 		System.out.println("asldkjhalksd");
-		String fileDirectory = "C:\\Users\\sulee\\git\\team2_semi_challengers\\WebContent\\report_image";
+		String fileDirectory = "C:\\Users\\VVIP\\Desktop\\Semi_Challengers2_1114_승준2\\WebContent\\report_image";
 		int fileSize = 1024*1024*10;
 		MultipartRequest mr = new MultipartRequest(request, fileDirectory, fileSize, "UTF-8" , new DefaultFileRenamePolicy());
 		

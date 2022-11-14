@@ -27,8 +27,11 @@
 <script type="text/javascript" src="searchJS/location.js"></script>
 <script type="text/javascript" src="searchJS/local.js"></script>
 
-<script type="text/javascript" src="searchJS/move.js"></script> -->
+<script type="text/javascript" src="searchJS/move.js"></script>
 
+<!-- toastr -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <style type="text/css">
@@ -219,207 +222,218 @@
 		cursor: pointer;
 	}
 
-/* 검색버튼 팝업창 css */
-	#search_layer {
-	position:fixed;
-	top:0;
-	left:0;
-	z-index: 10000; 
-	width: 100%; 
-	height: 100%; 
-	background-color: #fff; 
-	float: top;
-	display: none;
-	overflow-y : auto;
-	}
-	
-	
-	.search_box{
-		position: unset;
-		height: 100%; 
-		width: unset;
-		box-sizing:border-box;
-		background:#fff;
-	}
-	
-	#search_wrap{
-		margin: 0 auto;
-		width: 1000px;
-	}
-	
-	.search_box_position{
-		position: absolute;
-		width: 100%;
-		height: 100%;
-	}
-	
-	#search_bar{
-		width: 1000px;
-		margin: 30px auto;
-	}
-	
-	
-	.search_text2{
-		width:80%; 
-		height:40px;
-		padding: 0;
-		border-spacing: 1px;
-		border-color: black;
-		border-radius: 5px;
-		font-size: 16px;
-		float: left;
-	}
-	
-	.search_btn2{
-		margin-left:10px;
-		cursor: pointer;
-		width: 80px;
-		height: 43.99px;
-		background-color: #ff4d54;
-		color : white;
-		font-weight : bold;
-		font-size: 16px;
-		border-radius: 5px;
-		float: left;
-		
-	}
-	
-	#close{
-		position: absolute;
-		top: 18px;
-		right: 20px;
-	}
-	
-	.search_title{
-	
-		margin-top: 50px;
-		line-height:1.4rem;
-		font-size:20px; 
-		font-weight:bold;
-		text-align: left;
-	
-	}
-	
-	#search_card1{
-		margin: 0px 0px 28px;
-		
-	}
-	
-	#search_card2{
-		margin: 0px 0px 24px;
-	}
-	
-	#search_card3{
-		margin: 0px 0px 40px;
-		height: 300px;
-	}
-	.card_image {
-	width: 100px;
-	height: 100px;
-	}
-	
-	#card_most_category{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		justify-content: space-between;
-		margin: 25px 25px 25px 25px;
-			
-	
-	}	
-	
-	#card_most_keyword{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		justify-content: space-between;
-		margin: 25px;
-		flex-wrap:wrap;
-		align-content: space-around;
-		font-weight: bold;
-	}
-	
-	
-	#card_most_keyword li{
-		width: 50%;
-		margin-bottom: 30px;
-	}
-	
-	
-	
-	/* 최근 조회한 챌린지 */
-	#card_qurency{
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin: 25px 25px 25px 25px;
-	}	
-	
-	
-	
-	/* 검색 */
-	
-	#search_wrap2{
-		display: none;
-	}
-	
-	.card_items{
-		cursor: pointer;
-	}
-	
-	.card_items_keyword{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		justify-content: space-between;
-		margin : 50px 50px 50px 0px;
-		flex-wrap:wrap;
-		align-content: space-between;
-		font-weight: bold;
-	}
-	
-	.card_keyword_icon{
-		float: left;
-	}
-	
-	.card_keyword_icon img{
-		width: 100px;
-		height: 100px;
-	}
-	
-	.card_keyword_info{
-		float: left;
-		margin-left: 50px;
-	}
-	
-	.none{
-		text-align: center;
-		font-size: 16px;
-		color: #AAA;
-		margin-right: 400px;
-	}
-	
-	.keyword_form{
-		cursor: pointer;
-	}
-	
-	.blank{
-		width: 100px;
-		height: 100px;
-	}
-	
-	
-	
+   /* 검색버튼 팝업창 css */
+   #search_layer {
+   position:fixed;
+   top:0;
+   left:0;
+   z-index: 10000; 
+   width: 100%; 
+   height: 100%; 
+   background-color: #fff; 
+   float: top;
+   display: none;
+   }
+   
+   
+   .search_box{
+      position: unset;
+      height: 100%; 
+      width: unset;
+      box-sizing:border-box;
+      background:#fff;
+   }
+   
+   #search_wrap{
+      margin: 0 auto;
+      width: 1000px;
+   }
+   
+   .search_box_position{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+   }
+   
+   #search_bar{
+      width: 1000px;
+      margin: 30px auto;
+   }
+   
+   
+   .search_text2{
+      width:80%; 
+      height:40px;
+      padding: 0;
+      border-spacing: 1px;
+      border-color: black;
+      border-radius: 5px;
+      font-size: 16px;
+      float: left;
+   }
+   
+   .search_btn2{
+      margin-left:10px;
+      cursor: pointer;
+      width: 80px;
+      height: 43.99px;
+      background-color: #ff4d54;
+      color : white;
+      font-weight : bold;
+      font-size: 16px;
+      border-radius: 5px;
+      float: left;
+      
+   }
+   
+   #close{
+      position: absolute;
+      top: 18px;
+      right: 20px;
+   }
+   
+   .search_title{
+   
+      margin-top: 50px;
+      line-height:1.4rem;
+      font-size:20px; 
+      font-weight:bold;
+      text-align: left;
+   
+   }
+   
+   #search_card1{
+      margin: 0px 0px 28px;
+
+      
+   }
+   
+   #search_card2{
+      margin: 0px 0px 24px;
+   }
+   
+   #search_card3{
+      margin: 0px 0px 40px;
+      height: 300px;
+   }
+
+   .card_image {
+   width: 100px;
+   height: 100px;
+   }
+   
+   #card_most_category{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 25px 25px 25px;
+         
+   
+   }   
+   
+   #card_most_keyword{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px;
+      flex-wrap:wrap;
+      align-content: space-around;
+      font-weight: bold;
+   }
+   
+   
+   #card_most_keyword li{
+      width: 50%;
+      margin-bottom: 30px;
+   }
+   
+   
+   
+   /* 최근 조회한 챌린지 */
+   #card_qurency{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 25px 25px 25px;
+   }   
+   
+   
+   
+   /* 검색 */
+   
+   #search_wrap2{
+      display: none;
+      margin: 0 auto;
+      width: 1000px;
+   }
+   
+   .card_items{
+      cursor: pointer;
+   }
+   
+   .card_items_keyword{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      margin : 50px 50px 50px 0px;
+      flex-wrap:wrap;
+      align-content: space-between;
+      font-weight: bold;
+   }
+   
+   #card_keyword{
+      overflow-y: auto;
+      height: 850px;
+   }
+   
+   .card_keyword_icon{
+      float: left;
+   }
+   
+   .card_keyword_icon img{
+      width: 100px;
+      height: 100px;
+   }
+   
+   .card_keyword_info{
+      float: left;
+      margin-left: 50px;
+   }
+   
+   .none{
+      text-align: center;
+      font-size: 16px;
+      color: #AAA;
+      margin-right: 400px;
+   }
+   
+   .keyword_form{
+      cursor: pointer;
+   }
+   
+   .blank{
+      width: 100px;
+      height: 100px;
+   }
+   
+   #search_card4{
+      margin-right: 100px;
+   }
+   
+   
  input::-webkit-search-decoration,
 input::-webkit-search-cancel-button,
 input::-webkit-search-results-button,
 input::-webkit-search-results-decoration{
- 	-webkit-appearance: none;
-	height: 20px;
-	width: 20px;
-	border-radius: 10px;
-	background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
-	cursor: pointer;
+    -webkit-appearance: none;
+   height: 20px;
+   width: 20px;
+   border-radius: 10px;
+   background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+   cursor: pointer;
 }
 </style>
 </head>
@@ -478,7 +492,7 @@ input::-webkit-search-results-decoration{
 
 				<li class="menu_li_2"><a href="#" id="move_search" onclick="return false;">챌린지 조회</a></li>
 				<li class="menu_li_3"><a href="<%=request.getContextPath() %>/member_challJoin.do">챌린지 개설</a></li>
-				<li class="menu_li_4"><a href="#">내 챌린지</a></li>
+				<li class="menu_li_4"><a href="<%=request.getContextPath()%>/member_myOngoingChall.do" >내 챌린지</a></li>
 			</ul>
 		</nav>
 		

@@ -182,34 +182,34 @@ img {
 		  <ul class="pagination">
 		    <li class="page-item">
 		      <a class="page-link" 
-		      		href="answer_check_X.do?page=1">First</a>
+		      		href="answer_check_O.do?page=1">First</a>
 		    </li>
 		    <li>
 		      <a class="page-link" 
-		      		href="answer_check_X.do?page=${page - 1 }">Previous</a>
+		      		href="answer_check_O.do?page=${page - 1 }">Previous</a>
 		    </li>
 		    <c:forEach begin="${startBlock }"
 	       				end="${lastBlock }" var="i">
 		      
 		      <c:if test="${i == page }">
 		         <li class="page-item active" aria-current="page">
-		           <a class="page-link" href="answer_check_X.do?page=${i }">${i }</a>
+		           <a class="page-link" href="answer_check_O.do?page=${i }">${i }</a>
 		         </li>
 		      </c:if>
 	      
 		      <c:if test="${i != page }">
 		         <li class="page-item">
-		           <a class="page-link" href="answer_check_X.do?page=${i }">${i }</a>
+		           <a class="page-link" href="answer_check_O.do?page=${i }">${i }</a>
 		         </li>
 		      </c:if>
 	   		</c:forEach>
 		    
 		    <c:if test="${lastBlock < allPage }">
 		      <li class="page-item">
-		      	<a class="page-link" href="answer_check_X.do?page=${page + 1 }">Next</a>
+		      	<a class="page-link" href="answer_check_O.do?page=${page + 1 }">Next</a>
 		      </li>
 		      <li class="page-item">
-		      	<a class="page-link" href="answer_check_X.do?page=${allPage }">End</a>
+		      	<a class="page-link" href="answer_check_O.do?page=${allPage }">End</a>
 		      </li>
 		    </c:if>
 		  </ul>

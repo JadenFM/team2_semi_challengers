@@ -57,6 +57,16 @@
 					</div>	
 				</div>	
 			</div>	
+			
+			<div class="ongoing_container">
+				<div class="ongoing_box">
+					<span><img src="<%=request.getContextPath()%>/search_image/icon_logo.png"></span>
+					<span>챌린지 누적 참가 건수</span>
+					<span id="input_ongoing">
+					</span>
+				</div>
+			</div>
+			
 				
 			<div class="main_container">	
 				<div class="admin_container">	
@@ -67,33 +77,21 @@
 					</div>	
 				</div>	
 			</div>	
+			
+						<div class="main_container">	
+				<div class="new_container">	
+					<div class="container_title">	
+						<span class="title">신규 챌린지</span>	
+					</div>	
+					<div id="input_items4">	
+					</div>	
+				</div>	
+			</div>
 				
 			<form id="form" method='post' action="<%=request.getContextPath()%>/search.do">	
 			<input type="hidden" name="keyword" value="">				
 			<input type="hidden" id="form_category" name="category" value="">				
 			</form>	
-
-				<div class="most_container">
-					<div class="container_title">
-						<span class="title">인기 챌린지</span>
-					</div>
-					<div id="input_items2">
-					</div>
-				</div>
-			
-				<div class="admin_container">
-					<div class="container_title">
-						<span class="title">전문 멘토와 함께하는 챌린지</span>
-					</div>
-					<div id="input_items3">
-					</div>
-				</div>
-			</div>
-			
-			<form id="form" method='post' action="<%=request.getContextPath()%>/search.do">
-			<input type="hidden" name="keyword" value="">			
-			<input type="hidden" id="form_category" name="category" value="">			
-			</form>
 		
 	</article>
 	<jsp:include page="include/chall_bottom.jsp" />

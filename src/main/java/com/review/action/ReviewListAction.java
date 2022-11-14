@@ -77,6 +77,7 @@ public class ReviewListAction implements Action {
 		request.setAttribute("startBlock", startBlock);
 		request.setAttribute("endBlock", endBlock);
 		request.setAttribute("reviewList", reviewList);
+		request.setAttribute("chall_no", chall_no);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

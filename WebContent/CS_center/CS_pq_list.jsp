@@ -110,10 +110,14 @@ function pqWrite(){
 						<span>${dto.getP_q_content() }</span>
 						<br><br>
 						<div>
+							<span>답변 등록일 : ${dto.getP_q_regdate() }</span>
+							<br>
+		
 							<span>${dto.getP_q_answer_cont() }</span>
 						</div>
 					</c:if>
 					<c:if test="${dto.getP_q_answer_cont() == null }">
+						
 						<span>${dto.getP_q_content() }</span>
 						<br><br>
 						<div>

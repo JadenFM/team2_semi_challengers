@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.category.medel.CategoryDTO;
+import com.chall.controller.OjdbcUrl;
 import com.user.model.UserDTO;
 
 
@@ -30,41 +31,44 @@ public class MainDAO {
 		return instance;
 	}
 
-// Connection을 가져오는 메서드
-	public void openConn() {
+	OjdbcUrl oju = new OjdbcUrl();
 
-		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@projectchallengers_high?TNS_ADMIN=D:/NCS/download/Wallet_ProjectChallengers";
-		String user = "ADMIN";
-		String password = "WelcomeTeam2";
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
+	// Connection을 가져오는 메서드
+		public void openConn() {
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	} // openConn() END
+			String driver = "oracle.jdbc.driver.OracleDriver";
+			String url = oju.getUrl();
+			String user = "ADMIN";
+			String password = "WelcomeTeam2";
 
-// 사용한 자원을 반환하는 메서드
-	public void closeConn(ResultSet rs, PreparedStatement pstmt, Connection con) {
+			try {
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, user, password);
 
-		try {
-
-			if (rs != null) {
-				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (con != null) {
-				con.close();
-			}
+		} // openConn() END
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	} // closeConn() END
+	// 사용한 자원을 반환하는 메서드
+		public void closeConn(ResultSet rs, PreparedStatement pstmt, Connection con) {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} // closeConn() END
 
 
 	public String getCategoryList() {
@@ -232,6 +236,7 @@ public class MainDAO {
 				
 				dto.setMem_num(rs.getInt("MEM_NUM"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 
@@ -309,10 +314,11 @@ public class MainDAO {
 				
 				dto.setMem_num(rs.getInt("MEM_NUM"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 			
-			sql = "select * from challenge_list where rownum <= 4 order by chall_ongoingpeople desc";
+			sql = "select * from (select * from challenge_list order by chall_ongoingpeople desc) where rownum <= 4";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -466,6 +472,63 @@ public class MainDAO {
 		}finally {
 			closeConn(rs, pstmt, con);
 		}
+		
+		return result;
+	}
+
+	public String getNewChall() {
+		String result = "";
+		
+		try {
+			openConn();
+			
+			sql = "select * from challenge_list where rownum <= 4 and chall_open = 'open' order by chall_regdate";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+			
+			result += "<chall_lists>";
+			
+				result += "<chall_list>";
+				result += "<chall_open>" +rs.getString("chall_open") +"</chall_open>";
+				result += "<chall_num>" +rs.getInt("chall_num") +"</chall_num>";
+				result += "<chall_title>" +rs.getString("chall_title") +"</chall_title>";
+				result += "<chall_mainimage>" +rs.getString("chall_mainimage")+ "</chall_mainimage>";
+				result += "<chall_cycle>" +rs.getString("chall_cycle")+ "</chall_cycle>";
+				result += "<chall_duration>" +rs.getString("chall_duration")+ "</chall_duration>";
+				result += "<chall_startdate>" +rs.getString("chall_startdate")+ "</chall_startdate>";
+				result += "<chall_guide>" +rs.getString("chall_guide")+ "</chall_guide>";
+				result += "<chall_successimage>" +rs.getString("chall_successimage")+ "</chall_successimage>";
+				result += "<chall_failimage>" +rs.getString("chall_failimage")+ "</chall_failimage>";
+				result += "<chall_regitimestart>" +rs.getString("chall_regitimestart")+ "</chall_regitimestart>";
+				result += "<chall_regitimeend>" +rs.getString("chall_regitimeend")+ "</chall_regitimeend>";
+				result += "<chall_cont>" +rs.getString("chall_cont")+ "</chall_cont>";
+				result += "<chall_depositdefault>" +rs.getInt("chall_depositdefault")+ "</chall_depositdefault>";
+				result += "<chall_depositmax>" +rs.getInt("chall_depositmax")+ "</chall_depositmax>";
+				result += "<chall_maxpeople>" +rs.getInt("chall_maxpeople")+ "</chall_maxpeople>";
+				result += "<chall_category_num>" +rs.getString("chall_category_code_fk")+ "</chall_category_num_fk>";
+				result += "<chall_keyword1>" +rs.getString("chall_keyword1")+ "</chall_keyword1>";
+				result += "<chall_admin_id>" +rs.getString("admin_id_fk")+ "</chall_admin_id>";
+				result += "<chall_ongoingpeople>" +rs.getInt("chall_ongoingpeople")+ "</chall_ongoingpeople>";
+				result += "<chall_creater_name>공식 챌린지</chall_creater_name>";
+				result += "<chall_creater_img>admin_logo.svg</chall_creater_img>";
+				result += "</chall_list>";
+			
+			}
+			
+			result += "</chall_lists>";
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeConn(rs, pstmt, con);
+		}
+		
 		
 		return result;
 	}

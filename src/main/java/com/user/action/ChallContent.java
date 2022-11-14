@@ -49,7 +49,9 @@ public class ChallContent implements Action {
 		ChallProofDAO proof_dao = ChallProofDAO.getInstance();
 		int checkJoin = proof_dao.checkJoin(chall_num, mem_num);
 		request.setAttribute("checkJoin", checkJoin);	// 정보있음=1(버튼:'참가완료') / 정보없음=-1(버튼:'참가하기')
-		if((chall_dto.getChall_open()).equals("private") && checkJoin != 1 && session.getAttribute("memberNum") != null && request.getParameter("CodeOk") == null) {
+		String status = chall_dto.getChall_status();
+		if((chall_dto.getChall_open()).equals("private") && checkJoin != 1 && session.getAttribute("memberNum") != null 
+				&& request.getParameter("CodeOk") == null && status == "진행중") {
 			forward.setPath("user/member_CheckPrivateCode.jsp");
 		}else {
 			

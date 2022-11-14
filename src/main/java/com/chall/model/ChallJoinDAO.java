@@ -108,7 +108,7 @@ public class ChallJoinDAO {
 			if (rs.next()) {
 				count = rs.getInt(1) + 1;
 			}
-			sql = "insert into challenge_list values('',?,'','','','','','','','','','','','','','','','','','',?,?,default,'','','','')";
+			sql = "insert into challenge_list values('',?,'','','','','','','','','','','','','','','','','','',?,?,default,'','','','','')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, count);
 			pstmt.setString(2, "임시");
@@ -157,7 +157,7 @@ public class ChallJoinDAO {
 			if (rs.next()) {
 				count = rs.getInt(1) + 1;
 			}
-			sql = "insert into challenge_list values(?,?,'','','','','','','','','','','','','','','','','',?,?,'',default,'','','','')";
+			sql = "insert into challenge_list values(?,?,'','','','','','','','','','','','','','','','','',?,?,'',default,'','','','','')";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, open);
 			pstmt.setInt(2, count);
@@ -447,7 +447,7 @@ public class ChallJoinDAO {
 	public void challJoinOk(int challNum) {
 		try {
 			openConn();
-			sql = "update challenge_list set chall_ongoingPeople = 1, chall_status = '진행중' where chall_num = ?";
+			sql = "update challenge_list set chall_ongoingPeople = 1, chall_status = '진행중', CHALL_REGDATE = sysdate where chall_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, challNum);
 			pstmt.executeUpdate();
@@ -464,7 +464,7 @@ public class ChallJoinDAO {
 	public void challJoinOk(int challNum, String ad_id) {
 		try {
 			openConn();
-			sql = "update challenge_list set chall_status = '진행중' where chall_num = ?";
+			sql = "update challenge_list set chall_status = '진행중', CHALL_REGDATE = sysdate where chall_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, challNum);
 			pstmt.executeUpdate();

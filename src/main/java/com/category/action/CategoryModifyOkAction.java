@@ -21,7 +21,7 @@ public class CategoryModifyOkAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)throws IOException, Exception {
 		
-		String filedirectory ="C:\\\\Users\\\\user1\\\\git\\\\team2_semi_challengers\\\\WebContent\\\\uploadFile";
+		String filedirectory ="C:\\Users\\VVIP\\Desktop\\Semi_Challengers2_1114_승준2\\WebContent\\uploadFile";
 		int filesize = 10*1024*1024;
 		MultipartRequest mr = new MultipartRequest(request, filedirectory, filesize, "UTF-8",new DefaultFileRenamePolicy());
 		

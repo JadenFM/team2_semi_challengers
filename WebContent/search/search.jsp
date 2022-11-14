@@ -114,11 +114,11 @@
 				<span><a class="toggle_icon">+</a></span>
 				<ul class="search_submenu">
 					<li><input type="checkbox" id="cycle_all" name="cycle_all"><label for="cycle_all"><a>전체</a></label></li>
-					<li><input type="checkbox" id="cycle_daily" class="cycle" name="cycle" value="daily"><label for="cycle_daily"><a>매일</a></label></li>
-					<li><input type="checkbox" id="cycle1" class="cycle" name="cycle" value="1"><label for="cycle1"><a>주1일</a></label></li>
-					<li><input type="checkbox" id="cycle2" class="cycle" name="cycle" value="2"><label for="cycle2"><a>주2일</a></label></li>
-					<li><input type="checkbox" id="cycle3" class="cycle" name="cycle" value="3"><label for="cycle3"><a>주3일</a></label></li>
-					<li><input type="checkbox" id="cycle4" class="cycle" name="cycle" value="4"><label for="cycle4"><a>주4일</a></label></li>
+					<li><input type="checkbox" id="cycle_daily" class="cycle" name="cycle" value="매일"><label for="cycle_daily"><a>매일</a></label></li>
+					<li><input type="checkbox" id="cycle1" class="cycle" name="cycle" value="주 1일"><label for="cycle1"><a>주1일</a></label></li>
+					<li><input type="checkbox" id="cycle2" class="cycle" name="cycle" value="주 2일"><label for="cycle2"><a>주2일</a></label></li>
+					<li><input type="checkbox" id="cycle3" class="cycle" name="cycle" value="주 3일"><label for="cycle3"><a>주3일</a></label></li>
+					<li><input type="checkbox" id="cycle4" class="cycle" name="cycle" value="주 4일"><label for="cycle4"><a>주4일</a></label></li>
 				</ul>
 			</li>
 			<li class="option">

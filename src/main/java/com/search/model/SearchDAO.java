@@ -100,6 +100,7 @@ public class SearchDAO {
 				
 				dto.setMem_num(rs.getInt("MEM_NUM"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 
@@ -194,6 +195,7 @@ public class SearchDAO {
 				
 				dto.setMem_num(rs.getInt("mem_num"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 			
@@ -330,6 +332,7 @@ public class SearchDAO {
 				
 				dto.setMem_num(rs.getInt("mem_num"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 			
@@ -338,6 +341,9 @@ public class SearchDAO {
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, "%" +keyword+ "%");
+			pstmt.setString(2, keyword);
+			pstmt.setString(3, keyword);
+			pstmt.setString(4, keyword);
 			
 			rs = pstmt.executeQuery();
 			
@@ -422,6 +428,7 @@ public class SearchDAO {
 				
 				dto.setMem_num(rs.getInt("mem_num"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 			
@@ -532,7 +539,7 @@ public class SearchDAO {
 				 * ") and chall_title like ?";
 				 */
 				
-				sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b  where " +spOptionA[spOptionA.length-1]+  " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and chall_title like ?) where rnum >= ? and rnum <= ?";
+				sql = "select * from (select row_number() over (order by chall_num desc) rnum, b.* from challenge_list b where " +spOptionA[spOptionA.length-1]+  " in(" +strA+ ") and " +spOptionB[spOptionB.length-1]+ " in(" +strB+ ") and chall_title like ?) where rnum >= ? and rnum <= ?";
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -644,6 +651,7 @@ public class SearchDAO {
 				
 				dto.setMem_num(rs.getInt("mem_num"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_img(rs.getString("mem_img"));
 				list.add(dto);
 			}
 			
