@@ -6,12 +6,16 @@
 작업 기간 : 2022.10.18 - 2022.11.14
 <br>
 <br>
+<h3>메인 1</h3>
 <img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/main1.JPG"  width="800" height="380"/>
 <hr>
+<h3>메인 2</h3>
 <img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/main2.JPG"  width="800" height="380"/>
 <hr>
+<h3>개설 1</h3>
 <img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/개설1.JPG"  width="800" height="380"/>
 <hr>
+<h3>로그인 1</h3>
 <img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/로그인.JPG"  width="800" height="380"/>
 <hr>
 
