@@ -6,9 +6,14 @@
 작업 기간 : 2022.10.18 - 2022.11.14
 <br>
 <br>
-<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide1.jpg"  width="350" height="200"/>
-<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide8.jpg"  width="350" height="200"/>
-<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide9.jpg"  width="350" height="200"/>
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/main1.JPG"  width="800" height="380"/>
+<hr>
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/main2.JPG"  width="800" height="380"/>
+<hr>
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/개설1.JPG"  width="800" height="380"/>
+<hr>
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/로그인.JPG"  width="800" height="380"/>
+<hr>
 
 
 ## Tools
