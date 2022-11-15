@@ -7,6 +7,7 @@
 작업 기간 : 2022.10.18 - 2022.11.14
 <br>
 <br>
+![slide1](https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide1.jpg)
 
 ## Tools
 * Eclipse IDE for Enterprise Java Developers - Ver. 2020-09(4.17.0)
