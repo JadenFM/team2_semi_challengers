@@ -1,4 +1,4 @@
-![challengers](https://newsroom.smilegate.com/data/s3/board/1920_400_%EB%AA%A9%ED%91%9C_%EB%8B%AC%EC%84%B1_%ED%94%8C%EB%9E%AB%ED%8F%BC_%EC%B1%8C%EB%A6%B0%EC%A0%80%EC%8A%A4_%EC%9B%B9%EB%B0%B0%EB%84%88.png)
+![challengers](https://chlngers.com/logo_standard.svg)
 <h1>Team2 Semi Project - "Challengers"</h1>
 <br>
 팀원 : 박지수, 박현우, 백승준, 이세건, 허제이
