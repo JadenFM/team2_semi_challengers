@@ -1,4 +1,3 @@
-![challengers](https://chlngers.com/logo_standard.svg)
 <h1>Team2 Semi Project - "Challengers"</h1>
 <br>
 팀원 : 박지수, 박현우, 백승준, 이세건, 허제이
@@ -7,7 +6,10 @@
 작업 기간 : 2022.10.18 - 2022.11.14
 <br>
 <br>
-![slide1](https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide1.jpg)
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide1.jpg"  width="350" height="200"/>
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide8.jpg"  width="350" height="200"/>
+<img src="https://github.com/JadenFM/team2_semi_challengers/blob/master/Slide9.jpg"  width="350" height="200"/>
+
 
 ## Tools
 * Eclipse IDE for Enterprise Java Developers - Ver. 2020-09(4.17.0)
